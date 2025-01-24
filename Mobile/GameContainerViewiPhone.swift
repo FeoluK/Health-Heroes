@@ -1,7 +1,15 @@
+//
+//  GameContainerViewiPhone.swift
+//  Mobile
+//
+//  Created by Hunter Harris on 1/24/25.
+//
+
+import Foundation
 import SwiftUI
 
 struct GameContainerViewiPhone: View {
-    @StateObject private var gameStateManager = GameStateManager()
+    @ObservedObject private var gameStateManager = GameStateManager.shared
     
     var body: some View {
         Group {
@@ -9,24 +17,29 @@ struct GameContainerViewiPhone: View {
             case .loading:
                 LoadingScreenView()
             case .mainMenu:
-                MainMenuView()
+                MainView()
             case .inGame:
                 GameView()
-            case .lobbyIsReady:
+            case .lobbyIsReady, .lobbyNotReady:
+                EmptyView()// PlayerListView()
+            default:
                 EmptyView()
-            default: EmptyView()
             }
         }
         .onAppear {
             gameStateManager.startLoading()
         }
+        .task {
+            for await newSession in MyGroupActivity.sessions() {
+                SharePlayManager.shared.configureSession(newSession)
+            }
+        }
     }
 }
 
-// Placeholder views - you'll implement these later
-struct MainMenuView: View {
+struct MainView: View {
     var body: some View {
-        Text("Main Menu")
+        Text("Game View")
     }
 }
 
@@ -34,4 +47,4 @@ struct GameView: View {
     var body: some View {
         Text("Game View")
     }
-} 
+}
