@@ -20,6 +20,8 @@
 		81290B2B2D4433A6006CFB47 /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B2A2D4433A6006CFB47 /* PlayerListView.swift */; };
 		81290B2C2D4433A6006CFB47 /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B2A2D4433A6006CFB47 /* PlayerListView.swift */; };
 		81290B2D2D4436CB006CFB47 /* SharePlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE4ED3670D9731718D5F37 /* SharePlayManager.swift */; };
+		81290B312D44423A006CFB47 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B302D44423A006CFB47 /* Player.swift */; };
+		81290B322D44423A006CFB47 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B302D44423A006CFB47 /* Player.swift */; };
 		8C0BDDC0911EA77843B86678 /* GameContainerViewiPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FCD5AD29C28BCFF0754BC /* GameContainerViewiPhone.swift */; };
 		9008BA3206967A9F31C84C6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D81C4D028C810D5A586EAB5C /* Assets.xcassets */; };
 		93EFB9177C714B76B5D612B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7AAEC2C5810917B2BC35EA /* Preview Assets.xcassets */; };
@@ -43,6 +45,7 @@
 		782FCD5AD29C28BCFF0754BC /* GameContainerViewiPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameContainerViewiPhone.swift; sourceTree = "<group>"; };
 		81290B262D44327E006CFB47 /* GameContainerViewVision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameContainerViewVision.swift; sourceTree = "<group>"; };
 		81290B2A2D4433A6006CFB47 /* PlayerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
+		81290B302D44423A006CFB47 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		98E7B32424281FA9863180A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DC6009E15A13E9081AC151F /* Mobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1FE3E1B90DA5D64BFE4C46 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 				3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */,
 				4CE0F585F0F545369D598531 /* MainView.swift */,
 				FCEE4ED3670D9731718D5F37 /* SharePlayManager.swift */,
+				81290B302D44423A006CFB47 /* Player.swift */,
 				5CC90651290DFD3E0884508D /* LoadingScreenView.swift */,
 				81290B2A2D4433A6006CFB47 /* PlayerListView.swift */,
 			);
@@ -245,6 +249,7 @@
 				81290B2C2D4433A6006CFB47 /* PlayerListView.swift in Sources */,
 				81290B2D2D4436CB006CFB47 /* SharePlayManager.swift in Sources */,
 				8C0BDDC0911EA77843B86678 /* GameContainerViewiPhone.swift in Sources */,
+				81290B312D44423A006CFB47 /* Player.swift in Sources */,
 				33B78EA5BB222B88C8187B67 /* GameStateManager.swift in Sources */,
 				F3CCCDA2792CD31F4730A194 /* LoadingScreenView.swift in Sources */,
 				EEBA01A7AD6782B9F930B1A7 /* MobileApp.swift in Sources */,
@@ -263,6 +268,7 @@
 				3D2DC5F5B4D4F54FDF649D0A /* MainView.swift in Sources */,
 				81290B282D44328F006CFB47 /* LoadingScreenView.swift in Sources */,
 				1710F8FE8910C427184F1AFD /* SharePlayManager.swift in Sources */,
+				81290B322D44423A006CFB47 /* Player.swift in Sources */,
 				81290B292D4432AA006CFB47 /* GameStateManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,8 +1,16 @@
 import SwiftUI
 
 class GameStateManager: ObservableObject {
+    
+    static let shared = GameStateManager()
+    
     @Published var isLoading = true
     @Published var gameState: GameState = .loading
+    
+    var tasks = Set<Task<Void, Never>>()
+    
+    var sharePlayMessages: [any SharePlayMessage] = []
+    
     
     enum GameState {
         case loading

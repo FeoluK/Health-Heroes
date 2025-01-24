@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct GameContainerViewVision: View {
-    @StateObject private var gameStateManager = GameStateManager()
+    @ObservedObject private var gameStateManager = GameStateManager.shared
     
     var body: some View {
         Group {
@@ -29,6 +29,11 @@ struct GameContainerViewVision: View {
         }
         .onAppear {
             gameStateManager.startLoading()
+        }
+        .task {
+            for await newSession in MyGroupActivity.sessions() {
+                SharePlayManager.shared.configureSession(newSession)
+            }
         }
     }
 }

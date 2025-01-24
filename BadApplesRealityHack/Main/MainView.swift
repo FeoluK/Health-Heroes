@@ -32,6 +32,7 @@ struct MainView: View {
                             appModel.immersiveSpaceState = .inTransition
                             switch await openImmersiveSpace(id: appModel.immersiveSpaceID) {
                                 case .opened:
+                                GameStateManager.shared.gameState = .lobbyNotReady
                                     sharePlayManager.startSharePlay()
 
                                 case .userCancelled, .error:

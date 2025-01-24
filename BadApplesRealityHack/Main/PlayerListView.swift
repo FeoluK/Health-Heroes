@@ -13,7 +13,7 @@ struct PlayerListView: View {
 
     var body: some View {
         VStack {
-            if let session = sharePlayManager.groupSession {
+            if let session = sessionInfo.session {
                 List(session.activeParticipants.enumerated().map { index, participant in
                     "User\(index + 1))"
                 }, id: \ .self) { user in
