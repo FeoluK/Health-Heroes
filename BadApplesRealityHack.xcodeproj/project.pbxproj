@@ -15,7 +15,6 @@
 		5F58CEFB9EC757AE6C19626A /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */; };
 		93EFB9177C714B76B5D612B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7AAEC2C5810917B2BC35EA /* Preview Assets.xcassets */; };
 		F05ABAF6D8CDEDBA68174A7F /* BadApplesRealityHackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193A31C128A770ACD88CA640 /* BadApplesRealityHackApp.swift */; };
-		F27A7D0562097C5E9B2B69F6 /* ToggleImmersiveSpaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F10BAF79023BDBEF5AB70 /* ToggleImmersiveSpaceButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		4CE0F585F0F545369D598531 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		5F7AAEC2C5810917B2BC35EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		909F10BAF79023BDBEF5AB70 /* ToggleImmersiveSpaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleImmersiveSpaceButton.swift; sourceTree = "<group>"; };
 		98E7B32424281FA9863180A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFD67D5799B14E82F33ADDDD /* BadApples.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BadApples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD14894D14D3AD2C765F2964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -61,7 +59,6 @@
 				3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */,
 				4CE0F585F0F545369D598531 /* MainView.swift */,
 				FCEE4ED3670D9731718D5F37 /* SharePlayManager.swift */,
-				909F10BAF79023BDBEF5AB70 /* ToggleImmersiveSpaceButton.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -150,7 +147,6 @@
 				5F58CEFB9EC757AE6C19626A /* ImmersiveView.swift in Sources */,
 				3D2DC5F5B4D4F54FDF649D0A /* MainView.swift in Sources */,
 				1710F8FE8910C427184F1AFD /* SharePlayManager.swift in Sources */,
-				F27A7D0562097C5E9B2B69F6 /* ToggleImmersiveSpaceButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
