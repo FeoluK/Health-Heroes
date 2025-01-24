@@ -26,11 +26,29 @@ targets:
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: true
 
+  Mobile:
+    type: application
+    platform: iOS
+    sources: [BadApplesRealityHack]
+    settings:
+      base:
+        SWIFT_VERSION: 5.10.1
+        ENABLE_TESTABILITY: YES
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        UILaunchStoryboardName: LaunchScreen
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+
 schemes:
   BadApples:
     build:
       targets:
         BadApples: all
+        Mobile: all
     run:
       config: Debug
 
