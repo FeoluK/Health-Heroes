@@ -13,7 +13,7 @@ import Combine
 class SharePlayManager: ObservableObject {
     static let shared = SharePlayManager()
     
-    private var groupSession: GroupSession<MyGroupActivity>?
+    var groupSession: GroupSession<MyGroupActivity>?
     private var messenger: GroupSessionMessenger?
     private var cancellables = Set<AnyCancellable>()
     

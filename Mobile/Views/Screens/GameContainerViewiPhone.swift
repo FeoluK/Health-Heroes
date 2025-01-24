@@ -12,8 +12,9 @@ struct GameContainerViewiPhone: View {
                 MainMenuView()
             case .inGame:
                 GameView()
-            case .ready:
+            case .lobbyIsReady:
                 EmptyView()
+            default: EmptyView()
             }
         }
         .onAppear {

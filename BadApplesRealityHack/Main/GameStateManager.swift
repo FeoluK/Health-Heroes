@@ -8,7 +8,8 @@ class GameStateManager: ObservableObject {
         case loading
         case mainMenu
         case inGame
-        case ready
+        case lobbyIsReady
+        case lobbyNotReady
     }
     
     func startLoading() {

@@ -21,8 +21,10 @@ struct GameContainerViewVision: View {
                 MainView()
             case .inGame:
                 GameView()
-            case .ready:
+            case .lobbyIsReady, .lobbyNotReady:
                 PlayerListView()
+            default:
+                EmptyView()
             }
         }
         .onAppear {
