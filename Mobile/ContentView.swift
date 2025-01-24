@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Mobile
 //
-//  Created by Hunter Harris on 1/24/25.
+//  Created by Feolu Kolawole on 1/24/25.
 //
 
 import SwiftUI
