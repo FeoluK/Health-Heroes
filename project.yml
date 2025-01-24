@@ -1,0 +1,39 @@
+name: BadApplesRealityHack
+options:
+  bundleIdPrefix: org.dicyaninlabs
+  deploymentTarget:
+    iOS: 17.0
+    visionOS: 2.0
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+
+targets:
+  BadApples:
+    type: application
+    platform: visionOS
+    sources: [BadApplesRealityHack]
+    settings:
+      base:
+        SWIFT_VERSION: 5.10.1
+        ENABLE_TESTABILITY: YES
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        UILaunchStoryboardName: LaunchScreen
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+
+schemes:
+  BadApples:
+    build:
+      targets:
+        BadApples: all
+    run:
+      config: Debug
+
+configs:
+  Debug: debug
+  Release: release
