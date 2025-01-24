@@ -10,12 +10,13 @@ import SwiftUI
 
 struct PlayerListView: View {
     @ObservedObject private var sharePlayManager = SharePlayManager.shared
+    @ObservedObject private var gameStateManager =  GameStateManager.shared
 
     var body: some View {
         VStack {
-            if let session = sessionInfo.session {
-                List(session.activeParticipants.enumerated().map { index, participant in
-                    "User\(index + 1))"
+            if let _ = sharePlayManager.sessionInfo.session {
+                List(gameStateManager.players.map { index, participant in
+                    "User-\(index))"
                 }, id: \ .self) { user in
                     Text(user)
                 }
@@ -24,7 +25,7 @@ struct PlayerListView: View {
             }
             
             Button(action: {
-                // Empty hook for button action
+                
             }) {
                 Text("Ready")
                     .padding()
