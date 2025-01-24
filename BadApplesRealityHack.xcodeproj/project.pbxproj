@@ -108,6 +108,8 @@
 				AD1FE3E1B90DA5D64BFE4C46 /* ContentView.swift */,
 				C2C6A87B777834B806A49110 /* MobileApp.swift */,
 				79844E5A3F14737E3E889DC3 /* MobileAssets.xcassets */,
+				782FCD5AD29C28BCFF0754BC /* GameContainerViewiPhone.swift */,
+				9AB6DC3C4DD8D0CCBBB2FAE4 /* Managers */,
 				9E0612657F168C0EC2BEDEB4 /* Preview Content */,
 				370A5E9E6F210FA37DC183CF /* Screens */,
 				356C7919663F8080FAF0FEE7 /* Views */,
