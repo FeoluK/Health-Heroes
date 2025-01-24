@@ -10,7 +10,7 @@ import GroupActivities
 import Combine
 
 @available(iOS 17.0, *)
-class SharePlayManager {
+class SharePlayManager: ObservableObject {
     static let shared = SharePlayManager()
     
     private var groupSession: GroupSession<MyGroupActivity>?
@@ -60,7 +60,7 @@ class SharePlayManager {
         }.store(in: &cancellables)
     }
     
-    private func cleanup() {
+    func cleanup() {
         groupSession = nil
         messenger = nil
         cancellables.removeAll()

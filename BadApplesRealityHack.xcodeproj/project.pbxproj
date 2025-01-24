@@ -3,45 +3,35 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06849CEE2CA1CA9D3EE7D7FB /* ToggleImmersiveSpaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D69E28AD113AA04BEADE8A5 /* ToggleImmersiveSpaceButton.swift */; };
 		1FBB90F915FBE76A082B2EFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98E7B32424281FA9863180A6 /* Assets.xcassets */; };
-		2A5BB772E1274C48E6525195 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3602089867B9BEFE38AC7DF /* AppModel.swift */; };
-		81626E2A2D43D6FF008D9DAC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81626E292D43D6FF008D9DAC /* MainView.swift */; };
-		81626E2C2D43D76E008D9DAC /* SharePlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81626E2B2D43D76E008D9DAC /* SharePlayManager.swift */; };
-		8213F97DA1D9D706DD0F079C /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB24E27500B2FC1A1659CED /* ImmersiveView.swift */; };
 		93EFB9177C714B76B5D612B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7AAEC2C5810917B2BC35EA /* Preview Assets.xcassets */; };
 		F05ABAF6D8CDEDBA68174A7F /* BadApplesRealityHackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193A31C128A770ACD88CA640 /* BadApplesRealityHackApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		193A31C128A770ACD88CA640 /* BadApplesRealityHackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadApplesRealityHackApp.swift; sourceTree = "<group>"; };
-		1AB24E27500B2FC1A1659CED /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
-		5D69E28AD113AA04BEADE8A5 /* ToggleImmersiveSpaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleImmersiveSpaceButton.swift; sourceTree = "<group>"; };
 		5F7AAEC2C5810917B2BC35EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		81626E292D43D6FF008D9DAC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		81626E2B2D43D76E008D9DAC /* SharePlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayManager.swift; sourceTree = "<group>"; };
 		98E7B32424281FA9863180A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A3602089867B9BEFE38AC7DF /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		AFD67D5799B14E82F33ADDDD /* BadApples.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BadApples.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD14894D14D3AD2C765F2964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BD14894D14D3AD2C765F2964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		819825D02D43DEDD004CD12B /* Main */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Main; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXGroup section */
 		1B3BADCCC4DE071787DA65DE /* BadApplesRealityHack */ = {
 			isa = PBXGroup;
 			children = (
-				A3602089867B9BEFE38AC7DF /* AppModel.swift */,
+				BD14894D14D3AD2C765F2964 /* Info.plist */,
 				98E7B32424281FA9863180A6 /* Assets.xcassets */,
 				193A31C128A770ACD88CA640 /* BadApplesRealityHackApp.swift */,
-				81626E292D43D6FF008D9DAC /* MainView.swift */,
-				1AB24E27500B2FC1A1659CED /* ImmersiveView.swift */,
-				BD14894D14D3AD2C765F2964 /* Info.plist */,
-				5D69E28AD113AA04BEADE8A5 /* ToggleImmersiveSpaceButton.swift */,
-				81626E2B2D43D76E008D9DAC /* SharePlayManager.swift */,
+				819825D02D43DEDD004CD12B /* Main */,
 				F0E1A377A868BCF1EECA5A54 /* Preview Content */,
 			);
 			path = BadApplesRealityHack;
@@ -84,6 +74,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				819825D02D43DEDD004CD12B /* Main */,
 			);
 			name = BadApples;
 			productName = BadApples;
@@ -133,12 +126,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A5BB772E1274C48E6525195 /* AppModel.swift in Sources */,
-				81626E2A2D43D6FF008D9DAC /* MainView.swift in Sources */,
 				F05ABAF6D8CDEDBA68174A7F /* BadApplesRealityHackApp.swift in Sources */,
-				8213F97DA1D9D706DD0F079C /* ImmersiveView.swift in Sources */,
-				06849CEE2CA1CA9D3EE7D7FB /* ToggleImmersiveSpaceButton.swift in Sources */,
-				81626E2C2D43D76E008D9DAC /* SharePlayManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
