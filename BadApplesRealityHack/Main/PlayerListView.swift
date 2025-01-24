@@ -25,7 +25,7 @@ struct PlayerListView: View {
             }
             
             Button(action: {
-                
+                Player.sendLocalIsReadyMsg()
             }) {
                 Text("Ready")
                     .padding()

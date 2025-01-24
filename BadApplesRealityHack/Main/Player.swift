@@ -31,12 +31,14 @@ struct Player: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
     let id: UUID
     let score: Int
     var isActive: Bool
+    var isReady: Bool
     
-    init(name: String, id: UUID, score: Int, isActive: Bool) {
+    init(name: String, id: UUID, score: Int, isActive: Bool, isReady: Bool) {
         self.name = name
         self.score = score
         self.id = id
         self.isActive = isActive
+        self.isReady = isReady
     }
     
     /// The local player, "me".
@@ -56,6 +58,13 @@ struct Player: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
         
         if newPlayer.id == Player.local?.id {
             Player.local = newPlayer
+        }
+    }
+    
+    static func sendLocalIsReadyMsg() {
+        if var updatedPlayerMsg = Player.local {
+            updatedPlayerMsg.isActive = true
+            SharePlayManager.sendMessage(message: updatedPlayerMsg)
         }
     }
 }

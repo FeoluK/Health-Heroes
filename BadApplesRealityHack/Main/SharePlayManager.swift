@@ -47,7 +47,7 @@ class SharePlayManager: ObservableObject {
         sessionInfo = .init(newSession: session)
         
         let localId = session.localParticipant.id
-        Player.local = .init(name: "name", id: localId, score: 0, isActive: true)
+        Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false)
         GameStateManager.shared.players[localId] = Player.local
         
         session.$state.sink { [weak self] state in
@@ -89,7 +89,7 @@ class SharePlayManager: ObservableObject {
         newSession.$activeParticipants.sink { activeParticipants in
             
             for participant in activeParticipants {
-                let potentialNewPlayer = Player(name: "name", id: participant.id, score: 0, isActive: true)
+                let potentialNewPlayer = Player(name: "name", id: participant.id, score: 0, isActive: true, isReady: false)
                 
                 if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
                 {
@@ -114,6 +114,31 @@ class SharePlayManager: ObservableObject {
         case let message as PlayerReadyMessage:
             return
         default: return
+        }
+    }
+    
+    static func sendMessage(message: any SharePlayMessage,
+                            participants: Set<Participant>? = nil,
+                            sendShimmer: Bool = true,
+                            updateStoreage: Bool = true,
+                            handleLocally: Bool = false)
+    {
+        if handleLocally {
+            Task {
+                if let localParticipant = SharePlayManager.shared.sessionInfo.session?.localParticipant {
+                    await SharePlayManager.handleMessage(AnySharePlayMessage(message), sender: localParticipant)
+                }
+            }
+        }
+    
+        if let session = SharePlayManager.shared.sessionInfo.session,
+            let messenger = SharePlayManager.shared.sessionInfo.messenger
+        {
+            let everyoneElse = session.activeParticipants.subtracting([session.localParticipant])
+            let newMessage = AnySharePlayMessage(message)
+            messenger.send(newMessage, to: .only(participants ?? everyoneElse)) { error in
+                if let error = error { print("Error sending \(message.self) Message: \(error)") }
+            }
         }
     }
     
@@ -177,6 +202,7 @@ struct AnySharePlayMessage: Codable {
     private enum MessageType: String, Codable {
         case playerMessage
         case playerReadyMessage
+        case game_StartMessage
        
     }
 
@@ -188,6 +214,8 @@ struct AnySharePlayMessage: Codable {
             try container.encode(MessageType.playerMessage, forKey: .type)
         case is PlayerReadyMessage:
             try container.encode(MessageType.playerReadyMessage, forKey: .type)
+        case is Game_StartMessage:
+            try container.encode(MessageType.game_StartMessage, forKey: .type)
         default:
             throw EncodingError.invalidValue(base, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Error encoding AnySharePlayMessage: Invalid type"))
         }
@@ -207,6 +235,8 @@ struct AnySharePlayMessage: Codable {
             
         case .playerReadyMessage:
             base = try JSONDecoder().decode(PlayerReadyMessage.self, from: data)
+        case .game_StartMessage:
+            base = try JSONDecoder().decode(Game_StartMessage.self, from: data)
         default: return
         }
     }
@@ -215,3 +245,13 @@ struct AnySharePlayMessage: Codable {
 
 
 
+
+struct Game_StartMessage: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
+    var windowId: String = ""
+    var messageId: String = UUID().uuidString
+    let id: UUID
+    
+    static func == (lhs: Game_StartMessage, rhs: Game_StartMessage) -> Bool {
+        lhs.id == rhs.id
+    }
+}
