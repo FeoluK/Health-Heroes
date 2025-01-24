@@ -94,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				D81C4D028C810D5A586EAB5C /* Assets.xcassets */,
+				0F8D387C89ED69E256885C96 /* MobileAssets.xcassets */,
 				AD1FE3E1B90DA5D64BFE4C46 /* ContentView.swift */,
 				C2C6A87B777834B806A49110 /* MobileApp.swift */,
 				9AB6DC3C4DD8D0CCBBB2FAE4 /* Managers */,
@@ -126,7 +127,6 @@
 				81290B262D44327E006CFB47 /* GameContainerViewVision.swift */,
 				3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */,
 				4CE0F585F0F545369D598531 /* MainView.swift */,
-				0F8D387C89ED69E256885C96 /* MobileAssets.xcassets */,
 				FCEE4ED3670D9731718D5F37 /* SharePlayManager.swift */,
 				5CC90651290DFD3E0884508D /* LoadingScreenView.swift */,
 			);

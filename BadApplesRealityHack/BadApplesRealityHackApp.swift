@@ -14,7 +14,7 @@ struct BadApplesRealityHackApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView()
+            GameContainerViewVision()
                 .environment(appModel)
         }
 

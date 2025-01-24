@@ -9,7 +9,7 @@ import Foundation
 
 import SwiftUI
 
-struct GameContainerViewiPhone: View {
+struct GameContainerViewVision: View {
     @StateObject private var gameStateManager = GameStateManager()
     
     var body: some View {
@@ -18,7 +18,7 @@ struct GameContainerViewiPhone: View {
             case .loading:
                 LoadingScreenView()
             case .mainMenu:
-                MainMenuView()
+                MainView()
             case .inGame:
                 GameView()
             }
@@ -26,13 +26,6 @@ struct GameContainerViewiPhone: View {
         .onAppear {
             gameStateManager.startLoading()
         }
-    }
-}
-
-// Placeholder views - you'll implement these later
-struct MainMenuView: View {
-    var body: some View {
-        Text("Main Menu")
     }
 }
 
