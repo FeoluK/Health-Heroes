@@ -1,6 +1,15 @@
+//
+//  GameContainerViewVision.swift
+//  BadApples
+//
+//  Created by Hunter Harris on 1/24/25.
+//
+
+import Foundation
+
 import SwiftUI
 
-struct GameContainerView: View {
+struct GameContainerViewiPhone: View {
     @StateObject private var gameStateManager = GameStateManager()
     
     var body: some View {
@@ -31,4 +40,4 @@ struct GameView: View {
     var body: some View {
         Text("Game View")
     }
-} 
+}

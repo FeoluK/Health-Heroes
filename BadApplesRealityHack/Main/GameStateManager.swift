@@ -1,19 +1,28 @@
-import Foundation
+import SwiftUI
 
-class GameStateManager {
-    static let shared = GameStateManager()
+class GameStateManager: ObservableObject {
+    @Published var isLoading = true
+    @Published var gameState: GameState = .loading
     
-    private init() {
-        // Private initializer to ensure singleton instance
+    enum GameState {
+        case loading
+        case mainMenu
+        case inGame
     }
     
-    // Add game state properties and methods here
-    
-    func resetGameState() {
-        // Logic to reset the game state
+    func startLoading() {
+        isLoading = true
+        gameState = .loading
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+            self.finishLoading()
+        }
     }
     
-    func updateGameState() {
-        // Logic to update the game state
+    private func finishLoading() {
+        withAnimation {
+            self.isLoading = false
+            self.gameState = .mainMenu
+        }
     }
 } 

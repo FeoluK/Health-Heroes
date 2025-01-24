@@ -11,7 +11,7 @@ import SwiftUI
 struct MobileApp: App {
     var body: some Scene {
         WindowGroup {
-            GameContainerView()
+            GameContainerViewiPhone()
         }
     }
 }
