@@ -14,20 +14,41 @@ struct MainView: View {
     @StateObject private var sharePlayManager = SharePlayManager.shared
     @State private var isSharePlayActive = false
     
+    @Environment(AppModel.self) private var appModel
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    
     var body: some View {
         VStack {
             Button(action: {
-                if isSharePlayActive {
-                    // Logic to stop SharePlay
-                    sharePlayManager.cleanup()
-                } else {
-                    // Logic to start SharePlay
-                    sharePlayManager.startSharePlay()
+                Task { @MainActor in
+                    switch appModel.immersiveSpaceState {
+                        case .open:
+                            appModel.immersiveSpaceState = .inTransition
+                            await dismissImmersiveSpace()
+                            sharePlayManager.cleanup()
+
+                        case .closed:
+                            appModel.immersiveSpaceState = .inTransition
+                            switch await openImmersiveSpace(id: appModel.immersiveSpaceID) {
+                                case .opened:
+                                    sharePlayManager.startSharePlay()
+
+                                case .userCancelled, .error:
+                                    fallthrough
+                                @unknown default:
+                                    appModel.immersiveSpaceState = .closed
+                            }
+
+                        case .inTransition:
+                            break
+                    }
+                    isSharePlayActive.toggle()
                 }
-                isSharePlayActive.toggle()
             }) {
                 Text(isSharePlayActive ? "Stop SharePlay" : "Start SharePlay")
             }
+            .disabled(appModel.immersiveSpaceState == .inTransition)
         }
     }
 }
