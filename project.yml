@@ -29,7 +29,7 @@ targets:
   Mobile:
     type: application
     platform: iOS
-    sources: [BadApplesRealityHack]
+    sources: [Mobile]
     settings:
       base:
         SWIFT_VERSION: 5.10.1

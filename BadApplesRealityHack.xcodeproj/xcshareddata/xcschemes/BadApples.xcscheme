@@ -21,6 +21,20 @@
                ReferencedContainer = "container:BadApplesRealityHack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F4C7332DE0C4415C68B00D3C"
+               BuildableName = "Mobile.app"
+               BlueprintName = "Mobile"
+               ReferencedContainer = "container:BadApplesRealityHack.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
