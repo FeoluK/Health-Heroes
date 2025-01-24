@@ -7,10 +7,10 @@ class GameStateManager: ObservableObject {
     @Published var isLoading = true
     @Published var gameState: GameState = .loading
     
+    @Published var players: [UUID: Player] = [:]
+    
     var tasks = Set<Task<Void, Never>>()
-    
     var sharePlayMessages: [any SharePlayMessage] = []
-    
     
     enum GameState {
         case loading

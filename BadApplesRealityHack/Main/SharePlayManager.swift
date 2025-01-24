@@ -11,13 +11,15 @@ import Combine
 
 @available(iOS 17.0, *)
 
-var sessionInfo: DemoSessionInfo = .init()
 
 class SharePlayManager: ObservableObject {
     static let shared = SharePlayManager()
     
-    var groupSession: GroupSession<MyGroupActivity>?
-    private var messenger: GroupSessionMessenger?
+    
+    @Published var sessionInfo: DemoSessionInfo = .init()
+    
+//    var groupSession: GroupSession<MyGroupActivity>?
+//    private var messenger: GroupSessionMessenger?
     private var cancellables = Set<AnyCancellable>()
     
     private init() {}
@@ -26,7 +28,7 @@ class SharePlayManager: ObservableObject {
         Task {
             do {
                 let activity = MyGroupActivity()
-                try await activity.activate()
+                let _ = try await activity.activate()
             } catch {
                 print("Failed to start SharePlay: \(error.localizedDescription)")
             }
@@ -42,16 +44,17 @@ class SharePlayManager: ObservableObject {
     }
     
     func configureSession(_ session: GroupSession<MyGroupActivity>) {
-        self.groupSession = session
-        self.messenger = GroupSessionMessenger(session: session)
+        sessionInfo = .init(newSession: session)
         
-        session.join()
+        let localId = session.localParticipant.id
+        Player.local = .init(name: "name", id: localId, score: 0, isActive: true)
+        GameStateManager.shared.players[localId] = Player.local
         
         session.$state.sink { [weak self] state in
             switch state {
-            case .waiting: self?.joinSharePlay()
-            case .joined:
-                self?.configureAfterJoining()
+            case .waiting:  self?.joinSession()
+            case .joined: return
+//                self?.configureAfterJoiningSession()
             case .invalidated:
                 print("SharePlay session ended")
                 self?.cleanup()
@@ -61,18 +64,43 @@ class SharePlayManager: ObservableObject {
         }.store(in: &cancellables)
     }
     
-    func configureAfterJoining() {
+    func joinSession() {
+        SharePlayManager.subscribeToSessionUpdates()
+        SharePlayManager.subscribeToPlayerUpdates()
         
+        SharePlayManager.shared.sessionInfo.session?.join()
     }
     
     static func subscribeToSessionUpdates() {
-        if let messenger =  sessionInfo.messenger {
+        if let messenger = SharePlayManager.shared.sessionInfo.messenger {
             var task = Task { @MainActor in
                 for await (anyMessage, sender) in messenger.messages(of: AnySharePlayMessage.self) {
                     await SharePlayManager.handleMessage(anyMessage, sender: sender.source)
                 }
             }
+            GameStateManager.shared.tasks.insert(task)
         }
+    }
+    
+    static func subscribeToPlayerUpdates() {
+        guard let newSession = SharePlayManager.shared.sessionInfo.session else {
+            print("failed to get session"); return }
+        
+        newSession.$activeParticipants.sink { activeParticipants in
+            
+            for participant in activeParticipants {
+                let potentialNewPlayer = Player(name: "name", id: participant.id, score: 0, isActive: true)
+                
+                if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
+                {
+                    let task = Task { @MainActor in
+                        GameStateManager.shared.players[participant.id] = potentialNewPlayer
+                    }
+                    GameStateManager.shared.tasks.insert(task)
+                }
+            }
+        }
+        .store(in: &SharePlayManager.shared.cancellables)
     }
     
     /// Handle individual AnySharePlayMessage messages
@@ -82,7 +110,7 @@ class SharePlayManager: ObservableObject {
                               forceHandling: Bool = false) async {
         switch message.base {
         case let message as Player:
-            return
+            await Player.handlePlayerMessage(message: message, sender: sender)
         case let message as PlayerReadyMessage:
             return
         default: return
@@ -90,8 +118,8 @@ class SharePlayManager: ObservableObject {
     }
     
     func cleanup() {
-        groupSession = nil
-        messenger = nil
+        sessionInfo.session = nil
+        sessionInfo.messenger = nil
         cancellables.removeAll()
     }
 }
@@ -117,16 +145,12 @@ class DemoSessionInfo: ObservableObject {
     
     init() { }
     init(newSession: GroupSession<MyGroupActivity>) {
+        self.session = newSession
+        self.messenger = GroupSessionMessenger(session: newSession, deliveryMode: .reliable)
+        self.reliableMessenger = GroupSessionMessenger(session: newSession, deliveryMode: .unreliable)
         Task { @MainActor in
-            configureForSession(newSession: newSession)
+            SharePlayManager.shared.sessionInfo = self
         }
-    }
-    
-    @MainActor
-    func configureForSession(newSession: GroupSession<MyGroupActivity>) {
-        sessionInfo.session = newSession
-        sessionInfo.messenger = GroupSessionMessenger(session: newSession, deliveryMode: .reliable)
-        sessionInfo.reliableMessenger = GroupSessionMessenger(session: newSession, deliveryMode: .unreliable)
     }
 }
 
