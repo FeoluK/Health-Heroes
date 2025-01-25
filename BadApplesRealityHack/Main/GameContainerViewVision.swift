@@ -20,7 +20,7 @@ struct GameContainerViewVision: View {
             case .loading:
                 LoadingScreenView()
             case .mainMenu:
-                MainView()
+                MainViewVision()
             case .inGame:
                 GameViewVision()
             case .lobbyIsReady, .lobbyNotReady:
@@ -69,5 +69,3 @@ struct GameViewVision: View {
         Text("Game View")
     }
 }
-
-

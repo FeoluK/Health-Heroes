@@ -29,7 +29,7 @@ struct ImmersiveView: View {
             content.add(rootEntity)
             configureAttachments(attachments)
         } update: { content, attachments in
-             updateAttachmentVisibility(attachments)
+            updateAttachmentVisibility(attachments)
             childAnchor.transform = Transform(matrix: WorldTrackingSessionManager.shared.getOriginFromDeviceTransform())
             
         } attachments: {

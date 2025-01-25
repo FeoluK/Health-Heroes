@@ -60,14 +60,14 @@ class Scene_ChestCompression {
         chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
         rootEntity.addChild(chestSphere1)
         
-        chestSphere2 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
-        rootEntity.addChild(chestSphere2)
-        chestSphere2.position = devicePositionAnchor.position
-        chestSphere2.position.x += -0.09
+//        chestSphere2 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
+//        rootEntity.addChild(chestSphere2)
+//        chestSphere2.position = devicePositionAnchor.position
+//        chestSphere2.position.x += -0.09
         
         // Add ScalingComponent to spheres
         chestSphere1.components[ScalingComponent.self] = ScalingComponent(targetEntity: childAnchor)
-        chestSphere2.components[ScalingComponent.self] = ScalingComponent(targetEntity: childAnchor)
+//        chestSphere2.components[ScalingComponent.self] = ScalingComponent(targetEntity: childAnchor)
         
         // Add ProximityComponent to spheres
 //        chestSphere1.components[ProximityComponent.self] = ProximityComponent(targetEntity: childAnchor)
@@ -119,6 +119,11 @@ struct ScalingComponent: Component {
 }
 
 class ScalingSystem: System {
+    private var pumpCounter: Int = 0
+    private var lastPumpTime: Date?
+    private let requiredPumps: Int = 3
+    private let timeLimit: TimeInterval = 2.0
+
     required init(scene: RealityKit.Scene) {
         
     }
@@ -133,56 +138,51 @@ class ScalingSystem: System {
             guard let scalingComponent = entity.components[ScalingComponent.self] else {
                 continue
             }
-            
+
             // Calculate distance to target entity
             let distance = entity.position.distance(to: childAnchor.position)
-            
-            // Define a scaling factor based on distance
-            let scaleFactor = max(0.1, 1.0 + distance)
-            
-            // Apply the scaling factor to the entity
-            entity.scale = SIMD3<Float>(repeating: scaleFactor)
-        }
-    }
-}
 
-// Component to handle proximity logic
-struct ProximityComponent: Component {
-    var targetEntity: Entity
-    var proximityFactor: Float = 1.0
-    
-    public init(targetEntity: Entity, proximityFactor: Float = 1.0) {
-        self.targetEntity = targetEntity
-        self.proximityFactor = proximityFactor
-    }
-}
+            // Check if distance is zero
+            print("distance: \(distance)")
+            if distance <= 0.1 {
+                if let lastTime = lastPumpTime, Date().timeIntervalSince(lastTime) <= timeLimit {
+                    pumpCounter += 1
+                } else {
+                    pumpCounter = 1
+                }
+                lastPumpTime = Date()
 
-final class ProximitySystem: System {
-    required init(scene: RealityKit.Scene) { }
-
-    func update(context: SceneUpdateContext) {
-        // Query entities with the ProximityComponent
-        let entities = context.scene.performQuery(
-            EntityQuery(where: .has(ProximityComponent.self))
-        )
-
-        for entity in entities {
-            guard let proximityComponent = entity.components[ProximityComponent.self] else {
-                continue
+                if pumpCounter >= requiredPumps {
+                    // Perform action for successful pumps
+                    print("Successful pump actions completed!")
+                    pumpCounter = 0 // Reset counter after success
+                    
+                    entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
+                    }
+                    
+                    SharePlayManager.sendMessage(
+                        message: Game_SendHeartMessage(id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: 1))
+                    
+                    
+                }
             }
-            
-            // Calculate distance to target entity
-            let distance = entity.position.distance(to: childAnchor.position)
-            
-            // Adjust position to move closer based on distance
-            let moveFactor = max(0.1, 1.0 - distance * proximityComponent.proximityFactor)
-            entity.position.x += moveFactor * (proximityComponent.targetEntity.position.x - entity.position.x)
-            entity.position.y += moveFactor * (proximityComponent.targetEntity.position.y - entity.position.y)
-            entity.position.z += moveFactor * (proximityComponent.targetEntity.position.z - entity.position.z)
+
+            // Reset if time limit exceeded
+            if let lastTime = lastPumpTime, Date().timeIntervalSince(lastTime) > timeLimit {
+                pumpCounter = 0
+            }
+
+//            // Define a scaling factor based on distance
+//            let scaleFactor = max(0.1, 1.0 + distance)
+//
+//            // Apply the scaling factor to the entity
+//            entity.scale = SIMD3<Float>(repeating: scaleFactor)
         }
     }
 }
-
 
 enum Platform {
     case iOS

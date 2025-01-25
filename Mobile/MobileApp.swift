@@ -13,8 +13,6 @@ struct MobileApp: App {
     init() {
         ScalingSystem.registerSystem()
         ScalingComponent.registerComponent()
-        ProximityComponent.registerComponent()
-        ProximitySystem.registerSystem()
         
         HeartMovementSystem.registerSystem()
         HeartMovementComponent.registerComponent()

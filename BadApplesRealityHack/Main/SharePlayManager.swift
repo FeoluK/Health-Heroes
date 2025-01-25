@@ -47,12 +47,13 @@ class SharePlayManager: ObservableObject {
     
     func configureSession(_ session: GroupSession<MyGroupActivity>) {
         sessionInfo = .init(newSession: session)
+        GameStateManager.shared.gameState = .lobbyNotReady
         
         session.$state.sink { [weak self] state in
             switch state {
             case .waiting:  self?.joinSession()
             case .joined: return
-//                self?.configureAfterJoiningSession()
+                self?.configureAfterJoiningSession()
             case .invalidated:
                 print("SharePlay session ended")
                 self?.cleanup()

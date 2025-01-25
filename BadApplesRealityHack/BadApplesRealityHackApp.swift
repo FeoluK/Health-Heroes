@@ -15,6 +15,9 @@ struct BadApplesRealityHackApp: App {
     init() {
         ScalingSystem.registerSystem()
         ScalingComponent.registerComponent()
+        
+        HeartMovementSystem.registerSystem()
+        HeartMovementComponent.registerComponent()
     }
 
     var body: some Scene {
