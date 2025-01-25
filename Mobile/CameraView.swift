@@ -1,22 +1,40 @@
 import SwiftUI
-import AVFoundation
+import RealityKit
 import ARKit
 
+class CameraViewModel: ObservableObject {
+    let rootEntity = Entity()
+    let currentObjectRoot = Entity()
+    
+    func spawnFloor() {
+        // Implementation for floor spawning
+        let floor = ModelEntity(mesh: .generatePlane(width: 50, depth: 50))
+        floor.generateCollisionShapes(recursive: true)
+        rootEntity.addChild(floor)
+    }
+}
+
 struct CameraView: View {
-    @StateObject private var cameraController = CameraController()
+    @StateObject private var viewModel = CameraViewModel()
     @State private var showPermissionAlert = false
     @State private var showRules = false
     @State private var showLeaderboard = false
     @State private var showCustomMenu = false
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
+    // Drag gesture for interaction
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { _ in
+                // Handle drag
+            }
+            .onEnded { _ in
+                // Handle drag end
+            }
+    }
+    
     var body: some View {
-        ZStack {
-            // Camera preview
-            CameraPreviewView(session: cameraController.session)
-                .ignoresSafeArea()
-            
-            // Top menu button
+        ZStack {            
             VStack {
                 HStack {
                     Spacer()
@@ -53,11 +71,7 @@ struct CameraView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            cameraController.checkPermissions { authorized in
-                if !authorized {
-                    showPermissionAlert = true
-                }
-            }
+            // No need to check permissions as RealityView handles it
         }
         .alert("Camera Permission Required", isPresented: $showPermissionAlert) {
             Button("Go to Settings", role: .none) {
@@ -247,97 +261,6 @@ struct LeaderboardRow: View {
             Text("\(score)")
                 .bold()
         }
-    }
-}
-
-// Camera preview representation
-struct CameraPreviewView: UIViewRepresentable {
-    let session: AVCaptureSession
-    
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView(frame: UIScreen.main.bounds)
-        
-        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        previewLayer.frame = view.frame
-        previewLayer.videoGravity = .resizeAspectFill
-        view.layer.addSublayer(previewLayer)
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
-
-// Camera controller to manage AVCapture session and AR
-class CameraController: NSObject, ObservableObject {
-    @Published var isTorchOn = false
-    let session = AVCaptureSession()
-    private var device: AVCaptureDevice?
-    
-    override init() {
-        super.init()
-        setupCamera()
-    }
-    
-    func setupCamera() {
-        session.sessionPreset = .high
-        
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
-            print("Failed to get camera device")
-            return
-        }
-        self.device = device
-        
-        do {
-            let input = try AVCaptureDeviceInput(device: device)
-            if session.canAddInput(input) {
-                session.addInput(input)
-            }
-            
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                self?.session.startRunning()
-            }
-        } catch {
-            print("Failed to setup camera: \(error.localizedDescription)")
-        }
-    }
-    
-    func checkPermissions(completion: @escaping (Bool) -> Void) {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            completion(true)
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                DispatchQueue.main.async {
-                    completion(granted)
-                }
-            }
-        default:
-            completion(false)
-        }
-    }
-    
-    func toggleTorch() {
-        guard let device = device, device.hasTorch else { return }
-        
-        do {
-            try device.lockForConfiguration()
-            device.torchMode = device.torchMode == .on ? .off : .on
-            isTorchOn = device.torchMode == .on
-            device.unlockForConfiguration()
-        } catch {
-            print("Torch could not be used: \(error.localizedDescription)")
-        }
-    }
-    
-    // AR Session preparation
-    func prepareARSession() {
-        guard ARWorldTrackingConfiguration.isSupported else {
-            print("AR is not supported on this device")
-            return
-        }
-        
-        // AR configuration will be added here when needed
     }
 }
 
