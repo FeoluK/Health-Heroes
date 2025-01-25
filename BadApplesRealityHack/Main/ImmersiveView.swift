@@ -70,7 +70,7 @@ struct ImmersiveView: View {
                 showSlide1 = false
                 showSlide2 = true
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 16) {
                     showSlide2 = false
                     showSlide3 = true
                 }
