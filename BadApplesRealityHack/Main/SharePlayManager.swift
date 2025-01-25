@@ -36,7 +36,7 @@ class SharePlayManager: ObservableObject {
     }
     
     func joinSharePlay() {
-        Task {
+        Task { @MainActor in
             for await session in MyGroupActivity.sessions() {
                 configureSession(session)
             }
