@@ -29,7 +29,9 @@ struct ImmersiveView: View {
             content.add(rootEntity)
             configureAttachments(attachments)
         } update: { content, attachments in
-            // updateAttachmentVisibility(attachments)
+             updateAttachmentVisibility(attachments)
+            childAnchor.transform = Transform(matrix: WorldTrackingSessionManager.shared.getOriginFromDeviceTransform())
+            
         } attachments: {
             Attachment(id: slide1View) {
                   //2. Define the SwiftUI View
@@ -54,6 +56,26 @@ struct ImmersiveView: View {
                       .padding()
                       .glassBackgroundEffect()
               }
+        }
+        .onAppear {
+            configureSlideVisibility()
+        }
+    }
+    
+    func configureSlideVisibility() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            showSlide1 = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                showSlide1 = false
+                showSlide2 = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    showSlide2 = false
+                    showSlide3 = true
+                }
+                
+            }
         }
     }
     

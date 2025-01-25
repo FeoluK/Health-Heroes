@@ -43,7 +43,7 @@ struct GameContainerViewVision: View {
             switch action {
             case .openImmersiveSpace(let space):
                 Task { @MainActor in
-                    await openImmersiveSpace(id: space)
+                    await openImmersiveSpace(id: "ImmersiveSpace")
                 }
                 
             case .dismissImmersiveSpace():

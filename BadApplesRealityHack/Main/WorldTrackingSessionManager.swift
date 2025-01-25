@@ -41,6 +41,7 @@ class WorldTrackingSessionManager: ObservableObject {
     }
 
     func handleWorldTrackingUpdates() async {
+//        childAnchor.transform = Transform(matrix: getOriginFromDeviceTransform())
         //latestPose = getOriginFromDeviceTransform()
 //        for await update in worldTracking.anchorUpdates {
 //        }
