@@ -2,12 +2,13 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+let qrCodeAnchor = AnchorEntity(.image(group: "ARResources", name: "AppClip"))
+
 class CameraViewModel: ObservableObject {
     let rootEntity = Entity()
     let currentObjectRoot = Entity()
     
     func spawnFloor() {
-        // Implementation for floor spawning
         let floor = ModelEntity(mesh: .generatePlane(width: 50, depth: 50))
         floor.generateCollisionShapes(recursive: true)
         rootEntity.addChild(floor)
@@ -34,7 +35,23 @@ struct CameraView: View {
     }
     
     var body: some View {
-        ZStack {            
+        ZStack {
+            if #available(iOS 18.0, *) {
+                RealityView { content in
+                    content.camera = .spatialTracking
+                    
+                    let entity = ModelEntity(mesh: .generateSphere(radius: 0.3), materials: [SimpleMaterial(color: .red, isMetallic: true)])
+                    qrCodeAnchor.addChild(entity)
+                    entity.position += .init(x: 0, y: 1, z: 0)
+                    content.add(qrCodeAnchor)
+                    
+                } update: { content in
+                    
+                }.gesture(dragGesture)
+            } else {
+                // Fallback on earlier versions
+            }
+            
             VStack {
                 HStack {
                     Spacer()

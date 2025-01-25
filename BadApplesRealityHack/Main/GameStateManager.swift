@@ -49,10 +49,12 @@ class GameStateManager: ObservableObject {
     static func handleGameStartMsg(message: Game_StartMessage,
                                     sender: Participant) async
     {
-        GameStateManager.shared.gameState = .inGame
-        
         Task { @MainActor in
-            GameStateManager.shared.actionSubject.send(.openImmersiveSpace(message.gameMode))
+            GameStateManager.shared.gameState = .inGame
+            
+            Task { @MainActor in
+                GameStateManager.shared.actionSubject.send(.openImmersiveSpace(message.gameMode))
+            }
         }
     }
 }

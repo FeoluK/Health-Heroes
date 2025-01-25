@@ -57,12 +57,12 @@ struct GameContainerViewVision: View {
         
     }
 }
-
-struct GameView: View {
-    var body: some View {
-        Text("Game View")
-    }
-}
+//
+//struct GameView: View {
+//    var body: some View {
+//        Text("Game View")
+//    }
+//}
 
 
 
