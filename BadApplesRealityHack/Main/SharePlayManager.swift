@@ -86,7 +86,10 @@ class SharePlayManager: ObservableObject {
         
         newSession.$activeParticipants.sink { activeParticipants in
             let localId = newSession.localParticipant.id
-            let totalParticipants = activeParticipants.count
+            var totalParticipants = activeParticipants.count
+            if totalParticipants == 1 {
+                totalParticipants += 1
+            }
             let isVisionDevice = currentPlatform() == .visionOS
             Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 1 : totalParticipants) // todo: fix player seat Id
             GameStateManager.shared.players[localId] = Player.local
