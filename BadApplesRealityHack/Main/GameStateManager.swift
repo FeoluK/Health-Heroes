@@ -57,4 +57,12 @@ class GameStateManager: ObservableObject {
             }
         }
     }
+    
+    static func handleHeartMessage(message: Game_SendHeartMessage,
+                                    sender: Participant) async
+    {
+        if currentPlatform() == .visionOS {
+            
+        }
+    }
 }

@@ -115,6 +115,8 @@ class SharePlayManager: ObservableObject {
             return
         case let message as Game_StartMessage:
            await GameStateManager.handleGameStartMsg(message: message, sender: sender)
+        case let message as Game_StartMessage:
+           await GameStateManager.handleHeartMessage(message: message, sender: sender)
         default: return
         }
     }
@@ -213,6 +215,7 @@ struct AnySharePlayMessage: Codable {
         case playerMessage
         case playerReadyMessage
         case game_StartMessage
+        case game_SendHeartMessage
        
     }
 
@@ -226,6 +229,8 @@ struct AnySharePlayMessage: Codable {
             try container.encode(MessageType.playerReadyMessage, forKey: .type)
         case is Game_StartMessage:
             try container.encode(MessageType.game_StartMessage, forKey: .type)
+        case is Game_SendHeartMessage:
+            try container.encode(MessageType.game_SendHeartMessage, forKey: .type)
         default:
             throw EncodingError.invalidValue(base, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Error encoding AnySharePlayMessage: Invalid type"))
         }
@@ -247,6 +252,8 @@ struct AnySharePlayMessage: Codable {
             base = try JSONDecoder().decode(PlayerReadyMessage.self, from: data)
         case .game_StartMessage:
             base = try JSONDecoder().decode(Game_StartMessage.self, from: data)
+        case .game_SendHeartMessage:
+            base = try JSONDecoder().decode(Game_SendHeartMessage.self, from: data)
         default: return
         }
     }
@@ -263,6 +270,19 @@ struct Game_StartMessage: Codable, Sendable, Identifiable, Equatable, SharePlayM
     let gameMode: String
     
     static func == (lhs: Game_StartMessage, rhs: Game_StartMessage) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+
+struct Game_SendHeartMessage: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
+    var windowId: String = ""
+    var messageId: String = UUID().uuidString
+    let id: UUID
+    let gameMode: String
+    let heartHeight: Float
+    
+    static func == (lhs: Game_SendHeartMessage, rhs: Game_SendHeartMessage) -> Bool {
         lhs.id == rhs.id
     }
 }

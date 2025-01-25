@@ -36,19 +36,3 @@ struct BadApplesRealityHackApp: App {
         .immersionStyle(selection: .constant(.full), in: .full)
     }
 }
-
-enum Platform {
-    case iOS
-    case visionOS
-    case unknown
-}
-
-func currentPlatform() -> Platform {
-    #if os(iOS)
-    return .iOS
-    #elseif os(visionOS)
-    return .visionOS
-    #else
-    return .unknown
-    #endif
-}

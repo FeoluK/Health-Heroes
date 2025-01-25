@@ -37,7 +37,7 @@ struct GameContainerViewiPhone: View {
         }
         .onReceive(gameStateManager.sessionActionPublisher, perform: { action in
             switch action {
-            case .openImmersiveSpace(let space):
+            case .openImmersiveSpace(_):
                 gameStateManager.gameState = .inGame
                 
                 GameModeManager.shared.loadGame()

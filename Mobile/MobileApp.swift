@@ -9,6 +9,13 @@ import SwiftUI
 
 @main
 struct MobileApp: App {
+    
+    init() {
+        ScalingSystem.registerSystem()
+        ScalingComponent.registerComponent()
+        ProximityComponent.registerComponent()
+        ProximitySystem.registerSystem()
+    }
     var body: some Scene {
         WindowGroup {
             GameContainerViewiPhone()

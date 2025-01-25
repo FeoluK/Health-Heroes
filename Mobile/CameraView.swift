@@ -3,11 +3,10 @@ import RealityKit
 import ARKit
 
 let qrCodeAnchor = AnchorEntity(.image(group: "ARResources", name: "AppClip"))
-var devicePositionAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.4), materials: [UnlitMaterial(color: .green)])
+var devicePositionAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
+var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
 
 class CameraViewModel: ObservableObject {
-    let rootEntity = Entity()
-    let currentObjectRoot = Entity()
     
     func spawnFloor() {
         let floor = ModelEntity(mesh: .generatePlane(width: 50, depth: 50))
@@ -29,17 +28,15 @@ struct CameraView: View {
             if #available(iOS 18.0, *) {
                 RealityView { content in
                     content.camera = .spatialTracking
-                    
                     content.add(rootEntity)
                     rootEntity.position = .init(x: 0, y: 0, z: 0)
                     
                     devicePositionAnchor.components.set(AnchoringComponent(.camera, trackingMode: .continuous))
+                    childAnchor.components[PhysicsBodyComponent.self] = .init()
+                    childAnchor.position += .init(x: 0, y: 0, z: -1)
                     rootEntity.addChild(devicePositionAnchor)
+                    devicePositionAnchor.addChild(childAnchor)
                     
-//                    let entity = ModelEntity(mesh: .generateSphere(radius: 0.001), materials: [SimpleMaterial(color: .red, isMetallic: true)])
-//                    qrCodeAnchor.addChild(entity)
-//                    entity.position += .init(x: 0, y: 1, z: 0)
-//                    content.add(qrCodeAnchor)
                 } update: { content in
                     GameModeManager.shared.handleSceneUpdate()
                 }.gesture(dragGesture)
