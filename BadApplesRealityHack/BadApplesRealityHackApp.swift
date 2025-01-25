@@ -11,6 +11,11 @@ import SwiftUI
 struct BadApplesRealityHackApp: App {
 
     @State private var appModel = AppModel()
+    
+    init() {
+        ScalingSystem.registerSystem()
+        ScalingComponent.registerComponent()
+    }
 
     var body: some Scene {
         WindowGroup {

@@ -148,6 +148,7 @@ class SharePlayManager: ObservableObject {
         sessionInfo.session = nil
         sessionInfo.messenger = nil
         cancellables.removeAll()
+        GameStateManager.shared.gameState = .mainMenu
     }
 }
 

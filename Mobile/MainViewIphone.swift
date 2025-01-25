@@ -21,7 +21,7 @@ struct MainViewIphone: View {
     var body: some View {
         VStack {
             if sharePlayManager.sessionInfo.session != nil {
-                
+                launchCameraButton
             } else if groupStateObserver.isEligibleForGroupSession {
                 // Not in a session, but is eligible for a session (in Facetime call)
                 startSharePlayButton
@@ -32,6 +32,16 @@ struct MainViewIphone: View {
         // SharePlay share activity sheet handling
         .sheet(isPresented: $isActivitySharingSheetPresented) {
             ActivitySharingViewController(activity: MyGroupActivity())
+        }
+    }
+    
+    var launchCameraButton: some View {
+        Button(action: {
+            Task { @MainActor in
+                GameStateManager.shared.gameState = .inGame
+            }
+        }) {
+            Text("Start")
         }
     }
     
