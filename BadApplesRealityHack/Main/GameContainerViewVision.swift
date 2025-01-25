@@ -22,7 +22,7 @@ struct GameContainerViewVision: View {
             case .mainMenu:
                 MainView()
             case .inGame:
-                GameView()
+                GameViewVision()
             case .lobbyIsReady, .lobbyNotReady:
                 PlayerListView()
             default:
@@ -64,5 +64,10 @@ struct GameContainerViewVision: View {
 //    }
 //}
 
+struct GameViewVision: View {
+    var body: some View {
+        Text("Game View")
+    }
+}
 
 

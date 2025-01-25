@@ -10,6 +10,8 @@ import RealityFoundation
 import RealityKit
 
 var rootEntity = ModelEntity()
+var devicePositionAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
+var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
 
 enum GameMode: String {
     case ChestCompression

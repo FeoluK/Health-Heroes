@@ -3,8 +3,6 @@ import RealityKit
 import ARKit
 
 let qrCodeAnchor = AnchorEntity(.image(group: "ARResources", name: "AppClip"))
-var devicePositionAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
-var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
 
 class CameraViewModel: ObservableObject {
     
