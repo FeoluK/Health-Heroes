@@ -48,40 +48,7 @@ struct GameContainerViewiPhone: View {
             default: return
             }
         })
-        // SharePlay share activity sheet handling
-        .sheet(isPresented: $isActivitySharingSheetPresented) {
-            ActivitySharingViewController(activity: MyGroupActivity())
-        }
         
-    }
-    
-    var inviteToSharePlayView: some View {
-        VStack {
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Invite to  SharePlay").foregroundStyle(.gray)
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 60)
-                }
-                Spacer()
-            }
-            
-            VStack {
-                Button {
-                    isActivitySharingSheetPresented = true
-                } label: {
-                    HStack {
-                        Image(systemName: "square.and.arrow.up").foregroundStyle(.white)
-                        Text(LocalizedStringKey("inviteToSharePlayTitle")).foregroundStyle(.white)
-                    }
-                }
-                .padding()
-                .buttonStyle(.plain)
-                .background(.green)
-                .frame(height: 60)
-            }
-        }
     }
 }
 
