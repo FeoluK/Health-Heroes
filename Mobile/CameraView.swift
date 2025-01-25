@@ -38,7 +38,7 @@ struct CameraView: View {
                     content.add(qrCodeAnchor)
                     
                 } update: { content in
-                    
+                    GameModeManager.shared.handleSceneUpdate()
                 }.gesture(dragGesture)
             } else {
                 // Fallback on earlier versions
