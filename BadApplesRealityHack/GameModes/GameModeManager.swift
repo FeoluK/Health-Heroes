@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import RealityFoundation
+
+var rootEntity = ModelEntity()
 
 enum GameMode {
     case ChestCompression
@@ -20,7 +23,7 @@ class GameModeManager {
     public func loadGame() {
         
         switch gameMode {
-        case .ChestCompression: retu rn
+        case .ChestCompression: return
         case .mode2: return
         default: return
         }

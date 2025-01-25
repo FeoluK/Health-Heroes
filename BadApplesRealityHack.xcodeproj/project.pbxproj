@@ -16,7 +16,6 @@
 		3D2DC5F5B4D4F54FDF649D0A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE0F585F0F545369D598531 /* MainView.swift */; };
 		4DD4CB97A57860178B894E30 /* GameContainerViewVision.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A9EC9778DBC1A90AD417D9 /* GameContainerViewVision.swift */; };
 		4FB7F6BE93B743CE5BDEAFE3 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECC5A83A59E465D3F059F7 /* CameraView.swift */; };
-		5B7C53D0E065DBD46D443309 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD14894D14D3AD2C765F2964 /* Info.plist */; };
 		5F58CEFB9EC757AE6C19626A /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */; };
 		68D1A5922D446458004A6A8C /* GameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA9EA0003B1F73EC1CB1BB7 /* GameStateManager.swift */; };
 		68D1A5932D44645F004A6A8C /* LoadingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0028DA26E4BEC04ADBE15DFD /* LoadingScreenView.swift */; };
@@ -220,7 +219,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FBB90F915FBE76A082B2EFF /* Assets.xcassets in Resources */,
-				5B7C53D0E065DBD46D443309 /* Info.plist in Resources */,
 				93EFB9177C714B76B5D612B5 /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
