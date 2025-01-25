@@ -8,6 +8,8 @@
 import Foundation
 import GroupActivities
 import Combine
+import SwiftUICore
+import UIKit
 
 @available(iOS 17.0, *)
 
@@ -46,10 +48,6 @@ class SharePlayManager: ObservableObject {
     func configureSession(_ session: GroupSession<MyGroupActivity>) {
         sessionInfo = .init(newSession: session)
         
-        let localId = session.localParticipant.id
-        Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false)
-        GameStateManager.shared.players[localId] = Player.local
-        
         session.$state.sink { [weak self] state in
             switch state {
             case .waiting:  self?.joinSession()
@@ -87,13 +85,19 @@ class SharePlayManager: ObservableObject {
             print("failed to get session"); return }
         
         newSession.$activeParticipants.sink { activeParticipants in
+            let localId = newSession.localParticipant.id
+            let totalParticipants = activeParticipants.count
+            let isVisionDevice = currentPlatform() == .visionOS
+            Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 0 : totalParticipants) // todo: fix player seat Id
+            GameStateManager.shared.players[localId] = Player.local
             
             for participant in activeParticipants {
-                let potentialNewPlayer = Player(name: "name", id: participant.id, score: 0, isActive: true, isReady: false)
+                let potentialNewPlayer = Player(name: "name", id: participant.id, score: 0, isActive: true, isReady: false, isVisionDevice: false, playerSeat: 0)
                 
                 if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
                 {
                     let task = Task { @MainActor in
+                        Player.sendLocalPlayerUpdateMsg()
                         GameStateManager.shared.players[participant.id] = potentialNewPlayer
                     }
                     GameStateManager.shared.tasks.insert(task)
@@ -101,6 +105,16 @@ class SharePlayManager: ObservableObject {
             }
         }
         .store(in: &SharePlayManager.shared.cancellables)
+    }
+    
+    static func getColorForSeat(seat: Int) -> UIColor {
+        switch seat {
+        case 1: return .red
+        case 2: return .blue
+        case 3: return .purple
+        case 4: return .yellow
+        default: return .black
+        }
     }
     
     /// Handle individual AnySharePlayMessage messages
@@ -115,7 +129,7 @@ class SharePlayManager: ObservableObject {
             return
         case let message as Game_StartMessage:
            await GameStateManager.handleGameStartMsg(message: message, sender: sender)
-        case let message as Game_StartMessage:
+        case let message as Game_SendHeartMessage:
            await GameStateManager.handleHeartMessage(message: message, sender: sender)
         default: return
         }

@@ -19,6 +19,7 @@ struct PlayerListView: View {
                     if let player = gameStateManager.players[key] {
                         HStack {
                             Text(player.name)
+                                .foregroundStyle(Color(SharePlayManager.getColorForSeat(seat: player.playerSeat)))
                             Spacer()
                             if player.isReady {
                                 Image(systemName: "checkmark")

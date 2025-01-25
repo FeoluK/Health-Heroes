@@ -45,9 +45,16 @@ class GameModeManager {
 var chestSphere1 = ModelEntity()
 var chestSphere2 = ModelEntity()
 
+var game_seat1 = ModelEntity()
+var game_seat2 = ModelEntity()
+var game_seat3 = ModelEntity()
+var game_seat4 = ModelEntity()
+
 class Scene_ChestCompression {
     
     static func configureScene() {
+        configureFloorTiles()
+        
         chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
         rootEntity.addChild(chestSphere1)
         
@@ -63,6 +70,25 @@ class Scene_ChestCompression {
         // Add ProximityComponent to spheres
 //        chestSphere1.components[ProximityComponent.self] = ProximityComponent(targetEntity: childAnchor)
 //        chestSphere2.components[ProximityComponent.self] = ProximityComponent(targetEntity: childAnchor)
+    }
+    
+    static func configureFloorTiles() {
+        game_seat1 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 1), isMetallic: true)])
+        rootEntity.addChild(game_seat1)
+        game_seat1.position = .init(x: 0, y: -0.3, z: -1)
+        
+        game_seat2 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 2), isMetallic: true)])
+        rootEntity.addChild(game_seat2)
+        game_seat2.position = .init(x: -0.6, y: -0.3, z: 0)
+        
+        game_seat3 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 3), isMetallic: true)])
+        rootEntity.addChild(game_seat3)
+        game_seat3.position = .init(x: 0, y: -0.3, z: 0)
+        
+        game_seat4 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 4), isMetallic: true)])
+        rootEntity.addChild(game_seat4)
+        game_seat4.position = .init(x: 0.6, y: -0.3, z: 0)
+        
     }
     
     static func handleSceneUpdate() {
