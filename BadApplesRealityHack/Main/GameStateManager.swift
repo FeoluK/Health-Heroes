@@ -2,6 +2,7 @@ import SwiftUI
 import RealityFoundation
 import Combine
 import GroupActivities
+import RealityKit
 
 enum SessionAction {
     case openImmersiveSpace(String)
@@ -64,16 +65,56 @@ class GameStateManager: ObservableObject {
     {
         Task { @MainActor in
             if currentPlatform() == .visionOS {
-                let newHeart = ModelEntity()
-                newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
-                
-                rootEntity.addChild(newHeart)
+                if #available(iOS 18.0, *) {
+                    if let newHeart = try? await ModelEntity(named: "heart1") { 
+                        newHeart.scale = .init(repeating: 0.1)
+                        newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
+                        newHeart.position.y = 0.4
+                        newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: childAnchor.position)
+                        
+                        rootEntity.addChild(newHeart)
+                    }
+                } else {
+                    // Fallback on earlier versions
+                }
             }
         }
     }
 }
 
+// New ECS Component System for Heart Movement
 
+class HeartMovementComponent: Component {
+    var targetPosition: SIMD3<Float>
+    
+    init(targetPosition: SIMD3<Float>) {
+        self.targetPosition = targetPosition
+    }
+}
+
+class HeartMovementSystem: System {
+    required init(scene: RealityKit.Scene) {
+        
+    }
+    
+    func update(context: SceneUpdateContext) {
+        let entities = context.scene.performQuery(
+            EntityQuery(where: .has(HeartMovementComponent.self))
+        )
+
+        for entity in entities {
+            guard let proximityComponent = entity.components[HeartMovementComponent.self] else {
+                continue
+            }
+            
+            let component = entity.components[HeartMovementComponent.self]
+            let currentPosition = entity.position
+            let direction = normalize((component?.targetPosition ?? .one) - currentPosition)
+            let speed: Float = 0.1 // Adjust speed as needed
+            entity.position += direction * speed * Float(context.deltaTime)
+        }
+    }
+}
 
 func getSeatTileEntity(seat: Int) -> ModelEntity {
     switch seat {

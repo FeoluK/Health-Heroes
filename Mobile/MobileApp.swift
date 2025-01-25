@@ -15,6 +15,9 @@ struct MobileApp: App {
         ScalingComponent.registerComponent()
         ProximityComponent.registerComponent()
         ProximitySystem.registerSystem()
+        
+        HeartMovementSystem.registerSystem()
+        HeartMovementComponent.registerComponent()
     }
     var body: some Scene {
         WindowGroup {
