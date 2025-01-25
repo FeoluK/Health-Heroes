@@ -69,8 +69,18 @@
 		FCEE4ED3670D9731718D5F37 /* SharePlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		81290B4E2D449872006CFB47 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				GameModeManager.swift,
+			);
+			target = F4C7332DE0C4415C68B00D3C /* Mobile */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		81290B3B2D447376006CFB47 /* GameModes */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GameModes; sourceTree = "<group>"; };
+		81290B3B2D447376006CFB47 /* GameModes */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (81290B4E2D449872006CFB47 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = GameModes; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXGroup section */

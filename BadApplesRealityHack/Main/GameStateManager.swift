@@ -1,5 +1,11 @@
 import SwiftUI
+import Combine
 import GroupActivities
+
+enum SessionAction {
+    case openImmersiveSpace(String)
+    case dismissImmersiveSpace(Void)
+}
 
 class GameStateManager: ObservableObject {
     
@@ -12,6 +18,9 @@ class GameStateManager: ObservableObject {
     
     var tasks = Set<Task<Void, Never>>()
     var sharePlayMessages: [any SharePlayMessage] = []
+    
+    let actionSubject = PassthroughSubject<SessionAction, Never>()
+    var sessionActionPublisher: AnyPublisher<SessionAction, Never> { actionSubject.eraseToAnyPublisher() }
     
     enum GameState {
         case loading
@@ -41,5 +50,9 @@ class GameStateManager: ObservableObject {
                                     sender: Participant) async
     {
         GameStateManager.shared.gameState = .inGame
+        
+        Task { @MainActor in
+            GameStateManager.shared.actionSubject.send(.openImmersiveSpace(message.gameMode))
+        }
     }
 }

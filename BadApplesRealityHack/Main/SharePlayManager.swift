@@ -153,7 +153,7 @@ class SharePlayManager: ObservableObject {
 
 extension SharePlayManager {
     static func sendStartGameMessage() {
-        let startGameMsg: Game_StartMessage = .init(id: UUID())
+        let startGameMsg: Game_StartMessage = .init(id: UUID(), gameMode: GameModeManager.shared.gameMode.rawValue)
         sendMessage(message: startGameMsg, handleLocally: true)
     }
 }
@@ -259,6 +259,7 @@ struct Game_StartMessage: Codable, Sendable, Identifiable, Equatable, SharePlayM
     var windowId: String = ""
     var messageId: String = UUID().uuidString
     let id: UUID
+    let gameMode: String
     
     static func == (lhs: Game_StartMessage, rhs: Game_StartMessage) -> Bool {
         lhs.id == rhs.id

@@ -10,7 +10,7 @@ import RealityFoundation
 
 var rootEntity = ModelEntity()
 
-enum GameMode {
+enum GameMode: String {
     case ChestCompression
     case mode2
 }

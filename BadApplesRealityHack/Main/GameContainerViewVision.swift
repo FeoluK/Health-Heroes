@@ -11,6 +11,9 @@ import SwiftUI
 struct GameContainerViewVision: View {
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    
     var body: some View {
         Group {
             switch gameStateManager.gameState {
@@ -34,6 +37,24 @@ struct GameContainerViewVision: View {
                 SharePlayManager.shared.configureSession(newSession)
             }
         }
+#if os(visionOS)
+        // Open the ImmersiveSpace when we receive .openImmersiveSpace from sessionActionPublisher
+        .onReceive(gameStateManager.sessionActionPublisher, perform: { action in
+            switch action {
+            case .openImmersiveSpace(let space):
+                Task { @MainActor in
+                    await openImmersiveSpace(id: space)
+                }
+                
+            case .dismissImmersiveSpace():
+                Task { @MainActor in
+                    await dismissImmersiveSpace()
+                }
+            default: return
+            }
+        })
+#endif
+        
     }
 }
 
