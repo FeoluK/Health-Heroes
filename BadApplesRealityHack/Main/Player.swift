@@ -63,8 +63,8 @@ struct Player: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
     
     static func sendLocalIsReadyMsg() {
         if var updatedPlayerMsg = Player.local {
-            updatedPlayerMsg.isActive = true
-            SharePlayManager.sendMessage(message: updatedPlayerMsg)
+            updatedPlayerMsg.isReady = true
+            SharePlayManager.sendMessage(message: updatedPlayerMsg, handleLocally: true)
         }
     }
 }

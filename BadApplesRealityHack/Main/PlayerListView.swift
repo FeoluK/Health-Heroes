@@ -15,10 +15,17 @@ struct PlayerListView: View {
     var body: some View {
         VStack {
             if let _ = sharePlayManager.sessionInfo.session {
-                List(gameStateManager.players.map { index, participant in
-                    "User-\(index))"
-                }, id: \ .self) { user in
-                    Text(user)
+                List(gameStateManager.players.keys.sorted(), id: \.self) { key in
+                    if let player = gameStateManager.players[key] {
+                        HStack {
+                            Text(player.name)
+                            Spacer()
+                            if player.isReady {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.green)
+                            }
+                        }
+                    }
                 }
             } else {
                 Text("No active SharePlay session")

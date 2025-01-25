@@ -39,22 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7B75061B-B678-458B-8A2C-8BA6B0834D14"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BadApplesRealityHack/Main/SharePlayManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "configureSession(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "93D939FA-C7E1-4F40-9E02-9F769F76D893"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -98,22 +82,78 @@
             endingLineNumber = "77"
             landmarkName = "subscribeToSessionUpdates()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "94A7F35D-F6C2-4271-AA55-F20108CA6BF4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BadApplesRealityHack/Main/SharePlayManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "configureSession(_:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F40F7E31-58EC-4310-A512-0EE23235AC4B - 2eaa7af5878d0f68"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 () async -&gt; () in static BadApples.SharePlayManager.subscribeToSessionUpdates() -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+               <Location
+                  uuid = "F40F7E31-58EC-4310-A512-0EE23235AC4B - 88b31aa955c52565"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #1 () async -&gt; () in static BadApples.SharePlayManager.subscribeToSessionUpdates() -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+               <Location
+                  uuid = "F40F7E31-58EC-4310-A512-0EE23235AC4B - df611b7038a8c156"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 () async -&gt; () in static BadApples.SharePlayManager.subscribeToSessionUpdates() -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+               <Location
+                  uuid = "F40F7E31-58EC-4310-A512-0EE23235AC4B - df611b7038a8c156"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 () async -&gt; () in static BadApples.SharePlayManager.subscribeToSessionUpdates() -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+               <Location
+                  uuid = "F40F7E31-58EC-4310-A512-0EE23235AC4B - 51dc3bf2b9c78354"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 () async -&gt; () in static BadApples.SharePlayManager.subscribeToSessionUpdates() -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -145,6 +185,176 @@
             startingLineNumber = "68"
             endingLineNumber = "68"
             landmarkName = "joinSession()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "12FF176D-E3C7-42B2-82B1-DC23F51CFA38"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BadApplesRealityHack/Main/SharePlayManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "handleMessage(_:sender:forceHandling:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "12FF176D-E3C7-42B2-82B1-DC23F51CFA38 - 10394504aa55ed5e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static BadApples.SharePlayManager.handleMessage(_: BadApples.AnySharePlayMessage, sender: GroupActivities.Participant, forceHandling: Swift.Bool) async -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "113"
+                  endingLineNumber = "113">
+               </Location>
+               <Location
+                  uuid = "12FF176D-E3C7-42B2-82B1-DC23F51CFA38 - 5fe55e1337b73033"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for static BadApples.SharePlayManager.handleMessage(_: BadApples.AnySharePlayMessage, sender: GroupActivities.Participant, forceHandling: Swift.Bool) async -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "113"
+                  endingLineNumber = "113">
+               </Location>
+               <Location
+                  uuid = "12FF176D-E3C7-42B2-82B1-DC23F51CFA38 - c291c4b649572e9c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static BadApples.SharePlayManager.handleMessage(_: BadApples.AnySharePlayMessage, sender: GroupActivities.Participant, forceHandling: Swift.Bool) async -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/SharePlayManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "113"
+                  endingLineNumber = "113">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AA30BA3E-93AE-466C-9D36-B6A4681079BE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BadApplesRealityHack/Main/Player.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "handlePlayerMessage(message:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C005DCF9-359E-43F8-91DA-2560C7BDF31A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BadApplesRealityHack/Main/Player.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "sendLocalIsReadyMsg()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BB6B0B6B-9156-4836-968C-B4DDDAE20FB5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BadApplesRealityHack/Main/Player.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "handlePlayerMessage(message:sender:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BB6B0B6B-9156-4836-968C-B4DDDAE20FB5 - 3680b58d89402904"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static BadApples.Player.handlePlayerMessage(message: BadApples.Player, sender: GroupActivities.Participant) async -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50">
+               </Location>
+               <Location
+                  uuid = "BB6B0B6B-9156-4836-968C-B4DDDAE20FB5 - 528bbb334c3f6691"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () async -&gt; () in static BadApples.Player.handlePlayerMessage(message: BadApples.Player, sender: GroupActivities.Participant) async -&gt; ()"
+                  moduleName = "BadApples.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hunterharris/Dev/2025-Apps/BadApples2/BadApplesRealityHack/BadApplesRealityHack/Main/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6CC94A0-0D26-45EF-9CB7-0A30F8D14EC3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BadApplesRealityHack/Main/SharePlayManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "handleMessage(_:sender:forceHandling:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0078B3B5-028F-4A9B-A1D6-83F442A80FE1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BadApplesRealityHack/Main/Player.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "handlePlayerMessage(message:sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

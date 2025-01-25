@@ -126,7 +126,7 @@ class SharePlayManager: ObservableObject {
         if handleLocally {
             Task {
                 if let localParticipant = SharePlayManager.shared.sessionInfo.session?.localParticipant {
-                    await SharePlayManager.handleMessage(AnySharePlayMessage(message), sender: localParticipant)
+                    await SharePlayManager.handleMessage(AnySharePlayMessage(message), sender: localParticipant, forceHandling: handleLocally)
                 }
             }
         }
