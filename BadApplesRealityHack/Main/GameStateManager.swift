@@ -1,4 +1,5 @@
 import SwiftUI
+import RealityFoundation
 import Combine
 import GroupActivities
 
@@ -61,8 +62,25 @@ class GameStateManager: ObservableObject {
     static func handleHeartMessage(message: Game_SendHeartMessage,
                                     sender: Participant) async
     {
-        if currentPlatform() == .visionOS {
-            
+        Task { @MainActor in
+            if currentPlatform() == .visionOS {
+                let newHeart = ModelEntity()
+                newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
+                
+                rootEntity.addChild(newHeart)
+            }
         }
+    }
+}
+
+
+
+func getSeatTileEntity(seat: Int) -> ModelEntity {
+    switch seat {
+    case 1: return game_seat1
+    case 2: return game_seat2
+    case 3: return game_seat3
+    case 4: return game_seat4
+    default: return game_seat1
     }
 }

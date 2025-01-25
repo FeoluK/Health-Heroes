@@ -88,7 +88,7 @@ class SharePlayManager: ObservableObject {
             let localId = newSession.localParticipant.id
             let totalParticipants = activeParticipants.count
             let isVisionDevice = currentPlatform() == .visionOS
-            Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 0 : totalParticipants) // todo: fix player seat Id
+            Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 1 : totalParticipants) // todo: fix player seat Id
             GameStateManager.shared.players[localId] = Player.local
             
             for participant in activeParticipants {
@@ -293,7 +293,7 @@ struct Game_SendHeartMessage: Codable, Sendable, Identifiable, Equatable, ShareP
     var windowId: String = ""
     var messageId: String = UUID().uuidString
     let id: UUID
-    let gameMode: String
+    let seatNumber: Int
     let heartHeight: Float
     
     static func == (lhs: Game_SendHeartMessage, rhs: Game_SendHeartMessage) -> Bool {

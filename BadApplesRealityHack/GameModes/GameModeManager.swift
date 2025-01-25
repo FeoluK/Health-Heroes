@@ -23,8 +23,8 @@ class GameModeManager {
     
     public func handleSceneUpdate() {
         switch self.gameMode {
-        case .ChestCompression:
-            Scene_ChestCompression.handleSceneUpdate()
+        case .ChestCompression: return
+//            Scene_ChestCompression.handleSceneUpdate()
         case .mode2: return
         }
     }
