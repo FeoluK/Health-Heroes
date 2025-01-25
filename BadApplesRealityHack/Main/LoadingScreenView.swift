@@ -5,11 +5,11 @@ struct LoadingScreenView: View {
     @State private var loadingText: String = "Preparing Medical Simulation..."
     @State private var rotation: Double = 0
     @State private var floatingSymbols: [(String, CGPoint, Double)] = [
-        ("pill.fill", CGPoint(x: 50, y: 200), 0),
-        ("cross.case.fill", CGPoint(x: 300, y: 150), 45),
-        ("heart.fill", CGPoint(x: 100, y: 400), 90),
-        ("lungs.fill", CGPoint(x: 250, y: 300), 180),
-        ("brain.head.profile", CGPoint(x: 150, y: 100), 270)
+        ("pill.fill", CGPoint(x: 50, y: 100), 0),
+        ("cross.case.fill", CGPoint(x: 300, y: 100), 45),
+        ("heart.fill", CGPoint(x: 100, y: 150), 90),
+        ("lungs.fill", CGPoint(x: 250, y: 150), 180),
+        ("brain.head.profile", CGPoint(x: 150, y: 50), 270)
     ]
     
     let loadingTexts = [
@@ -22,28 +22,37 @@ struct LoadingScreenView: View {
     
     var body: some View {
         ZStack {
-            // Gradient background
+            // Vibrant gradient background
             LinearGradient(
-                gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.white]),
+                gradient: Gradient(colors: [Color(hex: "FF6B6B"), Color(hex: "4ECDC4")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
             
-            // Floating medical symbols
-            ForEach(0..<floatingSymbols.count, id: \.self) { index in
-                Image(systemName: floatingSymbols[index].0)
-                    .font(.system(size: 30))
-                    .foregroundColor(.blue.opacity(0.6))
-                    .position(floatingSymbols[index].1)
-                    .rotationEffect(.degrees(floatingSymbols[index].2))
-                    .animation(
-                        Animation.easeInOut(duration: Double.random(in: 2...4))
-                            .repeatForever(autoreverses: true),
-                        value: floatingSymbols[index].2
-                    )
+            // Top section for floating symbols
+            VStack {
+                // Floating medical symbols contained in the top third
+                ZStack {
+                    ForEach(0..<floatingSymbols.count, id: \.self) { index in
+                        Image(systemName: floatingSymbols[index].0)
+                            .font(.system(size: 30))
+                            .foregroundColor(.white.opacity(0.8))
+                            .position(floatingSymbols[index].1)
+                            .rotationEffect(.degrees(floatingSymbols[index].2))
+                            .animation(
+                                Animation.easeInOut(duration: Double.random(in: 2...4))
+                                    .repeatForever(autoreverses: true),
+                                value: floatingSymbols[index].2
+                            )
+                    }
+                }
+                .frame(height: 200) // Constrain the floating symbols to this height
+                
+                Spacer()
             }
             
+            // Main content
             VStack {
                 Spacer()
                 
@@ -51,46 +60,47 @@ struct LoadingScreenView: View {
                 Image(systemName: "stethoscope.circle.fill")
                     .resizable()
                     .frame(width: 120, height: 120)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.white)
                     .background(
                         Circle()
-                            .fill(.white)
+                            .fill(.white.opacity(0.2))
                             .blur(radius: 20)
                     )
                     .rotationEffect(.degrees(rotation))
                     .padding()
                 
                 // Game title
-                Text("Medical Mystery")
+                Text("Healing Heroes")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.white)
                     .padding(.bottom, 5)
                 
                 Text("A SharePlay Experience")
                     .font(.system(size: 18, weight: .medium, design: .rounded))
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.white.opacity(0.9))
                     .padding(.bottom, 30)
                 
                 // Loading text with emoji
                 Text(loadingText)
                     .font(.headline)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(Color(hex: "FF6B6B"))
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 15)
-                            .fill(.white.opacity(0.7))
+                            .fill(.white)
+                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
                     )
                 
                 // Custom progress bar
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(.gray.opacity(0.3))
+                        .fill(.white.opacity(0.3))
                         .frame(width: 250, height: 10)
                     
                     RoundedRectangle(cornerRadius: 10)
                         .fill(
                             LinearGradient(
-                                colors: [.blue, .blue.opacity(0.7)],
+                                colors: [Color(hex: "FF6B6B"), Color(hex: "FFE66D")],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -106,11 +116,9 @@ struct LoadingScreenView: View {
         }
         .onAppear {
             startLoadingSimulation()
-            // Start rotating main icon
             withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
                 rotation = 360
             }
-            // Animate floating symbols
             animateFloatingSymbols()
         }
     }
@@ -140,4 +148,4 @@ struct LoadingScreenView: View {
 
 #Preview {
     LoadingScreenView()
-} 
+}

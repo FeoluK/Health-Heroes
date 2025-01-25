@@ -10,7 +10,6 @@ import SwiftUI
 
 struct GameContainerViewiPhone: View {
     @ObservedObject private var gameStateManager = GameStateManager.shared
-    
     @State var isActivitySharingSheetPresented = false
     
     var body: some View {
@@ -20,8 +19,12 @@ struct GameContainerViewiPhone: View {
                 LoadingScreenView()
             case .mainMenu:
                 MainViewIphone()
-            case .inGame:
+            case .inGame, .playing:
                 CameraView()
+            case .paused:
+                CameraView() // You might want to overlay a pause menu
+            case .gameOver:
+                CameraView() // You might want to overlay a game over screen
             case .lobbyIsReady, .lobbyNotReady:
                 PlayerListView()
             }
@@ -39,16 +42,12 @@ struct GameContainerViewiPhone: View {
             switch action {
             case .openImmersiveSpace(_):
                 gameStateManager.gameState = .inGame
-                
                 GameModeManager.shared.loadGame()
-                
             case .dismissImmersiveSpace():
                 gameStateManager.gameState = .mainMenu
-                
             default: return
             }
         })
-        
     }
 }
 

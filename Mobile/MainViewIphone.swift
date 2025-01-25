@@ -18,20 +18,109 @@ struct MainViewIphone: View {
     @ObservedObject private var gameStateManager = GameStateManager.shared
     @StateObject var groupStateObserver = GroupStateObserver()
     
+    // Animation states
+    @State private var rotation: Double = 0
+    @State private var floatingSymbols: [(String, CGPoint, Double)] = [
+        ("cross.case.fill", CGPoint(x: 50, y: 100), 0),
+        ("heart.fill", CGPoint(x: 300, y: 150), 45),
+        ("brain.head.profile", CGPoint(x: 150, y: 200), 90),
+        ("lungs.fill", CGPoint(x: 250, y: 50), 180),
+        ("pill.fill", CGPoint(x: 100, y: 300), 270),
+        ("stethoscope", CGPoint(x: 200, y: 250), 135)
+    ]
+    
     var body: some View {
-        VStack {
-            if sharePlayManager.sessionInfo.session != nil {
-                launchCameraButton
-            } else if groupStateObserver.isEligibleForGroupSession {
-                // Not in a session, but is eligible for a session (in Facetime call)
-                startSharePlayButton
-            } else {
-                inviteToSharePlayButton
+        ZStack {
+            // Background gradient
+            LinearGradient(
+                gradient: Gradient(colors: [Color(hex: "FF6B6B"), Color(hex: "4ECDC4")]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            
+            // Top section for floating symbols
+            VStack {
+                ZStack {
+                    ForEach(0..<floatingSymbols.count, id: \.self) { index in
+                        Image(systemName: floatingSymbols[index].0)
+                            .font(.system(size: 30))
+                            .foregroundColor(.white.opacity(0.15))
+                            .position(floatingSymbols[index].1)
+                            .rotationEffect(.degrees(floatingSymbols[index].2))
+                            .animation(
+                                Animation.easeInOut(duration: Double.random(in: 2...4))
+                                    .repeatForever(autoreverses: true),
+                                value: floatingSymbols[index].2
+                            )
+                    }
+                }
+                .frame(height: 200) // Constrain floating symbols
+                
+                Spacer()
             }
+            
+            // Main content
+            VStack(spacing: 30) {
+                Spacer()
+                
+                // Medical logo/profile circle with rotation
+                ZStack {
+                    Circle()
+                        .fill(.white.opacity(0.2))
+                        .frame(width: 180, height: 180)
+                        .blur(radius: 1)
+                    
+                    Circle()
+                        .stroke(.white.opacity(0.3), lineWidth: 2)
+                        .frame(width: 180, height: 180)
+                    
+                    Image(systemName: "stethoscope.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.white)
+                        .rotationEffect(.degrees(rotation))
+                        .shadow(color: .white.opacity(0.5), radius: 10)
+                }
+                .padding(.bottom, 20)
+                
+                // Title with glow effect
+                Text("Healing Heroes")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .shadow(color: .white.opacity(0.5), radius: 10)
+                
+                Text("Collaborative Learning")
+                    .font(.system(size: 18, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.9))
+                
+                Spacer()
+                
+                // Main content buttons
+                if sharePlayManager.sessionInfo.session != nil {
+                    launchCameraButton
+                        .transition(.scale.combined(with: .opacity))
+                } else if groupStateObserver.isEligibleForGroupSession {
+                    startSharePlayButton
+                        .transition(.scale.combined(with: .opacity))
+                } else {
+                    inviteToSharePlayButton
+                        .transition(.scale.combined(with: .opacity))
+                }
+                
+                Spacer()
+            }
+            .padding()
         }
-        // SharePlay share activity sheet handling
         .sheet(isPresented: $isActivitySharingSheetPresented) {
             ActivitySharingViewController(activity: MyGroupActivity())
+        }
+        .onAppear {
+            withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
+                rotation = 360
+            }
+            animateFloatingSymbols()
         }
     }
     
@@ -41,7 +130,7 @@ struct MainViewIphone: View {
                 GameStateManager.shared.gameState = .inGame
             }
         }) {
-            Text("Start")
+            actionButton(title: "Start Session", icon: "play.fill")
         }
     }
     
@@ -52,59 +141,98 @@ struct MainViewIphone: View {
                 isSharePlayActive.toggle()
             }
         }) {
-            Text(isSharePlayActive ? "Stop SharePlay" : "Start SharePlay")
+            actionButton(
+                title: isSharePlayActive ? "Stop SharePlay" : "Start SharePlay",
+                icon: "person.2.fill"
+            )
         }
     }
     
     var inviteToSharePlayButton: some View {
-        VStack {
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Invite to  SharePlay").foregroundStyle(.gray)
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 60)
-                }
-                Spacer()
-            }
+        VStack(spacing: 20) {
+            Text("Join Interactive Training")
+                .font(.title2.bold())
+                .foregroundColor(.white)
+                .shadow(color: .white.opacity(0.3), radius: 5)
             
-            VStack {
-                Button {
-                    isActivitySharingSheetPresented = true
-                } label: {
-                    HStack {
-                        Image(systemName: "square.and.arrow.up").foregroundStyle(.white)
-                        Text(LocalizedStringKey("inviteToSharePlayTitle")).foregroundStyle(.white)
-                    }
-                }
-                .padding()
-                .buttonStyle(.plain)
-                .background(.green)
-                .frame(height: 60)
+            Text("Invite colleagues to practice together")
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.8))
+                .multilineTextAlignment(.center)
+            
+            Button {
+                isActivitySharingSheetPresented = true
+            } label: {
+                actionButton(title: "Start SharePlay Session", icon: "person.2.badge.gearshape")
             }
         }
+        .padding(.bottom, 30)
+    }
+    
+    private func animateFloatingSymbols() {
+        for index in 0..<floatingSymbols.count {
+            withAnimation(Animation.easeInOut(duration: Double.random(in: 2...4))
+                .repeatForever(autoreverses: true)) {
+                    floatingSymbols[index].1.y += CGFloat.random(in: -50...50)
+                    floatingSymbols[index].2 += Double.random(in: -45...45)
+                }
+        }
+    }
+    
+    func actionButton(title: String, icon: String) -> some View {
+        HStack(spacing: 15) {
+            Image(systemName: icon)
+                .font(.system(size: 20, weight: .semibold))
+            Text(title)
+                .font(.system(size: 20, weight: .semibold))
+        }
+        .foregroundColor(.white)
+        .frame(maxWidth: .infinity)
+        .frame(height: 60)
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(LinearGradient(
+                    colors: [Color(hex: "FF6B6B"), Color(hex: "FFE66D")],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                ))
+        )
+        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+        .padding(.horizontal, 30)
     }
 }
 
-//{
-//    case .open:
-//        appModel.immersiveSpaceState = .inTransition
-//        await dismissImmersiveSpace()
-//        sharePlayManager.cleanup()
-//
-//    case .closed:
-//        appModel.immersiveSpaceState = .inTransition
-//        switch await openImmersiveSpace(id: appModel.immersiveSpaceID) {
-//            case .opened:
-//            GameStateManager.shared.gameState = .lobbyNotReady
-//                sharePlayManager.startSharePlay()
-//
-//            case .userCancelled, .error:
-//                fallthrough
-//            @unknown default:
-//                appModel.immersiveSpaceState = .closed
-//        }
-//
-//    case .inTransition:
-//        break
-//}
+// Helper for hex colors
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue:  Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+}
+
+#Preview {
+    if #available(iOS 17.0, *) {
+        MainViewIphone()
+    } else {
+        Text("iOS 17.0+ required")
+    }
+}

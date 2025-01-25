@@ -10,28 +10,37 @@ enum SessionAction {
 }
 
 class GameStateManager: ObservableObject {
-    
     static let shared = GameStateManager()
     
+    // MARK: - Published Properties
     @Published var isLoading = true
     @Published var gameState: GameState = .loading
-    
+    @Published var currentGame: GameType?
     @Published var players: [UUID: Player] = [:]
     
+    // MARK: - SharePlay Properties
     var tasks = Set<Task<Void, Never>>()
     var sharePlayMessages: [any SharePlayMessage] = []
     
     let actionSubject = PassthroughSubject<SessionAction, Never>()
     var sessionActionPublisher: AnyPublisher<SessionAction, Never> { actionSubject.eraseToAnyPublisher() }
     
+    // MARK: - Game State Enum
     enum GameState {
         case loading
         case mainMenu
         case inGame
+        case playing
+        case paused
+        case gameOver
         case lobbyIsReady
         case lobbyNotReady
     }
     
+    // MARK: - Private Init
+    private init() {}
+    
+    // MARK: - Game State Functions
     func startLoading() {
         isLoading = true
         gameState = .loading
@@ -48,8 +57,26 @@ class GameStateManager: ObservableObject {
         }
     }
     
+    func resetGame() {
+        gameState = .mainMenu
+        currentGame = nil
+    }
+    
+    func pauseGame() {
+        gameState = .paused
+    }
+    
+    func resumeGame() {
+        gameState = .playing
+    }
+    
+    func endGame() {
+        gameState = .gameOver
+    }
+    
+    // MARK: - SharePlay Message Handlers
     static func handleGameStartMsg(message: Game_StartMessage,
-                                    sender: Participant) async
+                                 sender: Participant) async
     {
         Task { @MainActor in
             GameStateManager.shared.gameState = .inGame
@@ -61,23 +88,19 @@ class GameStateManager: ObservableObject {
     }
     
     static func handleHeartMessage(message: Game_SendHeartMessage,
-                                    sender: Participant) async
+                                 sender: Participant) async
     {
         Task { @MainActor in
-          //  if currentPlatform() == .visionOS {
-                if #available(iOS 18.0, *) {
-                    if let newHeart = try? await ModelEntity(named: "heart1") { 
-                        newHeart.scale = .init(repeating: 0.1)
-                        newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
-                        newHeart.position.y = 0.4
-                        newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)
-                        
-                        rootEntity.addChild(newHeart)
-                    }
-                } else {
-                    // Fallback on earlier versions
+            if #available(iOS 18.0, *) {
+                if let newHeart = try? await ModelEntity(named: "heart1") {
+                    newHeart.scale = .init(repeating: 0.1)
+                    newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
+                    newHeart.position.y = 0.4
+                    newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)
+                    
+                    rootEntity.addChild(newHeart)
                 }
-           // }
+            }
         }
     }
 }
