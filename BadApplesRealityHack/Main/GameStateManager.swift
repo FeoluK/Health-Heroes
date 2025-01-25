@@ -64,20 +64,20 @@ class GameStateManager: ObservableObject {
                                     sender: Participant) async
     {
         Task { @MainActor in
-            if currentPlatform() == .visionOS {
+          //  if currentPlatform() == .visionOS {
                 if #available(iOS 18.0, *) {
                     if let newHeart = try? await ModelEntity(named: "heart1") { 
                         newHeart.scale = .init(repeating: 0.1)
                         newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
                         newHeart.position.y = 0.4
-                        newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: childAnchor.position)
+                        newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)
                         
                         rootEntity.addChild(newHeart)
                     }
                 } else {
                     // Fallback on earlier versions
                 }
-            }
+           // }
         }
     }
 }

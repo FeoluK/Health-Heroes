@@ -27,6 +27,7 @@ struct ImmersiveView: View {
     var body: some View {
         RealityView { content, attachments in
             content.add(rootEntity)
+            GameModeManager.shared.loadGame()
             configureAttachments(attachments)
         } update: { content, attachments in
             updateAttachmentVisibility(attachments)
