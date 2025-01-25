@@ -64,7 +64,7 @@
 		9DC6009E15A13E9081AC151F /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D7A99750FE031301280864 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		AD1FE3E1B90DA5D64BFE4C46 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		AFD67D5799B14E82F33ADDDD /* BadApples.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BadApples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD67D5799B14E82F33ADDDD /* BadApples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BadApples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD14894D14D3AD2C765F2964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C2C6A87B777834B806A49110 /* MobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileApp.swift; sourceTree = "<group>"; };
 		C46EA3AADDF102260CF8B730 /* Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mobile.entitlements; sourceTree = "<group>"; };
@@ -317,7 +317,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.BadApples2;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.badapples8;
 				SDKROOT = xros;
 				SWIFT_VERSION = 5.10.1;
 				TARGETED_DEVICE_FAMILY = 7;
@@ -337,7 +337,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.Mobile2;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.badapples8;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.10.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,7 +413,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.Mobile2;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.badapples8;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.10.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -495,7 +495,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.BadApples2;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dicyaninlabs.badapples8;
 				SDKROOT = xros;
 				SWIFT_VERSION = 5.10.1;
 				TARGETED_DEVICE_FAMILY = 7;

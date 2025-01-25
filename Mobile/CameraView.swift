@@ -4,64 +4,6 @@ import ARKit
 
 let qrCodeAnchor = AnchorEntity(.image(group: "ARResources", name: "AppClip"))
 
-enum GameType: String, CaseIterable, Hashable {
-    case diagnosis = "Diagnosis"
-    case xray = "X-Ray Analysis"
-    case labTest = "Lab Test"
-    case surgery = "Surgery"
-    case ultrasound = "Ultrasound"
-    case mri = "MRI Scan"
-    case cardiology = "Cardiology"
-    case neurology = "Neurology"
-    case pediatrics = "Pediatrics"
-    case emergency = "Emergency"
-    case dental = "Dental"
-    case ophthalmology = "Eye Care"
-    case dermatology = "Skin Care"
-    case orthopedics = "Orthopedics"
-    case psychology = "Psychology"
-    
-    var icon: String {
-        switch self {
-        case .diagnosis: return "stethoscope"
-        case .xray: return "rays"
-        case .labTest: return "flask.fill"
-        case .surgery: return "cross.case.fill"
-        case .ultrasound: return "waveform"
-        case .mri: return "brain.head.profile"
-        case .cardiology: return "heart.fill"
-        case .neurology: return "brain"
-        case .pediatrics: return "figure.child"
-        case .emergency: return "bolt.heart.fill"
-        case .dental: return "mouth.fill"
-        case .ophthalmology: return "eye.fill"
-        case .dermatology: return "hand.raised.fill"
-        case .orthopedics: return "figure.walk"
-        case .psychology: return "brain.head.profile"
-        }
-    }
-    
-    var color: Color {
-        switch self {
-        case .diagnosis: return .blue
-        case .xray: return .purple
-        case .labTest: return .green
-        case .surgery: return .red
-        case .ultrasound: return .cyan
-        case .mri: return .orange
-        case .cardiology: return .pink
-        case .neurology: return .indigo
-        case .pediatrics: return .yellow
-        case .emergency: return .red
-        case .dental: return .mint
-        case .ophthalmology: return .teal
-        case .dermatology: return .brown
-        case .orthopedics: return .gray
-        case .psychology: return .purple
-        }
-    }
-}
-
 class CameraViewModel: ObservableObject {
     func spawnFloor() {
         let floor = ModelEntity(mesh: .generatePlane(width: 50, depth: 50))
