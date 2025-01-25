@@ -113,6 +113,8 @@ class SharePlayManager: ObservableObject {
             await Player.handlePlayerMessage(message: message, sender: sender)
         case let message as PlayerReadyMessage:
             return
+        case let message as Game_StartMessage:
+           await GameStateManager.handleGameStartMsg(message: message, sender: sender)
         default: return
         }
     }
@@ -146,6 +148,13 @@ class SharePlayManager: ObservableObject {
         sessionInfo.session = nil
         sessionInfo.messenger = nil
         cancellables.removeAll()
+    }
+}
+
+extension SharePlayManager {
+    static func sendStartGameMessage() {
+        let startGameMsg: Game_StartMessage = .init(id: UUID())
+        sendMessage(message: startGameMsg, handleLocally: true)
     }
 }
 

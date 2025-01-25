@@ -31,16 +31,33 @@ struct PlayerListView: View {
                 Text("No active SharePlay session")
             }
             
-            Button(action: {
-                Player.sendLocalIsReadyMsg()
-            }) {
-                Text("Ready")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-            .padding()
+            playerReadyButton
         }
+    }
+    
+    var playerReadyButton: some View {
+        Button(action: {
+            Player.sendLocalIsReadyMsg()
+        }) {
+            Text("Ready")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+        .padding()
+    }
+    
+    var playerStartGameButton: some View {
+        Button(action: {
+            SharePlayManager.sendStartGameMessage()
+        }) {
+            Text("Start Game")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+        .padding()
     }
 }

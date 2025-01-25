@@ -1,4 +1,5 @@
 import SwiftUI
+import GroupActivities
 
 class GameStateManager: ObservableObject {
     
@@ -35,4 +36,10 @@ class GameStateManager: ObservableObject {
             self.gameState = .mainMenu
         }
     }
-} 
+    
+    static func handleGameStartMsg(message: Game_StartMessage,
+                                    sender: Participant) async
+    {
+        GameStateManager.shared.gameState = .inGame
+    }
+}
