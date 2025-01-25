@@ -12,18 +12,16 @@ struct GameContainerViewiPhone: View {
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
     var body: some View {
-        Group {
+        VStack {
             switch gameStateManager.gameState {
             case .loading:
                 LoadingScreenView()
             case .mainMenu:
-                MainView()
+                MainViewIphone()
             case .inGame:
-                GameView()
+                CameraView()
             case .lobbyIsReady, .lobbyNotReady:
-                EmptyView()// PlayerListView()
-            default:
-                EmptyView()
+                PlayerListView()
             }
         }
         .onAppear {
@@ -32,14 +30,9 @@ struct GameContainerViewiPhone: View {
         .task {
             for await newSession in MyGroupActivity.sessions() {
                 SharePlayManager.shared.configureSession(newSession)
+                gameStateManager.gameState = .lobbyNotReady
             }
         }
-    }
-}
-
-struct MainView: View {
-    var body: some View {
-        Text("Game View")
     }
 }
 

@@ -8,7 +8,7 @@ struct CameraView: View {
     @State private var showRules = false
     @State private var showLeaderboard = false
     @State private var showCustomMenu = false
-    @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var gameStateManager = GameStateManager.shared
     
     var body: some View {
         ZStack {
@@ -38,10 +38,10 @@ struct CameraView: View {
                                 isPresented: $showCustomMenu,
                                 showRules: $showRules,
                                 showLeaderboard: $showLeaderboard,
-                                onQuit: { dismiss() }
+                                onQuit: { gameStateManager.gameState = .mainMenu }
                             )
                             .transition(.opacity)
-                            .offset(y: 40) // Position menu below button
+                            .offset(y: 40)
                         }
                     }
                     .padding(.trailing, 12)
