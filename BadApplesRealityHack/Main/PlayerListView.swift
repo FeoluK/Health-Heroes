@@ -27,11 +27,15 @@ struct PlayerListView: View {
                         }
                     }
                 }
+                
+                if gameStateManager.players.values.allSatisfy({ $0.isReady }) {
+                    playerStartGameButton
+                } else {
+                    playerReadyButton
+                }
             } else {
                 Text("No active SharePlay session")
             }
-            
-            playerReadyButton
         }
     }
     
