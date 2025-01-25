@@ -49,14 +49,13 @@ class SharePlayManager: ObservableObject {
         sessionInfo = .init(newSession: session)
         GameStateManager.shared.gameState = .lobbyNotReady
         
+        joinSession()
+        
         session.$state.sink { [weak self] state in
             switch state {
-            case .waiting:  self?.joinSession()
+            case .waiting:  return
             case .joined: return
-                self?.configureAfterJoiningSession()
-            case .invalidated:
-                print("SharePlay session ended")
-                self?.cleanup()
+            case .invalidated: self?.cleanup()
             default:
                 break
             }
@@ -162,6 +161,7 @@ class SharePlayManager: ObservableObject {
     }
     
     func cleanup() {
+        SharePlayManager.shared.sessionInfo.session = nil
         sessionInfo.session = nil
         sessionInfo.messenger = nil
         cancellables.removeAll()
