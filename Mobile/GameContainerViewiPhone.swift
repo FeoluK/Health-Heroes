@@ -33,6 +33,17 @@ struct GameContainerViewiPhone: View {
                 gameStateManager.gameState = .lobbyNotReady
             }
         }
+        .onReceive(gameStateManager.sessionActionPublisher, perform: { action in
+            switch action {
+            case .openImmersiveSpace(let space):
+                gameStateManager.gameState = .inGame
+                
+            case .dismissImmersiveSpace():
+                gameStateManager.gameState = .mainMenu
+                
+            default: return
+            }
+        })
     }
 }
 
