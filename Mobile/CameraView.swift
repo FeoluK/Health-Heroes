@@ -3,6 +3,7 @@ import RealityKit
 import ARKit
 
 let qrCodeAnchor = AnchorEntity(.image(group: "ARResources", name: "AppClip"))
+var devicePositionAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.2), materials: [UnlitMaterial(color: .blue)])
 
 class CameraViewModel: ObservableObject {
     let rootEntity = Entity()
@@ -23,22 +24,13 @@ struct CameraView: View {
     @State private var showCustomMenu = false
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
-    // Drag gesture for interaction
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { _ in
-                // Handle drag
-            }
-            .onEnded { _ in
-                // Handle drag end
-            }
-    }
-    
     var body: some View {
         ZStack {
             if #available(iOS 18.0, *) {
                 RealityView { content in
                     content.camera = .spatialTracking
+                    
+                    content.add(devicePositionAnchor)
                     
                     let entity = ModelEntity(mesh: .generateSphere(radius: 0.3), materials: [SimpleMaterial(color: .red, isMetallic: true)])
                     qrCodeAnchor.addChild(entity)
@@ -110,6 +102,17 @@ struct CameraView: View {
                     .transition(.opacity)
             }
         }
+    }
+    
+    // Drag gesture for interaction
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { _ in
+                // Handle drag
+            }
+            .onEnded { _ in
+                // Handle drag end
+            }
     }
 }
 

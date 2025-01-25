@@ -23,9 +23,28 @@ class GameModeManager {
     public func loadGame() {
         
         switch gameMode {
-        case .ChestCompression: return
+        case .ChestCompression: Scene_ChestCompression.configureScene()
         case .mode2: return
         default: return
         }
+    }
+}
+
+
+
+class Scene_ChestCompression {
+    
+    static func configureScene() {
+        let sphere1 = ModelEntity(mesh: .generateSphere(radius: 0.3), materials: [SimpleMaterial(color: .red, isMetallic: true)])
+        rootEntity.addChild(sphere1)
+        
+        let sphere2 = ModelEntity(mesh: .generateSphere(radius: 0.3), materials: [SimpleMaterial(color: .red, isMetallic: true)])
+        rootEntity.addChild(sphere2)
+        sphere2.position = devicePositionAnchor.position
+        sphere2.position.x += -0.18
+    }
+    
+    static func handleSceneUpdate() {
+        
     }
 }
