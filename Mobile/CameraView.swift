@@ -87,11 +87,16 @@ struct CameraView: View {
                     content.add(rootEntity)
                     rootEntity.position = .init(x: 0, y: 0, z: 0)
                     
-                    devicePositionAnchor.components.set(AnchoringComponent(.camera, trackingMode: .continuous))
-                    childAnchor.components[PhysicsBodyComponent.self] = .init()
-                    childAnchor.position += .init(x: 0, y: 0, z: -1)
-                    rootEntity.addChild(devicePositionAnchor)
-                    devicePositionAnchor.addChild(childAnchor)
+                    if let newHeart = try? await ModelEntity(named: "heart1") {
+                        newHeart.scale = .init(repeating: 0.001)
+                       // content.add(newHeart)
+                    }
+                    
+                    cameraAnchor.components.set(AnchoringComponent(.camera, trackingMode: .continuous))
+                    rootEntity.addChild(cameraAnchor)
+                    
+                    cameraAnchor.addChild(childAnchor)
+                    childAnchor.position = .init(x: 0, y: 0, z: 0)
                     
                 } update: { content in
                     GameModeManager.shared.handleSceneUpdate()

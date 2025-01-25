@@ -10,8 +10,8 @@ import RealityFoundation
 import RealityKit
 
 var rootEntity = ModelEntity()
-var devicePositionAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
-var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
+var cameraAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
+var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .clear)])
 
 enum GameMode: String {
     case ChestCompression
@@ -121,15 +121,14 @@ struct ScalingComponent: Component {
 class ScalingSystem: System {
     private var pumpCounter: Int = 0
     private var lastPumpTime: Date?
+    private var lastSuccessPumpTime: Date?
     private let requiredPumps: Int = 3
-    private let timeLimit: TimeInterval = 2.0
+    private let timeLimit: TimeInterval = 0.3
+    private let pumpCooldown: TimeInterval = 3.0
 
-    required init(scene: RealityKit.Scene) {
-        
-    }
+    required init(scene: RealityKit.Scene) { }
 
     func update(context: SceneUpdateContext) {
-        // Query entities with the ScalingComponent
         let entities = context.scene.performQuery(
             EntityQuery(where: .has(ScalingComponent.self))
         )
@@ -139,10 +138,14 @@ class ScalingSystem: System {
                 continue
             }
 
+            if let lastSuccessPumpTime {
+                guard Date().timeIntervalSince(lastSuccessPumpTime) >= pumpCooldown else { continue }
+            }
             // Calculate distance to target entity
-            let distance = entity.position.distance(to: childAnchor.position)
+            let distance = entity.position.distance(to: childAnchor.position(relativeTo: nil))
 
             // Check if distance is zero
+            print("child anchor pos: \(childAnchor.position(relativeTo: nil))")
             print("distance: \(distance)")
             if distance <= 0.1 {
                 if let lastTime = lastPumpTime, Date().timeIntervalSince(lastTime) <= timeLimit {
@@ -153,9 +156,11 @@ class ScalingSystem: System {
                 lastPumpTime = Date()
 
                 if pumpCounter >= requiredPumps {
+                    lastSuccessPumpTime = Date()
                     // Perform action for successful pumps
                     print("Successful pump actions completed!")
                     pumpCounter = 0 // Reset counter after success
+                    lastPumpTime = Date() // Update last pump time
                     
                     entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
                     
@@ -164,9 +169,7 @@ class ScalingSystem: System {
                     }
                     
                     SharePlayManager.sendMessage(
-                        message: Game_SendHeartMessage(id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: 1))
-                    
-                    
+                        message: Game_SendHeartMessage(id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: 1), handleLocally: true)
                 }
             }
 

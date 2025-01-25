@@ -76,7 +76,7 @@ class GameStateManager: ObservableObject {
     
     // MARK: - SharePlay Message Handlers
     static func handleGameStartMsg(message: Game_StartMessage,
-                                 sender: Participant) async
+                                   sender: Participant) async
     {
         Task { @MainActor in
             GameStateManager.shared.gameState = .inGame
@@ -88,18 +88,21 @@ class GameStateManager: ObservableObject {
     }
     
     static func handleHeartMessage(message: Game_SendHeartMessage,
-                                 sender: Participant) async
+                                   sender: Participant) async
     {
         Task { @MainActor in
+            //  if currentPlatform() == .visionOS {
             if #available(iOS 18.0, *) {
-                if let newHeart = try? await ModelEntity(named: "heart1") {
-                    newHeart.scale = .init(repeating: 0.1)
-                    newHeart.position = getSeatTileEntity(seat: message.seatNumber).position
+                if let newHeart = try? await ModelEntity(named: "heart1") { 
+                    newHeart.scale = .init(repeating: 0.001)
+                    newHeart.position = getSeatTileEntity(seat: message.seatNumber).position(relativeTo: nil)
                     newHeart.position.y = 0.4
                     newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)
                     
                     rootEntity.addChild(newHeart)
                 }
+            } else {
+                // Fallback on earlier versions
             }
         }
     }
@@ -124,7 +127,7 @@ class HeartMovementSystem: System {
         let entities = context.scene.performQuery(
             EntityQuery(where: .has(HeartMovementComponent.self))
         )
-
+        
         for entity in entities {
             guard let proximityComponent = entity.components[HeartMovementComponent.self] else {
                 continue
