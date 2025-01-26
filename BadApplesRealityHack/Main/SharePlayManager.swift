@@ -37,24 +37,16 @@ class SharePlayManager: ObservableObject {
         }
     }
     
-    func joinSharePlay() {
-        Task { @MainActor in
-            for await session in MyGroupActivity.sessions() {
-                configureSession(session)
-            }
-        }
-    }
-    
     func configureSession(_ session: GroupSession<MyGroupActivity>) {
-        sessionInfo = .init(newSession: session)
-        GameStateManager.shared.gameState = .lobbyNotReady
+        self.cleanup()
         
-        joinSession()
+        Task { @MainActor in
+            try await Task.sleep(nanoseconds: 1000000000)
+            joinSession(session: session)
+        }
         
         session.$state.sink { [weak self] state in
             switch state {
-            case .waiting:  return
-            case .joined: return
             case .invalidated: self?.cleanup()
             default:
                 break
@@ -62,11 +54,13 @@ class SharePlayManager: ObservableObject {
         }.store(in: &cancellables)
     }
     
-    func joinSession() {
+    func joinSession(session:  GroupSession<MyGroupActivity>) {
         SharePlayManager.subscribeToSessionUpdates()
         SharePlayManager.subscribeToPlayerUpdates()
         
-        SharePlayManager.shared.sessionInfo.session?.join()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            SharePlayManager.shared.sessionInfo.session?.join()
+        }
     }
     
     static func subscribeToSessionUpdates() {
@@ -167,6 +161,7 @@ class SharePlayManager: ObservableObject {
         SharePlayManager.shared.sessionInfo.session = nil
         sessionInfo.session = nil
         sessionInfo.messenger = nil
+        sessionInfo = .init()
         cancellables.removeAll()
         GameStateManager.shared.gameState = .mainMenu
     }
