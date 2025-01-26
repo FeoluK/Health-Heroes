@@ -29,7 +29,7 @@ struct CameraView: View {
                     rootEntity.position = .init(x: 0, y: 0, z: 0)
                     
                     if let newHeart = try? await ModelEntity(named: "heart1") {
-                        newHeart.scale = .init(repeating: 0.001)
+                        newHeart.scale = .init(repeating: 0.002)
                        // content.add(newHeart)
                     }
                     
