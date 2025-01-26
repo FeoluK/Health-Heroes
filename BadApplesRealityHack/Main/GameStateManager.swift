@@ -99,7 +99,6 @@ class GameStateManager: ObservableObject {
         }
     }
     
-    // MARK: - SharePlay Message Handlers
     static func handleGameStartMsg(message: Game_StartMessage,
                                    sender: Participant) async
     {

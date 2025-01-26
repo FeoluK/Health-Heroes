@@ -17,7 +17,6 @@ class WorldTrackingSessionManager: ObservableObject {
     static let shared = WorldTrackingSessionManager()
     let session = ARKitSession()
     var ready = false
-    ////var latestPose: simd_float4x4 = .init()
     let worldTracking = WorldTrackingProvider()
     
     let spaceStartOrigin: simd_float4x4 = .init()
