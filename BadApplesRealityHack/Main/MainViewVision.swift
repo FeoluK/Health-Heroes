@@ -41,6 +41,7 @@ struct MainViewVision: View {
         Button(action: {
             Task { @MainActor in
                 GameStateManager.shared.gameState = .inGame
+                SharePlayManager.sendStartGameMessage()
             }
         }) {
             Text("Start")
