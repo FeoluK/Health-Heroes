@@ -215,13 +215,14 @@ class ScalingSystem: System {
                     pumpCounter = 0 // Reset counter after success
                     lastPumpTime = Date() // Update last pump time
                     
-                    entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                         entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
                     }
                     
-                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: childAnchor.position(relativeTo: nil).y))
+                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: childAnchor.position(relativeTo: nil).y), handleLocally: true)
                 }
             }
 

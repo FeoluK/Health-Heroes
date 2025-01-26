@@ -128,6 +128,10 @@ struct MainViewIphone: View {
         Button(action: {
             Task { @MainActor in
                 GameStateManager.shared.gameState = .inGame
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    GameModeManager.shared.loadGame()
+                }
             }
         }) {
             actionButton(title: "Start Session", icon: "play.fill")
