@@ -120,20 +120,11 @@ class Scene_ChestCompression {
         configureFloorTiles()
         
         chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
+        chestSphere1.position = getSeatTileEntity(seat: Player.local?.playerSeat ?? 1).position(relativeTo: nil)
+        chestSphere1.position.y = childAnchor.position(relativeTo: nil).y
         rootEntity.addChild(chestSphere1)
-        
-//        chestSphere2 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
-//        rootEntity.addChild(chestSphere2)
-//        chestSphere2.position = devicePositionAnchor.position
-//        chestSphere2.position.x += -0.09
-        
-        // Add ScalingComponent to spheres
+
         chestSphere1.components[ScalingComponent.self] = ScalingComponent(targetEntity: childAnchor)
-//        chestSphere2.components[ScalingComponent.self] = ScalingComponent(targetEntity: childAnchor)
-        
-        // Add ProximityComponent to spheres
-//        chestSphere1.components[ProximityComponent.self] = ProximityComponent(targetEntity: childAnchor)
-//        chestSphere2.components[ProximityComponent.self] = ProximityComponent(targetEntity: childAnchor)
     }
     
     static func configureFloorTiles() {
@@ -230,7 +221,7 @@ class ScalingSystem: System {
                         entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
                     }
                     
-                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: cameraAnchor.position(relativeTo: nil).y))
+                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: childAnchor.position(relativeTo: nil).y))
                 }
             }
 

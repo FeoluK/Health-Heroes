@@ -50,15 +50,16 @@ class SharePlayManager: ObservableObject {
         }.store(in: &cancellables)
     }
     
-    func joinSession(session:  GroupSession<MyGroupActivity>) {
+    func joinSession(session: GroupSession<MyGroupActivity>) {
         Task { @MainActor in
             sessionInfo = .init(newSession: session)
+            try await Task.sleep(nanoseconds: 1000000000)
             GameStateManager.shared.gameState = .lobbyNotReady
             
             SharePlayManager.subscribeToSessionUpdates()
             SharePlayManager.subscribeToPlayerUpdates()
             
-            SharePlayManager.shared.sessionInfo.session?.join()
+            session.join()
             GameStateManager.shared.gameState = .lobbyNotReady
         }
     }
@@ -96,6 +97,10 @@ class SharePlayManager: ObservableObject {
                     let task = Task { @MainActor in
                         PlayerFuncs.sendLocalPlayerUpdateMsg()
                         GameStateManager.shared.players[participant.id] = potentialNewPlayer
+                        
+                        if GameStateManager.shared.gameState == .inGame {
+                            SharePlayManager.sendStartGameMessage()
+                        }
                     }
                     GameStateManager.shared.tasks.insert(task)
                 }
@@ -170,7 +175,7 @@ class SharePlayManager: ObservableObject {
 extension SharePlayManager {
     static func sendStartGameMessage() {
         let startGameMsg: Game_StartMessage = .init(windowId: "", messageId: "", id: UUID(), gameMode: GameModeManager.shared.gameMode.rawValue)
-        sendMessage(message: startGameMsg, handleLocally: true)
+        sendMessage(message: startGameMsg, handleLocally: false)
     }
 }
 

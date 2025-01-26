@@ -131,6 +131,7 @@ struct PlayerListView: View {
     var playerStartGameButton: some View {
         Button(action: {
             SharePlayManager.sendStartGameMessage()
+            GameStateManager.shared.actionSubject.send(.openImmersiveSpace("ImmersiveSpace"))
         }) {
             HStack {
                 Image(systemName: "play.fill")
