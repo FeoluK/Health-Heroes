@@ -64,7 +64,7 @@ struct PlayerListView: View {
                         VStack(spacing: 15) {
                             ForEach(Array(gameStateManager.players.keys.sorted().enumerated()), id: \.element) { index, key in
                                 if let player = gameStateManager.players[key] {
-                                    PlayerCard(player: player, delay: Double(index) * 0.2, index: index + 1)
+                                    PlayerCard(player: player, delay: Double(index) * 0.2, index: index)
                                 }
                             }
                         }
@@ -204,8 +204,13 @@ struct PlayerCard: View {
                             }
                         }
                 } else {
-                    Text("\(player.name)\(index)")
-                        .foregroundColor(.white)
+                    if player.name.starts(with: "Player") {
+                        Text("\(player.name)\(index + 1)")
+                            .foregroundColor(.white)
+                    } else {
+                        Text("\(player.name)")
+                            .foregroundColor(.white)
+                    }
                 }
             }
             .frame(width: 120, alignment: .leading)

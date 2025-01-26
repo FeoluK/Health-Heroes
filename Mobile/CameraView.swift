@@ -223,8 +223,18 @@ struct RulesView: View {
 }
 
 // Leaderboard popup view
+import SwiftUI
+import SharePlayMessages  // Add this to import Player type
+
 struct LeaderboardView: View {
     @Binding var isPresented: Bool
+    @ObservedObject private var gameStateManager = GameStateManager.shared
+    
+    var sortedPlayers: [(id: UUID, player: Player)] {
+        return gameStateManager.players
+            .map { ($0.key, $0.value) }
+            .sorted { $0.1.score > $1.1.score }
+    }
     
     var body: some View {
         VStack {
@@ -238,6 +248,7 @@ struct LeaderboardView: View {
                         Text("Leaderboard")
                             .font(.title2)
                             .bold()
+                            .foregroundColor(.black)
                         Spacer()
                         Button(action: {
                             withAnimation {
@@ -250,11 +261,14 @@ struct LeaderboardView: View {
                         }
                     }
                     
-                    // Placeholder leaderboard content
                     VStack(spacing: 15) {
-                        LeaderboardRow(rank: 1, name: "Dr. Smith", score: 1200)
-                        LeaderboardRow(rank: 2, name: "Dr. Johnson", score: 1100)
-                        LeaderboardRow(rank: 3, name: "Dr. Williams", score: 1000)
+                        ForEach(Array(sortedPlayers.enumerated()), id: \.1.id) { index, playerTuple in
+                            LeaderboardRow(
+                                rank: index + 1,
+                                name: playerTuple.player.name.isEmpty ? "Player \(playerTuple.player.playerSeat)" : playerTuple.player.name,
+                                score: playerTuple.player.score
+                            )
+                        }
                     }
                     
                     Spacer()
@@ -267,7 +281,6 @@ struct LeaderboardView: View {
     }
 }
 
-// Helper view for leaderboard rows
 struct LeaderboardRow: View {
     let rank: Int
     let name: String
@@ -278,10 +291,13 @@ struct LeaderboardRow: View {
             Text("#\(rank)")
                 .bold()
                 .frame(width: 40)
+                .foregroundColor(.black)
             Text(name)
+                .foregroundColor(.black)
             Spacer()
             Text("\(score)")
                 .bold()
+                .foregroundColor(.black)
         }
     }
 }
