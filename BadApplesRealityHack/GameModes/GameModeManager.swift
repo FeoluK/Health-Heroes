@@ -119,6 +119,12 @@ class Scene_ChestCompression {
     static func configureScene() {
         configureFloorTiles()
         
+        if currentPlatform() == .iOS {
+            configureSpherePumper()
+        }
+    }
+    
+    static func configureSpherePumper() {
         chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
         chestSphere1.position = getSeatTileEntity(seat: Player.local?.playerSeat ?? 1).position(relativeTo: nil)
         chestSphere1.position.y = childAnchor.position(relativeTo: nil).y
@@ -128,7 +134,7 @@ class Scene_ChestCompression {
     }
     
     static func configureFloorTiles() {
-        let floorHeight: Float = currentPlatform() == .visionOS ? 0 : -0.8
+        let floorHeight: Float = currentPlatform() == .visionOS ? 0 : -1.2
         game_seat1 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 1), isMetallic: true)])
         rootEntity.addChild(game_seat1)
         game_seat1.position = .init(x: 0, y: floorHeight, z: -1)
@@ -223,7 +229,7 @@ class ScalingSystem: System {
                         entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
                     }
                     
-                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: childAnchor.position(relativeTo: nil).y), handleLocally: true)
+                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: childAnchor.position(relativeTo: nil).y + 1.4), handleLocally: true)
                 }
             }
 

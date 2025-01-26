@@ -20,6 +20,8 @@ struct ImmersiveView: View {
     let slide4View = "slide4"
     let slideHeartCount = "slideHeart"
     
+    @State var immersionStyle: ImmersionStyle
+    
     @State var showSlide1 = true
     @State var showSlide2 = false
     @State var showSlide3 = false
@@ -68,11 +70,18 @@ struct ImmersiveView: View {
                       .glassBackgroundEffect()
               }
         }
+        .preferredSurroundingsEffect(surroundingsEffect)
         .onAppear {
             configureSlideVisibility()
+            configureScreenFadeEffects()
         }
     }
     
+    var surroundingsEffect: SurroundingsEffect {
+        return SurroundingsEffect.colorMultiply(Color.black)
+    }
+    
+    // for chest compression slides
     func configureSlideVisibility() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             showSlide1 = true
@@ -90,9 +99,27 @@ struct ImmersiveView: View {
         }
     }
     
+    func configureScreenFadeEffects() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            immersionStyle = .full
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            immersionStyle = .mixed
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+            immersionStyle = .full
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
+            immersionStyle = .progressive
+        }
+    }
+    
     func configureAttachments(_ attachments: RealityViewAttachments) {
         if let viewEntity = attachments.entity(for: slideHeartCount) {            viewEntity.components.set(BillboardComponent())
-            viewEntity.position = .init(x: 0.2, y: 1.1, z: -1)
+            viewEntity.position = .init(x: 0.3, y: 1.4, z: -1)
             viewEntity.isEnabled = true
             heartRateAnchor.addChild(viewEntity)
         }
@@ -128,7 +155,7 @@ struct ImmersiveView: View {
 }
 
 #Preview(immersionStyle: .full) {
-    ImmersiveView()
+    ImmersiveView(immersionStyle: .mixed)
         .environment(AppModel())
 }
 

@@ -138,8 +138,15 @@ class HeartMovementSystem: System {
             let component = entity.components[HeartMovementComponent.self]
             let currentPosition = entity.position
             let direction = normalize((component?.targetPosition ?? .one) - currentPosition)
-            let speed: Float = 0.3 // Adjust speed as needed
+            let speed: Float = 0.6 // Adjust speed as needed
             entity.position += direction * speed * Float(context.deltaTime)
+            
+            let distance1 = entity.position.distance(to: component?.targetPosition ?? .one)
+            if distance1 < 0.1 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    entity.removeFromParent()
+                }
+            }
         }
     }
 }

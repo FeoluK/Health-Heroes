@@ -11,6 +11,7 @@ import SwiftUI
 struct BadApplesRealityHackApp: App {
 
     @State private var appModel = AppModel()
+    @State private var currentStyle: ImmersionStyle = .progressive
     
     init() {
         ScalingSystem.registerSystem()
@@ -27,7 +28,7 @@ struct BadApplesRealityHackApp: App {
         }
 
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
-            ImmersiveView()
+            ImmersiveView(immersionStyle: currentStyle)
                 .environment(appModel)
                 .onAppear {
                     appModel.immersiveSpaceState = .open
@@ -36,6 +37,6 @@ struct BadApplesRealityHackApp: App {
                     appModel.immersiveSpaceState = .closed
                 }
         }
-        .immersionStyle(selection: .constant(.mixed), in: .mixed)
+        .immersionStyle(selection: $currentStyle, in: .mixed, .progressive, .full)
     }
 }
