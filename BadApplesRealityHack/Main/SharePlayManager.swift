@@ -86,11 +86,11 @@ class SharePlayManager: ObservableObject {
                 totalParticipants += 1
             }
             let isVisionDevice = currentPlatform() == .visionOS
-            Player.local = .init(name: "name", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 1 : totalParticipants) // todo: fix player seat Id
+            Player.local = .init(name: "Player", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 1 : totalParticipants) // todo: fix player seat Id
             GameStateManager.shared.players[localId] = Player.local
             
             for participant in activeParticipants {
-                let potentialNewPlayer = Player(name: "name", id: participant.id, score: 0, isActive: true, isReady: false, isVisionDevice: false, playerSeat: 0)
+                let potentialNewPlayer = Player(name: "Player", id: participant.id, score: 0, isActive: true, isReady: false, isVisionDevice: false, playerSeat: 0)
                 
                 if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
                 {

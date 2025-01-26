@@ -64,7 +64,7 @@ struct PlayerListView: View {
                         VStack(spacing: 15) {
                             ForEach(Array(gameStateManager.players.keys.sorted().enumerated()), id: \.element) { index, key in
                                 if let player = gameStateManager.players[key] {
-                                    PlayerCard(player: player, delay: Double(index) * 0.2)
+                                    PlayerCard(player: player, delay: Double(index) * 0.2, index: index + 1)
                                 }
                             }
                         }
@@ -160,6 +160,7 @@ struct PlayerListView: View {
 struct PlayerCard: View {
     let player: Player
     let delay: Double
+    let index: Int
     @State private var offset: CGFloat = 500
     @State private var opacity: Double = 0
     @State private var readyPulse: CGFloat = 1.0
@@ -169,6 +170,7 @@ struct PlayerCard: View {
     
     var body: some View {
         HStack(spacing: 15) {
+            // Seat circle
             ZStack {
                 Circle()
                     .fill(Color(SharePlayManager.getColorForSeat(seat: player.playerSeat)))
@@ -184,6 +186,7 @@ struct PlayerCard: View {
                     .font(.headline)
             }
             
+            // Name section
             ZStack(alignment: .leading) {
                 if isEditing && player.id == Player.local?.id {
                     TextField("", text: $newName)
@@ -201,7 +204,7 @@ struct PlayerCard: View {
                             }
                         }
                 } else {
-                    Text(player.name)
+                    Text("\(player.name)\(index)")
                         .foregroundColor(.white)
                 }
             }
@@ -216,6 +219,13 @@ struct PlayerCard: View {
             
             Spacer()
             
+            // Device indicator
+            Image(systemName: player.isVisionDevice ? "visionpro" : "iphone")
+                .foregroundColor(.white.opacity(0.6))
+                .font(.system(size: 20))
+                .frame(width: 30)
+            
+            // Ready status
             Image(systemName: "checkmark.circle.fill")
                 .foregroundColor(gameStateManager.players[player.id]?.isReady == true ? .green : .gray.opacity(0.3))
                 .font(.system(size: 30))

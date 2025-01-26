@@ -22,7 +22,7 @@ enum GameMode: String {
 }
 
 enum GameType: String, CaseIterable, Hashable {
-    case diagnosis = "Diagnosis"
+    case CPR = "CPR"
     case xray = "X-Ray Analysis"
     case labTest = "Lab Test"
     case surgery = "Surgery"
@@ -40,7 +40,7 @@ enum GameType: String, CaseIterable, Hashable {
     
     var icon: String {
         switch self {
-        case .diagnosis: return "stethoscope"
+        case .CPR: return "heart.circle.fill"
         case .xray: return "rays"
         case .labTest: return "flask.fill"
         case .surgery: return "cross.case.fill"
@@ -60,10 +60,10 @@ enum GameType: String, CaseIterable, Hashable {
     
     var color: Color {
         switch self {
-        case .diagnosis: return .blue
+        case .CPR: return .red
         case .xray: return .purple
-        case .labTest: return .green
-        case .surgery: return .red
+        case .labTest: return .blue
+        case .surgery: return .green
         case .ultrasound: return .cyan
         case .mri: return .orange
         case .cardiology: return .pink
