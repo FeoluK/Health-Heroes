@@ -48,7 +48,7 @@ struct ImmersiveView: View {
                     Image("HeartFrame")
                         .resizable()
                         .frame(width: 200, height: 210)
-                    Text("121")
+                    Text("\(chestSceneManager.currentHeartRate)")
                         .font(.extraLargeTitle)
                         .padding()
                 }.frame(width: 200, height: 210).background(.clear)
@@ -82,7 +82,7 @@ struct ImmersiveView: View {
         }
         .onChange(of: chestSceneManager.currentHeartRate) { oldValue, newValue in
             let minHeartRate: Double = 0
-            let maxHeartRate: Double = 180
+            let maxHeartRate: Double = 240
             let clampedHeartRate = max(min(Double(newValue), maxHeartRate), minHeartRate)
             let opacityAmount = 1 - (clampedHeartRate / maxHeartRate)
             darkenColor = Color.black.opacity(opacityAmount)

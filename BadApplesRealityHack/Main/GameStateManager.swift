@@ -98,7 +98,8 @@ class GameStateManager: ObservableObject {
                 if let newHeart = try? await ModelEntity(named: "heart1") { 
                     newHeart.scale = .init(repeating: 0.0002)
                     newHeart.position = getSeatTileEntity(seat: message.seatNumber).position(relativeTo: nil)
-                    newHeart.position.y = message.heartHeight
+                    let heartHeightAdd = currentPlatform() == .visionOS ? 0.4 : 0
+                    newHeart.position.y = message.heartHeight + Float(heartHeightAdd)
                     newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)
                     
                     rootEntity.addChild(newHeart)

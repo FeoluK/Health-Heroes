@@ -243,6 +243,8 @@ class ScalingSystem: System {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 #if os(iOS)
 //                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+#else
+                        
 #endif
                         entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
                     }
