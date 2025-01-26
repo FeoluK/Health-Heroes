@@ -147,6 +147,7 @@ class Scene_ChestCompression: ObservableObject {
         chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
         chestSphere1.position = getSeatTileEntity(seat: Player.local?.playerSeat ?? 1).position(relativeTo: nil)
         chestSphere1.position.y = childAnchor.position(relativeTo: nil).y
+        chestSphere1.position.y += 0.3
         rootEntity.addChild(chestSphere1)
 
         chestSphere1.components[ScalingComponent.self] = ScalingComponent(targetEntity: childAnchor)
