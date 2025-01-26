@@ -21,6 +21,7 @@ struct CameraView: View {
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
     @State var showCompressionTip1 = true
+    @State var showCompressionTip2 = false
     
     var body: some View {
         ZStack {
@@ -62,7 +63,24 @@ struct CameraView: View {
                             )
                         )
                     Spacer()
-                }
+                }.transition(.slide)
+            }
+            
+            if showCompressionTip2 {
+                VStack {
+                    Spacer()
+                    Text("Score points for each successful chest compression")
+                        .padding()
+                        .cornerRadius(20)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "FF6B6B"), Color(hex: "4ECDC4")]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    Spacer()
+                }.transition(.slide)
             }
             
             VStack {
@@ -101,8 +119,22 @@ struct CameraView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                showCompressionTip1 = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                withAnimation {
+                    showCompressionTip1 = false
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    withAnimation {
+                        showCompressionTip2 = true
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                        withAnimation {
+                            showCompressionTip2 = false
+                        }
+                    }
+                }
             }
         }
         .alert("Camera Permission Required", isPresented: $showPermissionAlert) {
