@@ -37,14 +37,17 @@ struct ImmersiveView: View {
             
         } attachments: {
             Attachment(id: slideHeartCount) {
-                  //2. Define the SwiftUI View
-                  Text("---")
-                      .font(.extraLargeTitle)
-                      .padding()
+                ZStack {
+                    Image("HeartFrame")
+                        .resizable()
+                        .frame(width: 200, height: 210)
+                    Text("121")
+                        .font(.extraLargeTitle)
+                        .padding()
+                }.frame(width: 200, height: 210).background(.clear)
               }
             
             Attachment(id: slide1View) {
-                  //2. Define the SwiftUI View
                   Text("Every year, 5.5 million people worldwide die from strokes, making it one of the leading causes of death globally. Recognizing symptoms and acting quickly can save countless lives.")
                       .font(.extraLargeTitle)
                       .padding()
@@ -52,7 +55,6 @@ struct ImmersiveView: View {
               }
             
             Attachment(id: slide2View) {
-                  //2. Define the SwiftUI View
                   Text("Many stroke-related deaths could be prevented if more people knew CPR (Cardiopulmonary Resuscitation).")
                       .font(.extraLargeTitle)
                       .padding()
@@ -60,7 +62,6 @@ struct ImmersiveView: View {
               }
             
             Attachment(id: slide3View) {
-                  //2. Define the SwiftUI View
                   Text("As around 30-40% of cardiac arrests are fatal due to bystanders not acting. Learning CPR can double or triple survival chances in emergencies—every second counts!")
                       .font(.extraLargeTitle)
                       .padding()
@@ -91,7 +92,7 @@ struct ImmersiveView: View {
     
     func configureAttachments(_ attachments: RealityViewAttachments) {
         if let viewEntity = attachments.entity(for: slideHeartCount) {            viewEntity.components.set(BillboardComponent())
-            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.position = .init(x: 0.2, y: 1.1, z: -1)
             viewEntity.isEnabled = true
             heartRateAnchor.addChild(viewEntity)
         }
