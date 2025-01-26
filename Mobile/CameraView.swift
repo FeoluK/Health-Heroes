@@ -51,7 +51,7 @@ struct CameraView: View {
             if showCompressionTip1 {
                 VStack {
                     Spacer()
-                    Text("Practice chest compressions")
+                    Text("Practice chest compressions by moving your phone close to the sphere and away from it")
                         .padding()
                         .cornerRadius(20)
                         .background(
