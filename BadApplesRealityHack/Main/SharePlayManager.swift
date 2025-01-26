@@ -88,7 +88,7 @@ class SharePlayManager: ObservableObject {
             let isVisionDevice = currentPlatform() == .visionOS
             let localPlayerSeat = isVisionDevice ? 1 : totalParticipants
             Player.local = .init(name: "Player\(localPlayerSeat)",
-                                 id: localId,
+                                 id: localId,   
                                  score: 0,
                                  isActive: true,
                                  isReady: false,
