@@ -120,7 +120,7 @@ class SharePlayManager: ObservableObject {
                             SharePlayManager.sendStartGameMessage()
                         }
                         
-                        GameStateManager.shared.configurePlayerSeats()
+//                        GameStateManager.shared.configurePlayerSeats()
                     }
                     GameStateManager.shared.tasks.insert(task)
                 }
