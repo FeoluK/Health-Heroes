@@ -114,7 +114,23 @@ var game_seat2 = ModelEntity()
 var game_seat3 = ModelEntity()
 var game_seat4 = ModelEntity()
 
-class Scene_ChestCompression {
+class Scene_ChestCompression: ObservableObject {
+    
+    static let shared = Scene_ChestCompression()
+    
+    @Published var currentHeartRate = 80
+    
+    private var heartRateTimer: Timer?
+    
+    init() {
+        heartRateTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+            self?.currentHeartRate += 20
+        }
+    }
+    
+    deinit {
+        heartRateTimer?.invalidate()
+    }
     
     static func configureScene() {
         configureFloorTiles()
@@ -223,6 +239,9 @@ class ScalingSystem: System {
                     lastPumpTime = Date() // Update last pump time
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+#if os(iOS)
+//                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+#endif
                         entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {

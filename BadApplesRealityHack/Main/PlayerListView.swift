@@ -272,7 +272,7 @@ struct GameSelector: View {
                     GameCircle(game: game, isSelected: game == gameStateManager.currentGame)
                         .onTapGesture {
                             gameStateManager.currentGame = game
-                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+//                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         }
                 }
             }
