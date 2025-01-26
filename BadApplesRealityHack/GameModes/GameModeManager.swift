@@ -123,18 +123,6 @@ class Scene_ChestCompression: ObservableObject {
     
     @Published var currentHeartRate = 80
     
-    private var heartRateTimer: Timer?
-    
-    init() {
-        heartRateTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-            self?.currentHeartRate = min((self?.currentHeartRate ?? 0) + 20, 160)
-        }
-    }
-    
-    deinit {
-        heartRateTimer?.invalidate()
-    }
-    
     static func configureScene() {
         configureFloorTiles()
         

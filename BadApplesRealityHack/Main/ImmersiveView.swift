@@ -32,6 +32,8 @@ struct ImmersiveView: View {
     @State var showSlide2 = false
     @State var showSlide3 = false
     
+    @State var heartRateTimer: Timer?
+    
     var body: some View {
         RealityView { content, attachments in
             content.add(rootEntity)
@@ -53,6 +55,7 @@ struct ImmersiveView: View {
                         .frame(width: 200, height: 210)
                     Text("\(chestSceneManager.currentHeartRate)")
                         .font(.extraLargeTitle)
+                        .offset(x: -20)
                         .padding()
                 }.frame(width: 200, height: 210).background(.clear)
               }
@@ -91,13 +94,17 @@ struct ImmersiveView: View {
         .onAppear {
             configureSlideVisibility()
 //            configureScreenFadeEffects()
+            
+            heartRateTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+                Scene_ChestCompression.shared.currentHeartRate = min(( Scene_ChestCompression.shared.currentHeartRate) + 0, 160)
+            }
         }
         .onChange(of: chestSceneManager.currentHeartRate) { oldValue, newValue in
             let minHeartRate: Double = 0
-            let maxHeartRate: Double = 240
+            let maxHeartRate: Double = 160
             let clampedHeartRate = max(min(Double(newValue), maxHeartRate), minHeartRate)
             let opacityAmount = 1 - (clampedHeartRate / maxHeartRate)
-            darkenColor = Color.black.opacity(opacityAmount)
+            darkenColor = Color.black.opacity(opacityAmount / 26)
         }
     }
     
@@ -118,6 +125,8 @@ struct ImmersiveView: View {
                 if let hitHeartComponent = hitEntity.components[HeartMovementComponent.self] {
                     if var player = GameStateManager.shared.players[hitHeartComponent.ownerPlayerId] {
                         player.score += 1
+                        
+                        hitEntity.removeFromParent()
                         
                         Scene_ChestCompression.shared.currentHeartRate -= 30
                         SharePlayManager.sendMessage(message: player)

@@ -23,7 +23,7 @@ struct MainViewVision: View {
     var body: some View {
         VStack {
             if sharePlayManager.sessionInfo.session != nil {
-                launchCameraButton
+                PlayerListView()
             } else if groupStateObserver.isEligibleForGroupSession {
                 // Not in a session, but is eligible for a session (in Facetime call)
                 startSharePlayButton
@@ -76,7 +76,7 @@ struct MainViewVision: View {
                 } label: {
                     HStack {
                         Image(systemName: "square.and.arrow.up").foregroundStyle(.white)
-                        Text(LocalizedStringKey("inviteToSharePlayTitle")).foregroundStyle(.white)
+                        Text("Invite").foregroundStyle(.white)
                     }
                 }
                 .padding()
