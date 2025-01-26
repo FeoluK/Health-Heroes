@@ -61,22 +61,6 @@ class SharePlayManager: ObservableObject {
             
             session.join()
             GameStateManager.shared.gameState = .lobbyNotReady
-            
-            if GameStateManager.shared.gameState == .lobbyNotReady {
-                var seatId = 1
-                for (_, player) in GameStateManager.shared.players {
-                    if player.isVisionDevice {
-                        var playerCopy = player
-                        playerCopy.playerSeat = 1
-                        SharePlayManager.sendMessage(message: playerCopy)
-                    } else {
-                        var playerCopy = player
-                        playerCopy.playerSeat = seatId
-                        SharePlayManager.sendMessage(message: playerCopy)
-                        seatId += 1
-                    }
-                }
-            }
         }
     }
     
