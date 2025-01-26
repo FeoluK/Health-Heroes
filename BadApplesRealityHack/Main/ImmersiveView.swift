@@ -33,6 +33,8 @@ struct ImmersiveView: View {
     var body: some View {
         RealityView { content, attachments in
             content.add(rootEntity)
+            rootEntity.addChild(leftHandEntity)
+            rootEntity.addChild(rightHandEntity)
             rootEntity.addChild(heartRateAnchor)
             GameModeManager.shared.loadGame()
             configureAttachments(attachments)

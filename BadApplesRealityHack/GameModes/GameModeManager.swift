@@ -12,6 +12,8 @@ import SwiftUICore
 import SharePlayMessages
 
 var rootEntity = ModelEntity()
+var leftHandEntity = ModelEntity()
+var rightHandEntity = ModelEntity()
 var heartRateAnchor = ModelEntity()
 var cameraAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
 var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .clear)])
