@@ -19,6 +19,7 @@ class GameStateManager: ObservableObject {
     @Published var gameState: GameState = .loading
     @Published var currentGame: GameType?
     @Published var players: [UUID: Player] = [:]
+    @Published var configuredSeats: Bool = false
     
     // MARK: - SharePlay Properties
     var tasks = Set<Task<Void, Never>>()
@@ -62,6 +63,7 @@ class GameStateManager: ObservableObject {
     func resetGame() {
         gameState = .mainMenu
         currentGame = nil
+        configuredSeats = false
     }
     
     func pauseGame() {
@@ -113,6 +115,36 @@ class GameStateManager: ObservableObject {
                 }
             } else {
                 // Fallback on earlier versions
+            }
+        }
+    }
+    
+    // only configure seats once all players have clicked ready
+    func configurePlayerSeats() {
+        guard !configuredSeats else { return }
+        var allReady = true
+        for (_, player) in GameStateManager.shared.players {
+            if !player.isReady {
+                allReady = false
+            }
+        }
+        guard allReady else { return }
+        
+        if GameStateManager.shared.gameState == .lobbyNotReady && currentPlatform() == .visionOS {
+            configuredSeats = true
+            var seatId = 1
+            for (_, player) in GameStateManager.shared.players {
+                if player.isVisionDevice {
+                    var playerCopy = player
+                    playerCopy.playerSeat = 1
+                    SharePlayManager.sendMessage(message: player)
+                    seatId += 1
+                } else {
+                    var playerCopy2 = player
+                    playerCopy2.playerSeat = seatId
+                    SharePlayManager.sendMessage(message: playerCopy2)
+                    seatId += 1
+                }
             }
         }
     }

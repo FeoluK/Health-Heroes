@@ -114,33 +114,34 @@ class SharePlayManager: ObservableObject {
                 if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
                 {
                     let task = Task { @MainActor in
-                        PlayerFuncs.sendLocalPlayerUpdateMsg()
                         GameStateManager.shared.players[participant.id] = potentialNewPlayer
                         
                         if GameStateManager.shared.gameState == .inGame {
                             SharePlayManager.sendStartGameMessage()
                         }
+                        
+                        GameStateManager.shared.configurePlayerSeats()
                     }
                     GameStateManager.shared.tasks.insert(task)
                 }
             }
             
-            if GameStateManager.shared.gameState == .lobbyNotReady && currentPlatform() == .visionOS {
-                var seatId = 1
-                for (_, player) in GameStateManager.shared.players {
-                    if player.isVisionDevice {
-                        var playerCopy = player
-                        playerCopy.playerSeat = 1
-                        SharePlayManager.sendMessage(message: player)
-                        seatId += 1
-                    } else {
-                        var playerCopy2 = player
-                        playerCopy2.playerSeat = seatId
-                        SharePlayManager.sendMessage(message: playerCopy2)
-                        seatId += 1
-                    }
-                }
-            }
+//            if GameStateManager.shared.gameState == .lobbyNotReady && currentPlatform() == .visionOS {
+//                var seatId = 1
+//                for (_, player) in GameStateManager.shared.players {
+//                    if player.isVisionDevice {
+//                        var playerCopy = player
+//                        playerCopy.playerSeat = 1
+//                        SharePlayManager.sendMessage(message: player)
+//                        seatId += 1
+//                    } else {
+//                        var playerCopy2 = player
+//                        playerCopy2.playerSeat = seatId
+//                        SharePlayManager.sendMessage(message: playerCopy2)
+//                        seatId += 1
+//                    }
+//                }
+//            }
         }
         .store(in: &SharePlayManager.shared.cancellables)
     }
@@ -203,6 +204,7 @@ class SharePlayManager: ObservableObject {
         sessionInfo = .init()
         cancellables.removeAll()
         GameStateManager.shared.gameState = .mainMenu
+        GameStateManager.shared.resetGame()
     }
 }
 

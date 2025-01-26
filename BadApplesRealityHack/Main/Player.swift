@@ -38,7 +38,8 @@ class PlayerFuncs {
         
         if newPlayer.id == Player.local?.id {
             Player.local = newPlayer
-            
         }
+        
+        GameStateManager.shared.configurePlayerSeats()
     }
 }
