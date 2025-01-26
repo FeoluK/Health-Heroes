@@ -45,6 +45,10 @@ struct GameContainerViewiPhone: View {
                 GameModeManager.shared.loadGame()
             case .dismissImmersiveSpace():
                 gameStateManager.gameState = .mainMenu
+                
+                if SharePlayManager.shared.sessionInfo.session != nil {
+                    gameStateManager.gameState = .lobbyNotReady
+                }
             default: return
             }
         })

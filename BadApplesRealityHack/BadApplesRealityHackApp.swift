@@ -37,6 +37,6 @@ struct BadApplesRealityHackApp: App {
                     appModel.immersiveSpaceState = .closed
                 }
         }
-        .immersionStyle(selection: $currentStyle, in: .mixed, .progressive, .full)
+        .immersionStyle(selection: .constant(.mixed), in: .mixed)
     }
 }
