@@ -231,7 +231,6 @@ class ScalingSystem: System {
                     }
                     
                     SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: 1))
-                    
                 }
             }
 

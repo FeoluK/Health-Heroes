@@ -79,8 +79,8 @@
 		81290B4E2D449872006CFB47 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Assets/heart1.usdz,
 				GameModeManager.swift,
-				heart1.usdz,
 			);
 			target = F4C7332DE0C4415C68B00D3C /* Mobile */;
 		};

@@ -14,7 +14,6 @@ import SharePlayMessages
 
 @available(iOS 17.0, *)
 
-
 class SharePlayManager: ObservableObject {
     static let shared = SharePlayManager()
     
@@ -173,7 +172,6 @@ extension SharePlayManager {
         let startGameMsg: Game_StartMessage = .init(windowId: "", messageId: "", id: UUID(), gameMode: GameModeManager.shared.gameMode.rawValue)
         sendMessage(message: startGameMsg, handleLocally: true)
     }
-     
 }
 
 // Define your custom GroupActivity

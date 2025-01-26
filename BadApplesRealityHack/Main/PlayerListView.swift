@@ -31,7 +31,8 @@ struct PlayerListView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "FF6B6B"), Color(hex: "4ECDC4")]),
+                gradient: Gradient(colors: [Color(hex: "FF6B6B"),
+                                            Color(hex: "4ECDC4")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
