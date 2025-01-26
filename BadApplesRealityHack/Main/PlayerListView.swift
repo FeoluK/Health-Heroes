@@ -164,7 +164,7 @@ struct PlayerListView: View {
 struct PlayerCard: View {
     let player: Player
     let delay: Double
-    let index: Int
+    let index: Int  // we can keep this for animation delay
     @State private var offset: CGFloat = 500
     @State private var opacity: Double = 0
     @State private var readyPulse: CGFloat = 1.0
@@ -199,8 +199,8 @@ struct PlayerCard: View {
                         .onSubmit {
                             if !newName.isEmpty {
                                 if var localPlayer = Player.local {
-                                    // If they try to set it back to just "Player", append their number
-                                    let finalName = newName == "Player" ? "Player \(index + 1)" : newName
+                                    // If they try to set it back to just "Player", append their seat number
+                                    let finalName = newName == "Player" ? "Player \(player.playerSeat)" : newName
                                     localPlayer.name = finalName
                                     Player.local = localPlayer
                                     gameStateManager.players[localPlayer.id] = localPlayer
@@ -220,21 +220,6 @@ struct PlayerCard: View {
                 if player.id == Player.local?.id {
                     newName = player.name
                     isEditing = true
-                }
-            }
-            .onAppear {
-                if player.name == "Player" {
-                    DispatchQueue.main.async {
-                        if var updatedPlayer = gameStateManager.players[player.id] {
-                            updatedPlayer.name = "Player \(index + 1)"
-                            updatedPlayer.playerSeat = index + 1
-                            gameStateManager.players[player.id] = updatedPlayer
-                            if player.id == Player.local?.id {
-                                Player.local = updatedPlayer
-                                PlayerFuncs.sendLocalPlayerUpdateMsg()
-                            }
-                        }
-                    }
                 }
             }
             
@@ -289,9 +274,9 @@ struct GameSelector: View {
                         .onTapGesture {
                             gameStateManager.currentGame = game
 #if os(iOS)
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
 #else
-                        
+                            
 #endif
                         }
                 }
