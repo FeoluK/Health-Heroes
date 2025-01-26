@@ -98,12 +98,12 @@ extension HandGestureTracker {
         leftHandEntity.name = "hand"
         leftHandEntity.generateCollisionShapes(recursive: true)
         leftHandEntity.components[PhysicsBodyComponent.self] = .init(
-            massProperties: .default, material: nil,  mode: .kinematic)
+            massProperties: .default, material: nil,  mode: .dynamic)
         
         rightHandEntity.name = "hand"
         rightHandEntity.generateCollisionShapes(recursive: true)
         rightHandEntity.components[PhysicsBodyComponent.self] = .init(
-            massProperties: .default, material: nil,  mode: .kinematic)
+            massProperties: .default, material: nil,  mode: .dynamic)
     }
 }
 

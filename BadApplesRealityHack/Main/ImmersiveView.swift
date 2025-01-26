@@ -21,7 +21,7 @@ struct ImmersiveView: View {
     let slideHeartCount = "slideHeart"
     
     @State var immersionStyle: ImmersionStyle
-    @State var darkenColor: Color = Color.black.opacity(0.1)
+    @State var intensity: Double = 0.8
     
     @ObservedObject var chestSceneManager: Scene_ChestCompression = Scene_ChestCompression.shared
     @ObservedObject var gestureModel: HandGestureTracker = HandGestureModelContainer.handGestureModel
@@ -31,8 +31,6 @@ struct ImmersiveView: View {
     @State var showSlide1 = true
     @State var showSlide2 = false
     @State var showSlide3 = false
-    
-    @State var heartRateTimer: Timer?
     
     var body: some View {
         RealityView { content, attachments in
@@ -94,17 +92,14 @@ struct ImmersiveView: View {
         .onAppear {
             configureSlideVisibility()
 //            configureScreenFadeEffects()
-            
-            heartRateTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
-                Scene_ChestCompression.shared.currentHeartRate = min(( Scene_ChestCompression.shared.currentHeartRate) + 0, 160)
-            }
+            Scene_ChestCompression.shared.startTimer()
         }
-        .onChange(of: chestSceneManager.currentHeartRate) { oldValue, newValue in
-            let minHeartRate: Double = 0
+        .onChange(of: $chestSceneManager.currentHeartRate.wrappedValue) { oldValue, newValue in
+            let minHeartRate: Double = 80
             let maxHeartRate: Double = 160
             let clampedHeartRate = max(min(Double(newValue), maxHeartRate), minHeartRate)
-            let opacityAmount = 1 - (clampedHeartRate / maxHeartRate)
-            darkenColor = Color.black.opacity(opacityAmount / 26)
+            let normalizedHeartRate = (clampedHeartRate - minHeartRate) / (maxHeartRate - minHeartRate)
+            intensity = log1p(normalizedHeartRate * 9) / log1p(9) * 0.2
         }
     }
     
@@ -137,7 +132,7 @@ struct ImmersiveView: View {
     }
     
     var surroundingsEffect: SurroundingsEffect {
-        return SurroundingsEffect.colorMultiply(darkenColor)
+        return SurroundingsEffect.dim(intensity: intensity)
     }
     
     // for chest compression slides

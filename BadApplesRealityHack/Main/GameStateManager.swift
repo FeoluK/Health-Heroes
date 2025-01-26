@@ -104,6 +104,11 @@ class GameStateManager: ObservableObject {
                     newHeart.position.y = message.heartHeight + Float(heartHeightAdd)
                     newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position + .init(x: 0, y: 1.2, z: 0), ownerPlayerId: Player.local?.id ?? UUID())
                     
+                    var collision = CollisionComponent(shapes: [ShapeResource.generateBox(width: 0.3, height: 0.3, depth: 0.3)])
+                    collision.filter = CollisionFilter(group: CollisionGroup(rawValue: 12), mask: [CollisionGroup(rawValue: 12)])
+                    collision.mode = .colliding
+                    newHeart.components[CollisionComponent.self] = collision
+                    
                     rootEntity.addChild(newHeart)
                 }
             } else {
