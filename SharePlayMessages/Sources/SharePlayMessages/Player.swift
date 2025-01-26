@@ -17,7 +17,7 @@ public struct Player: Codable, Sendable, Identifiable, Equatable, SharePlayMessa
         lhs.name == rhs.name && lhs.id == rhs.id
     }
     
-    public let name: String
+    public var name: String
     public let id: UUID
     public let score: Int
     public var isActive: Bool
