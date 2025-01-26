@@ -8,6 +8,10 @@ import Foundation
 import SwiftUI
 import SharePlayMessages
 
+import Foundation
+import SwiftUI
+import SharePlayMessages
+
 struct PlayerListView: View {
     @ObservedObject private var sharePlayManager = SharePlayManager.shared
     @ObservedObject private var gameStateManager = GameStateManager.shared
@@ -195,7 +199,9 @@ struct PlayerCard: View {
                         .onSubmit {
                             if !newName.isEmpty {
                                 if var localPlayer = Player.local {
-                                    localPlayer.name = newName
+                                    // If they try to set it back to just "Player", append their number
+                                    let finalName = newName == "Player" ? "Player \(index + 1)" : newName
+                                    localPlayer.name = finalName
                                     Player.local = localPlayer
                                     gameStateManager.players[localPlayer.id] = localPlayer
                                     PlayerFuncs.sendLocalPlayerUpdateMsg()
@@ -204,13 +210,8 @@ struct PlayerCard: View {
                             }
                         }
                 } else {
-                    if player.name.starts(with: "Player") {
-                        Text("\(player.name)\(index + 1)")
-                            .foregroundColor(.white)
-                    } else {
-                        Text("\(player.name)")
-                            .foregroundColor(.white)
-                    }
+                    Text(player.name)
+                        .foregroundColor(.white)
                 }
             }
             .frame(width: 120, alignment: .leading)
@@ -219,6 +220,21 @@ struct PlayerCard: View {
                 if player.id == Player.local?.id {
                     newName = player.name
                     isEditing = true
+                }
+            }
+            .onAppear {
+                if player.name == "Player" {
+                    DispatchQueue.main.async {
+                        if var updatedPlayer = gameStateManager.players[player.id] {
+                            updatedPlayer.name = "Player \(index + 1)"
+                            updatedPlayer.playerSeat = index + 1
+                            gameStateManager.players[player.id] = updatedPlayer
+                            if player.id == Player.local?.id {
+                                Player.local = updatedPlayer
+                                PlayerFuncs.sendLocalPlayerUpdateMsg()
+                            }
+                        }
+                    }
                 }
             }
             
@@ -272,7 +288,7 @@ struct GameSelector: View {
                     GameCircle(game: game, isSelected: game == gameStateManager.currentGame)
                         .onTapGesture {
                             gameStateManager.currentGame = game
-//                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         }
                 }
             }

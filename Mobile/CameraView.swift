@@ -192,11 +192,12 @@ struct RulesView: View {
                     .opacity(0.95)
                     .cornerRadius(20)
                 
-                VStack(spacing: 20) {
+                VStack(spacing: 15) {
                     HStack {
                         Text("Rules")
                             .font(.title2)
                             .bold()
+                            .foregroundColor(.black)
                         Spacer()
                         Button(action: {
                             withAnimation {
@@ -209,10 +210,36 @@ struct RulesView: View {
                         }
                     }
                     
-                    Text("Default rules text that can be edited later. This will contain information about how to play the medical simulation game and interact with the AR features.")
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("SAVE YOUR FRIEND!")
+                                .font(.headline)
+                                .foregroundColor(.black)
+                            
+                            Group {
+                                Text("iPhone Users:")
+                                    .fontWeight(.semibold)
+                                + Text("\nPress your phone to the red circle in a rhythmic pattern to perform CPR compressions. Each correct press sends a heart to your Vision Pro teammate.")
+                            }
+                            .foregroundColor(.black)
+                            .fixedSize(horizontal: false, vertical: true)  // Allows text to wrap naturally
+                            
+                            Group {
+                                Text("Vision Pro User:")
+                                    .fontWeight(.semibold)
+                                + Text("\nWatch for the hearts sent by your teammates. Grab them quickly and pull them towards you to collect them.")
+                            }
+                            .foregroundColor(.black)
+                            .fixedSize(horizontal: false, vertical: true)
+                            
+                            Text("Remember: Timing is key! Work together to maintain a steady rhythm and save your friend!")
+                                .fontWeight(.medium)
+                                .foregroundColor(.black)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                         .multilineTextAlignment(.leading)
-                    
-                    Spacer()
+                        .padding(.horizontal)
+                    }
                 }
                 .padding()
             }
@@ -266,7 +293,8 @@ struct LeaderboardView: View {
                             LeaderboardRow(
                                 rank: index + 1,
                                 name: playerTuple.player.name.isEmpty ? "Player \(playerTuple.player.playerSeat)" : playerTuple.player.name,
-                                score: playerTuple.player.score
+                                score: playerTuple.player.score,
+                                playerSeat: playerTuple.player.playerSeat
                             )
                         }
                     }
@@ -285,6 +313,7 @@ struct LeaderboardRow: View {
     let rank: Int
     let name: String
     let score: Int
+    let playerSeat: Int
     
     var body: some View {
         HStack {
@@ -293,7 +322,7 @@ struct LeaderboardRow: View {
                 .frame(width: 40)
                 .foregroundColor(.black)
             Text(name)
-                .foregroundColor(.black)
+                .foregroundColor(Color(SharePlayManager.getColorForSeat(seat: playerSeat)))
             Spacer()
             Text("\(score)")
                 .bold()

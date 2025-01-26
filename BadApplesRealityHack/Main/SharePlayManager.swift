@@ -86,11 +86,30 @@ class SharePlayManager: ObservableObject {
                 totalParticipants += 1
             }
             let isVisionDevice = currentPlatform() == .visionOS
-            Player.local = .init(name: "Player", id: localId, score: 0, isActive: true, isReady: false, isVisionDevice: isVisionDevice, playerSeat: isVisionDevice ? 1 : totalParticipants) // todo: fix player seat Id
+            let localPlayerSeat = isVisionDevice ? 1 : totalParticipants
+            Player.local = .init(name: "Player \(localPlayerSeat)",
+                                 id: localId,
+                                 score: 0,
+                                 isActive: true,
+                                 isReady: false,
+                                 isVisionDevice: isVisionDevice,
+                                 playerSeat: localPlayerSeat)
             GameStateManager.shared.players[localId] = Player.local
             
             for participant in activeParticipants {
-                let potentialNewPlayer = Player(name: "Player", id: participant.id, score: 0, isActive: true, isReady: false, isVisionDevice: false, playerSeat: 0)
+                // Calculate seat number based on join order
+                let participantIndex = Array(activeParticipants).firstIndex(of: participant) ?? 0
+                let seatNumber = participantIndex + 2  // Start at 2 since Vision Pro is 1
+                
+                let potentialNewPlayer = Player(
+                    name: "Player \(seatNumber)",
+                    id: participant.id,
+                    score: 0,
+                    isActive: true,
+                    isReady: false,
+                    isVisionDevice: false,
+                    playerSeat: seatNumber
+                )
                 
                 if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
                 {
@@ -125,7 +144,7 @@ class SharePlayManager: ObservableObject {
                               sender: Participant,
                               forceHandling: Bool = false) async {
         switch message.base {
-        case let message as Player: return 
+        case let message as Player: return
             await PlayerFuncs.handlePlayerMessage(message: message, sender: sender)
         case let message as PlayerReadyMessage:
             return
