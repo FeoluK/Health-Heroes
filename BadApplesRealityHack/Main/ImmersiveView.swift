@@ -18,6 +18,7 @@ struct ImmersiveView: View {
     let slide2View = "slide2"
     let slide3View = "slide3"
     let slide4View = "slide4"
+    let slideHeartCount = "slideHeart"
     
     @State var showSlide1 = true
     @State var showSlide2 = false
@@ -27,6 +28,7 @@ struct ImmersiveView: View {
     var body: some View {
         RealityView { content, attachments in
             content.add(rootEntity)
+            rootEntity.addChild(heartRateAnchor)
             GameModeManager.shared.loadGame()
             configureAttachments(attachments)
         } update: { content, attachments in
@@ -34,6 +36,13 @@ struct ImmersiveView: View {
             childAnchor.transform = Transform(matrix: WorldTrackingSessionManager.shared.getOriginFromDeviceTransform())
             
         } attachments: {
+            Attachment(id: slideHeartCount) {
+                  //2. Define the SwiftUI View
+                  Text("---")
+                      .font(.extraLargeTitle)
+                      .padding()
+              }
+            
             Attachment(id: slide1View) {
                   //2. Define the SwiftUI View
                   Text("Every year, 5.5 million people worldwide die from strokes, making it one of the leading causes of death globally. Recognizing symptoms and acting quickly can save countless lives.")
@@ -81,6 +90,11 @@ struct ImmersiveView: View {
     }
     
     func configureAttachments(_ attachments: RealityViewAttachments) {
+        if let viewEntity = attachments.entity(for: slideHeartCount) {            viewEntity.components.set(BillboardComponent())
+            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.isEnabled = true
+            heartRateAnchor.addChild(viewEntity)
+        }
         if let viewEntity = attachments.entity(for: slide1View) {            viewEntity.components.set(BillboardComponent())
             viewEntity.position = .init(x: 0.2, y: 1, z: -1)
             viewEntity.isEnabled = true
