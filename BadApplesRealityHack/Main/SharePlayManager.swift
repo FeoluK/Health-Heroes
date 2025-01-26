@@ -55,10 +55,16 @@ class SharePlayManager: ObservableObject {
     }
     
     func joinSession(session:  GroupSession<MyGroupActivity>) {
-        SharePlayManager.subscribeToSessionUpdates()
-        SharePlayManager.subscribeToPlayerUpdates()
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        Task { @MainActor in
+            try await Task.sleep(nanoseconds: 1000000000)
+            
+            sessionInfo = .init(newSession: session)
+            GameStateManager.shared.gameState = .lobbyNotReady
+            
+            SharePlayManager.subscribeToSessionUpdates()
+            SharePlayManager.subscribeToPlayerUpdates()
+            
+            
             SharePlayManager.shared.sessionInfo.session?.join()
         }
     }
