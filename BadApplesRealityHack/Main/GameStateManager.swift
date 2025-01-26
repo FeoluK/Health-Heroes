@@ -61,9 +61,13 @@ class GameStateManager: ObservableObject {
     }
     
     func resetGame() {
+        players = [:]
         gameState = .mainMenu
         currentGame = nil
         configuredSeats = false
+        
+        tasks.forEach { $0.cancel() }
+        tasks = []
     }
     
     func pauseGame() {
@@ -76,6 +80,19 @@ class GameStateManager: ObservableObject {
     
     func endGame() {
         gameState = .gameOver
+    }
+    
+    func sortPlayersByUUID() {
+        if currentPlatform() == .visionOS {
+            let sortedPlayers = GameStateManager.shared.players.sorted { $0.key.uuidString < $1.key.uuidString }
+            var seatId = 1
+            for (_, player) in sortedPlayers {
+                var playerCopy = player
+                playerCopy.playerSeat = seatId
+                seatId += 1
+                SharePlayManager.sendMessage(message: playerCopy)
+            }
+        }
     }
     
     // MARK: - SharePlay Message Handlers

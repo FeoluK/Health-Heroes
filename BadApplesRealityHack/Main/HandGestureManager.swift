@@ -99,11 +99,19 @@ extension HandGestureTracker {
         leftHandEntity.generateCollisionShapes(recursive: true)
         leftHandEntity.components[PhysicsBodyComponent.self] = .init(
             massProperties: .default, material: nil,  mode: .kinematic)
+        var collision = CollisionComponent(shapes: [ShapeResource.generateBox(width: 0.3, height: 0.3, depth: 0.3)])
+        collision.filter = CollisionFilter(group: CollisionGroup(rawValue: 12), mask: [CollisionGroup(rawValue: 12)])
+        collision.mode = .colliding
+        leftHandEntity.components.set(collision)
         
         rightHandEntity.name = "hand"
         rightHandEntity.generateCollisionShapes(recursive: true)
         rightHandEntity.components[PhysicsBodyComponent.self] = .init(
             massProperties: .default, material: nil,  mode: .kinematic)
+        var collision2 = CollisionComponent(shapes: [ShapeResource.generateBox(width: 0.3, height: 0.3, depth: 0.3)])
+        collision2.filter = CollisionFilter(group: CollisionGroup(rawValue: 12), mask: [CollisionGroup(rawValue: 12)])
+        collision2.mode = .colliding
+        rightHandEntity.components.set(collision)
     }
 }
 

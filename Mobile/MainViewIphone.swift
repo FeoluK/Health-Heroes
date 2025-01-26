@@ -122,6 +122,13 @@ struct MainViewIphone: View {
             }
             animateFloatingSymbols()
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            print("backgrounded")
+            SharePlayManager.shared.cleanup()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            print("foregrounded")
+        }
     }
     
     var launchCameraButton: some View {

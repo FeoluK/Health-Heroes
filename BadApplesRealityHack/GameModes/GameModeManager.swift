@@ -139,7 +139,8 @@ class Scene_ChestCompression: ObservableObject {
     }
     
     static func configureSpherePumper() {
-        chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: .red, isMetallic: true)])
+        let color = SharePlayManager.getColorForSeat(seat: Player.local?.playerSeat ?? 1)
+        chestSphere1 = ModelEntity(mesh: .generateSphere(radius: 0.03), materials: [SimpleMaterial(color: color, isMetallic: true)])
         chestSphere1.position = getSeatTileEntity(seat: Player.local?.playerSeat ?? 1).position(relativeTo: nil)
         chestSphere1.position.y = childAnchor.position(relativeTo: nil).y
         chestSphere1.position.y += 0.3

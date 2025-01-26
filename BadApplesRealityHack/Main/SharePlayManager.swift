@@ -120,7 +120,7 @@ class SharePlayManager: ObservableObject {
                             SharePlayManager.sendStartGameMessage()
                         }
                         
-//                        GameStateManager.shared.configurePlayerSeats()
+                        GameStateManager.shared.sortPlayersByUUID()
                     }
                     GameStateManager.shared.tasks.insert(task)
                 }
@@ -198,6 +198,7 @@ class SharePlayManager: ObservableObject {
     }
     
     func cleanup() {
+        SharePlayManager.shared.sessionInfo.session?.leave()
         SharePlayManager.shared.sessionInfo.session = nil
         sessionInfo.session = nil
         sessionInfo.messenger = nil
@@ -205,6 +206,15 @@ class SharePlayManager: ObservableObject {
         cancellables.removeAll()
         GameStateManager.shared.gameState = .mainMenu
         GameStateManager.shared.resetGame()
+    }
+    
+    func sortPlayersByUUID() {
+        let sortedPlayers = GameStateManager.shared.players.sorted { $0.key.uuidString < $1.key.uuidString }
+        var seatId = 1
+        for (_, player) in sortedPlayers {
+            player.playerSeat = seatId
+            seatId += 1
+        }
     }
 }
 
