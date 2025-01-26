@@ -99,7 +99,7 @@ struct MainViewIphone: View {
                 
                 // Main content buttons
                 if sharePlayManager.sessionInfo.session != nil {
-                    launchCameraButton
+                    PlayerListView()
                         .transition(.scale.combined(with: .opacity))
                 } else if groupStateObserver.isEligibleForGroupSession {
                     startSharePlayButton
@@ -128,6 +128,7 @@ struct MainViewIphone: View {
         Button(action: {
             Task { @MainActor in
                 GameStateManager.shared.gameState = .inGame
+                SharePlayManager.sendStartGameMessage()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     GameModeManager.shared.loadGame()

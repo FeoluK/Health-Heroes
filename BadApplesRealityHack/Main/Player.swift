@@ -40,6 +40,6 @@ class PlayerFuncs {
             Player.local = newPlayer
         }
         
-        GameStateManager.shared.configurePlayerSeats()
+//        GameStateManager.shared.configurePlayerSeats()
     }
 }
