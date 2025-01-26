@@ -18,6 +18,8 @@
 		4DD4CB97A57860178B894E30 /* GameContainerViewVision.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A9EC9778DBC1A90AD417D9 /* GameContainerViewVision.swift */; };
 		4FB7F6BE93B743CE5BDEAFE3 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECC5A83A59E465D3F059F7 /* CameraView.swift */; };
 		5F58CEFB9EC757AE6C19626A /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEA73F25466963FB7064BF5 /* ImmersiveView.swift */; };
+		68B10A6B2D465E4200519543 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B10A6A2D465E4200519543 /* AudioManager.swift */; };
+		68B10A6C2D465E4200519543 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B10A6A2D465E4200519543 /* AudioManager.swift */; };
 		68D1A5A62D44833B004A6A8C /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C027CE6ED20CFB529F27996 /* PlayerListView.swift */; };
 		68D1A5A72D448349004A6A8C /* GameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA9EA0003B1F73EC1CB1BB7 /* GameStateManager.swift */; };
 		68D1A5A82D448350004A6A8C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D7A99750FE031301280864 /* Player.swift */; };
@@ -57,6 +59,7 @@
 		4CE0F585F0F545369D598531 /* MainViewVision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewVision.swift; sourceTree = "<group>"; };
 		53AE7F3D4E204A73E1CA73C2 /* GameContainerViewiPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameContainerViewiPhone.swift; sourceTree = "<group>"; };
 		5F7AAEC2C5810917B2BC35EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		68B10A6A2D465E4200519543 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		68D1A5A32D4482F5004A6A8C /* TextLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLoadingView.swift; sourceTree = "<group>"; };
 		71CD8C6DEC063110560483E8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		79844E5A3F14737E3E889DC3 /* MobileAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MobileAssets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +81,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		68B10A712D465F5D00519543 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				LobbyMusic.mp3,
+			);
+			target = F4C7332DE0C4415C68B00D3C /* Mobile */;
+		};
 		81290B4E2D449872006CFB47 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -89,6 +99,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		68B10A6D2D465F1500519543 /* Audio */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (68B10A712D465F5D00519543 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Audio; sourceTree = "<group>"; };
 		81290B3B2D447376006CFB47 /* GameModes */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (81290B4E2D449872006CFB47 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = GameModes; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -115,6 +126,7 @@
 		1B3BADCCC4DE071787DA65DE /* BadApplesRealityHack */ = {
 			isa = PBXGroup;
 			children = (
+				68B10A6D2D465F1500519543 /* Audio */,
 				98E7B32424281FA9863180A6 /* Assets.xcassets */,
 				193A31C128A770ACD88CA640 /* BadApplesRealityHackApp.swift */,
 				BD14894D14D3AD2C765F2964 /* Info.plist */,
@@ -183,6 +195,7 @@
 				81290B772D44B954006CFB47 /* Extensions.swift */,
 				81290B7D2D454FA8006CFB47 /* WorldTrackingSessionManager.swift */,
 				817FD2FF2D4637400045CCE5 /* HandGestureManager.swift */,
+				68B10A6A2D465E4200519543 /* AudioManager.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -222,6 +235,7 @@
 				810FA0752D45BE1300A4733B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				68B10A6D2D465F1500519543 /* Audio */,
 				81290B3B2D447376006CFB47 /* GameModes */,
 			);
 			name = BadApples;
@@ -307,6 +321,7 @@
 			files = (
 				81290B4C2D4485DF006CFB47 /* TextEntity.swift in Sources */,
 				4FB7F6BE93B743CE5BDEAFE3 /* CameraView.swift in Sources */,
+				68B10A6C2D465E4200519543 /* AudioManager.swift in Sources */,
 				68D1A5AA2D44837A004A6A8C /* SharePlayManager.swift in Sources */,
 				68D1A5AB2D448731004A6A8C /* TextLoadingView.swift in Sources */,
 				68D1A5A62D44833B004A6A8C /* PlayerListView.swift in Sources */,
@@ -334,6 +349,7 @@
 				5F58CEFB9EC757AE6C19626A /* ImmersiveView.swift in Sources */,
 				28D2BAA905C368C534ACFB1C /* LoadingScreenView.swift in Sources */,
 				3D2DC5F5B4D4F54FDF649D0A /* MainViewVision.swift in Sources */,
+				68B10A6B2D465E4200519543 /* AudioManager.swift in Sources */,
 				81290B782D44B954006CFB47 /* Extensions.swift in Sources */,
 				716084650409BE2A76D8610E /* Player.swift in Sources */,
 				EF495AB9236D1AE3D6873A8B /* PlayerListView.swift in Sources */,

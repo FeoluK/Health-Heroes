@@ -12,6 +12,10 @@ import Foundation
 import SwiftUI
 import SharePlayMessages
 
+import Foundation
+import SwiftUI
+import SharePlayMessages
+
 struct PlayerListView: View {
     @ObservedObject private var sharePlayManager = SharePlayManager.shared
     @ObservedObject private var gameStateManager = GameStateManager.shared
@@ -21,6 +25,10 @@ struct PlayerListView: View {
     @State private var pulseScale: CGFloat = 1.0
     @State private var titleOffset: CGFloat = -50
     @State private var titleOpacity: Double = 0
+    @State private var currentVolume: Float = 0.0
+    private let targetVolume: Float = 0.5
+    private let fadeInDuration: TimeInterval = 2.0
+    private let fadeOutDuration: TimeInterval = 1.0
     
     // Orbiting symbols for background
     let orbitingSymbols = [
@@ -94,6 +102,7 @@ struct PlayerListView: View {
             }
         }
         .onAppear {
+            // Visual animations
             withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
                 orbitAngle = 360
             }
@@ -103,6 +112,35 @@ struct PlayerListView: View {
             withAnimation(.spring(duration: 1.0)) {
                 titleOffset = 0
                 titleOpacity = 1
+            }
+            
+            // Start playing lobby music with fade in
+            AudioManager.shared.playSound(
+                named: BackgroundMusic.lobby.rawValue,
+                volume: 0.0,
+                loops: -1
+            )
+            
+            // Fade in
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+                if currentVolume < targetVolume {
+                    currentVolume += Float(0.1 / fadeInDuration)
+                    AudioManager.shared.setVolume(currentVolume, forSound: BackgroundMusic.lobby.rawValue)
+                } else {
+                    timer.invalidate()
+                }
+            }
+        }
+        .onDisappear {
+            // Fade out and stop
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+                if currentVolume > 0 {
+                    currentVolume -= Float(0.1 / fadeOutDuration)
+                    AudioManager.shared.setVolume(currentVolume, forSound: BackgroundMusic.lobby.rawValue)
+                } else {
+                    AudioManager.shared.stopSound(named: BackgroundMusic.lobby.rawValue)
+                    timer.invalidate()
+                }
             }
         }
     }
@@ -135,8 +173,20 @@ struct PlayerListView: View {
     
     var playerStartGameButton: some View {
         Button(action: {
-            SharePlayManager.sendStartGameMessage()
-            GameStateManager.shared.actionSubject.send(.openImmersiveSpace("ImmersiveSpace"))
+            // Fade out music before starting game
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+                if currentVolume > 0 {
+                    currentVolume -= Float(0.1 / fadeOutDuration)
+                    AudioManager.shared.setVolume(currentVolume, forSound: BackgroundMusic.lobby.rawValue)
+                } else {
+                    AudioManager.shared.stopSound(named: BackgroundMusic.lobby.rawValue)
+                    timer.invalidate()
+                    
+                    // Start game after fade out
+                    SharePlayManager.sendStartGameMessage()
+                    GameStateManager.shared.actionSubject.send(.openImmersiveSpace("ImmersiveSpace"))
+                }
+            }
         }) {
             HStack {
                 Image(systemName: "play.fill")
