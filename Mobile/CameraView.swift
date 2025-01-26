@@ -20,6 +20,8 @@ struct CameraView: View {
     @State private var showCustomMenu = false
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
+    @State var showCompressionTip1 = true
+    
     var body: some View {
         ZStack {
             if #available(iOS 18.0, *) {
@@ -44,6 +46,23 @@ struct CameraView: View {
                 }.gesture(dragGesture)
             } else {
                 // Fallback on earlier versions
+            }
+            
+            if showCompressionTip1 {
+                VStack {
+                    Spacer()
+                    Text("Practice chest compressions")
+                        .padding()
+                        .cornerRadius(20)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "FF6B6B"), Color(hex: "4ECDC4")]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    Spacer()
+                }
             }
             
             VStack {
@@ -82,7 +101,9 @@ struct CameraView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            // No need to check permissions as RealityView handles it
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                showCompressionTip1 = false
+            }
         }
         .alert("Camera Permission Required", isPresented: $showPermissionAlert) {
             Button("Go to Settings", role: .none) {
