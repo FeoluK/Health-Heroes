@@ -99,7 +99,7 @@ struct MainViewIphone: View {
                 
                 // Main content buttons
                 if sharePlayManager.sessionInfo.session != nil {
-                    PlayerListView()
+                    launchCameraButton
                         .transition(.scale.combined(with: .opacity))
                 } else if groupStateObserver.isEligibleForGroupSession {
                     startSharePlayButton
