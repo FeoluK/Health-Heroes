@@ -102,10 +102,7 @@ class AudioManager {
 
 // MARK: - Sound Names Enum
 enum SoundEffect: String {
-    case buttonTap = "button_tap"
     case success = "success"
-    case failure = "failure"
-    case heartCollect = "heart_collect"
     // Add more sound effects as needed
 }
 

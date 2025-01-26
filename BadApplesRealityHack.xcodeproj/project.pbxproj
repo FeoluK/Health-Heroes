@@ -85,6 +85,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				LobbyMusic.mp3,
+				success.mp3,
 			);
 			target = F4C7332DE0C4415C68B00D3C /* Mobile */;
 		};
