@@ -24,11 +24,13 @@ struct ImmersiveView: View {
     @State var darkenColor: Color = Color.black.opacity(0.1)
     
     @ObservedObject var chestSceneManager: Scene_ChestCompression = Scene_ChestCompression.shared
+    @ObservedObject var gestureModel: HandGestureTracker = HandGestureModelContainer.handGestureModel
+    
+    @State var collisionSubscription: EventSubscription?
     
     @State var showSlide1 = true
     @State var showSlide2 = false
     @State var showSlide3 = false
-    
     
     var body: some View {
         RealityView { content, attachments in
@@ -38,6 +40,7 @@ struct ImmersiveView: View {
             rootEntity.addChild(heartRateAnchor)
             GameModeManager.shared.loadGame()
             configureAttachments(attachments)
+            subscribeToCollisionEvents(content: content)
         } update: { content, attachments in
             updateAttachmentVisibility(attachments)
             childAnchor.transform = Transform(matrix: WorldTrackingSessionManager.shared.getOriginFromDeviceTransform())
@@ -76,6 +79,15 @@ struct ImmersiveView: View {
               }
         }
         .preferredSurroundingsEffect(surroundingsEffect)
+        .task {
+            await gestureModel.start()
+        }
+        .task {
+            await gestureModel.publishHandTrackingUpdates()
+        }
+        .task {
+            await gestureModel.monitorSessionEvents()
+        }
         .onAppear {
             configureSlideVisibility()
 //            configureScreenFadeEffects()
@@ -86,6 +98,32 @@ struct ImmersiveView: View {
             let clampedHeartRate = max(min(Double(newValue), maxHeartRate), minHeartRate)
             let opacityAmount = 1 - (clampedHeartRate / maxHeartRate)
             darkenColor = Color.black.opacity(opacityAmount)
+        }
+    }
+    
+    func subscribeToCollisionEvents(content: RealityViewContent) {
+        collisionSubscription = content.subscribe(to: CollisionEvents.Began.self, on: nil, componentType: nil) { event in
+            
+            // Handle collision between moving target and shooting projectile
+            if (event.entityA.name == "heart" && event.entityB.name == "hand") ||
+                (event.entityB.name == "heart" && event.entityA.name == "hand")
+            {
+                var hitEntity = ModelEntity()
+                if event.entityA.name == "heart" {
+                    hitEntity = event.entityA as! ModelEntity
+                } else if event.entityB.name == "heart" {
+                    hitEntity = event.entityB as! ModelEntity
+                }
+                
+                if let hitHeartComponent = hitEntity.components[HeartMovementComponent.self] {
+                    if var player = GameStateManager.shared.players[hitHeartComponent.ownerPlayerId] {
+                        player.score += 1
+                        
+                        Scene_ChestCompression.shared.currentHeartRate -= 30
+                        SharePlayManager.sendMessage(message: player)
+                    }
+                }
+            }
         }
     }
     

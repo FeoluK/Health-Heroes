@@ -22,8 +22,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera</string>
+	<key>NSHandsTrackingUsageDescription</key>
+	<string>We need access to your hand tracking</string>
 	<key>NSWorldSensingUsageDescription</key>
-	<string>We need access to world sensing description</string>
+	<string>We need access to world sensing data</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

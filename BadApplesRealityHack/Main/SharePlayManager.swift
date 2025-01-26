@@ -158,8 +158,6 @@ class SharePlayManager: ObservableObject {
     
     static func sendMessage(message: any SharePlayMessage,
                             participants: Set<Participant>? = nil,
-                            sendShimmer: Bool = true,
-                            updateStoreage: Bool = true,
                             handleLocally: Bool = false)
     {
         if handleLocally {

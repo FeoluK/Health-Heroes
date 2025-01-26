@@ -19,7 +19,7 @@ public struct Player: Codable, Sendable, Identifiable, Equatable, SharePlayMessa
     
     public var name: String
     public let id: UUID
-    public let score: Int
+    public var score: Int
     public var isActive: Bool
     public var isReady: Bool
     public var playerSeat: Int

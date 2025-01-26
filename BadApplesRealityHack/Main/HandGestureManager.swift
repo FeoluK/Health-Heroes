@@ -95,10 +95,12 @@ class HandGestureTracker: ObservableObject, @unchecked Sendable {
 
 extension HandGestureTracker {
     private func configureHandCollision() {
+        leftHandEntity.name = "hand"
         leftHandEntity.generateCollisionShapes(recursive: true)
         leftHandEntity.components[PhysicsBodyComponent.self] = .init(
             massProperties: .default, material: nil,  mode: .kinematic)
         
+        rightHandEntity.name = "hand"
         rightHandEntity.generateCollisionShapes(recursive: true)
         rightHandEntity.components[PhysicsBodyComponent.self] = .init(
             massProperties: .default, material: nil,  mode: .kinematic)

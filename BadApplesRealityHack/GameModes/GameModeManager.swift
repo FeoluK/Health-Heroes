@@ -12,8 +12,9 @@ import SwiftUICore
 import SharePlayMessages
 
 var rootEntity = ModelEntity()
-var leftHandEntity = ModelEntity()
-var rightHandEntity = ModelEntity()
+var leftHandEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
+var rightHandEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
+
 var heartRateAnchor = ModelEntity()
 var cameraAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
 var childAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .clear)])
@@ -126,7 +127,7 @@ class Scene_ChestCompression: ObservableObject {
     
     init() {
         heartRateTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-            self?.currentHeartRate += 20
+            self?.currentHeartRate = min((self?.currentHeartRate ?? 0) + 20, 160)
         }
     }
     
@@ -239,6 +240,11 @@ class ScalingSystem: System {
                     print("Successful pump actions completed!")
                     pumpCounter = 0 // Reset counter after success
                     lastPumpTime = Date() // Update last pump time
+                    
+                    if var player = Player.local {
+                        player.score += 1
+                        SharePlayManager.sendMessage(message: player)
+                    }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 #if os(iOS)

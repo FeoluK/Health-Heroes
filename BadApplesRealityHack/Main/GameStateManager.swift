@@ -95,12 +95,14 @@ class GameStateManager: ObservableObject {
         Task { @MainActor in
             //  if currentPlatform() == .visionOS {
             if #available(iOS 18.0, *) {
-                if let newHeart = try? await ModelEntity(named: "heart1") { 
+                if let newHeart = try? await ModelEntity(named: "heart1") {
+                    newHeart.name = "heart"
+                    newHeart.components[PhysicsBodyComponent.self] = PhysicsBodyComponent(shapes: [.generateBox(size: .init(repeating: 0.3))], mass: 10, mode: .dynamic)
                     newHeart.scale = .init(repeating: 0.0002)
                     newHeart.position = getSeatTileEntity(seat: message.seatNumber).position(relativeTo: nil)
-                    let heartHeightAdd = currentPlatform() == .visionOS ? 0.4 : 0
+                    let heartHeightAdd = currentPlatform() == .visionOS ? 1.2 : 0
                     newHeart.position.y = message.heartHeight + Float(heartHeightAdd)
-                    newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)
+                    newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position, ownerPlayerId: Player.local?.id ?? UUID())
                     
                     rootEntity.addChild(newHeart)
                 }
@@ -115,9 +117,11 @@ class GameStateManager: ObservableObject {
 
 class HeartMovementComponent: Component {
     var targetPosition: SIMD3<Float>
+    var ownerPlayerId: UUID
     
-    init(targetPosition: SIMD3<Float>) {
+    init(targetPosition: SIMD3<Float>, ownerPlayerId: UUID) {
         self.targetPosition = targetPosition
+        self.ownerPlayerId = ownerPlayerId
     }
 }
 
