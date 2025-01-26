@@ -152,7 +152,7 @@ class Scene_ChestCompression: ObservableObject {
         let floorHeight: Float = currentPlatform() == .visionOS ? 0 : -1.2
         game_seat1 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 1), isMetallic: true)])
         rootEntity.addChild(game_seat1)
-        game_seat1.position = .init(x: 0, y: floorHeight, z: -1)
+        game_seat1.position = .init(x: 0, y: floorHeight, z: -1.3)
         
         game_seat2 = ModelEntity(mesh: .generatePlane(width: 0.3, depth: 0.3), materials: [SimpleMaterial(color: SharePlayManager.getColorForSeat(seat: 2), isMetallic: true)])
         rootEntity.addChild(game_seat2)

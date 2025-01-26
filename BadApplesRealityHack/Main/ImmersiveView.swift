@@ -173,22 +173,22 @@ struct ImmersiveView: View {
     
     func configureAttachments(_ attachments: RealityViewAttachments) {
         if let viewEntity = attachments.entity(for: slideHeartCount) {            viewEntity.components.set(BillboardComponent())
-            viewEntity.position = .init(x: 0.3, y: 1.4, z: -1)
+            viewEntity.position = .init(x: 0.3, y: 1.49, z: -1)
             viewEntity.isEnabled = true
             heartRateAnchor.addChild(viewEntity)
         }
         if let viewEntity = attachments.entity(for: slide1View) {            viewEntity.components.set(BillboardComponent())
-            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.position = .init(x: 0.2, y: 1.0, z: -1)
             viewEntity.isEnabled = true
             rootEntity.addChild(viewEntity)
         }
         if let viewEntity = attachments.entity(for: slide2View) {            viewEntity.components.set(BillboardComponent())
-            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.position = .init(x: 0.2, y: 1.1, z: -1)
             viewEntity.isEnabled = true
             rootEntity.addChild(viewEntity)
         }
         if let viewEntity = attachments.entity(for: slide3View) {            viewEntity.components.set(BillboardComponent())
-            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.position = .init(x: 0.2, y: 1.2, z: -1)
             viewEntity.isEnabled = true
             rootEntity.addChild(viewEntity)
         }
