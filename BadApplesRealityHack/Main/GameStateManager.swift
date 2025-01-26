@@ -96,7 +96,7 @@ class GameStateManager: ObservableObject {
             //  if currentPlatform() == .visionOS {
             if #available(iOS 18.0, *) {
                 if let newHeart = try? await ModelEntity(named: "heart1") { 
-                    newHeart.scale = .init(repeating: 0.001)
+                    newHeart.scale = .init(repeating: 0.0001)
                     newHeart.position = getSeatTileEntity(seat: message.seatNumber).position(relativeTo: nil)
                     newHeart.position.y = 0.4
                     newHeart.components[HeartMovementComponent.self] = HeartMovementComponent(targetPosition: getSeatTileEntity(seat: 1).position)

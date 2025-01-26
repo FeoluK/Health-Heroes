@@ -36,7 +36,7 @@ struct ImmersiveView: View {
         } attachments: {
             Attachment(id: slide1View) {
                   //2. Define the SwiftUI View
-                  Text("Testestest")
+                  Text("Every year, 5.5 million people worldwide die from strokes, making it one of the leading causes of death globally. Recognizing symptoms and acting quickly can save countless lives.")
                       .font(.extraLargeTitle)
                       .padding()
                       .glassBackgroundEffect()
@@ -44,7 +44,7 @@ struct ImmersiveView: View {
             
             Attachment(id: slide2View) {
                   //2. Define the SwiftUI View
-                  Text("Horse horse horse")
+                  Text("Many stroke-related deaths could be prevented if more people knew CPR (Cardiopulmonary Resuscitation).")
                       .font(.extraLargeTitle)
                       .padding()
                       .glassBackgroundEffect()
@@ -52,7 +52,7 @@ struct ImmersiveView: View {
             
             Attachment(id: slide3View) {
                   //2. Define the SwiftUI View
-                  Text("Cow cow cow cow")
+                  Text("As around 30-40% of cardiac arrests are fatal due to bystanders not acting. Learning CPR can double or triple survival chances in emergencies—every second counts!")
                       .font(.extraLargeTitle)
                       .padding()
                       .glassBackgroundEffect()
@@ -81,10 +81,17 @@ struct ImmersiveView: View {
     }
     
     func configureAttachments(_ attachments: RealityViewAttachments) {
-        // Add the attachments to the wrist entity
-        if let viewEntity = attachments.entity(for: "mainHeartView") {
-            //brushSettingsAttachment.scale = [0.7, 0.7, 0.7]
-            viewEntity.components.set(BillboardComponent())
+        if let viewEntity = attachments.entity(for: slide1View) {            viewEntity.components.set(BillboardComponent())
+            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.isEnabled = true
+            rootEntity.addChild(viewEntity)
+        }
+        if let viewEntity = attachments.entity(for: slide2View) {            viewEntity.components.set(BillboardComponent())
+            viewEntity.position = .init(x: 0.2, y: 1, z: -1)
+            viewEntity.isEnabled = true
+            rootEntity.addChild(viewEntity)
+        }
+        if let viewEntity = attachments.entity(for: slide3View) {            viewEntity.components.set(BillboardComponent())
             viewEntity.position = .init(x: 0.2, y: 1, z: -1)
             viewEntity.isEnabled = true
             rootEntity.addChild(viewEntity)

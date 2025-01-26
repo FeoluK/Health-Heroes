@@ -18,11 +18,7 @@ import SharePlayMessages
 class SharePlayManager: ObservableObject {
     static let shared = SharePlayManager()
     
-    
     @Published var sessionInfo: DemoSessionInfo = .init()
-    
-//    var groupSession: GroupSession<MyGroupActivity>?
-//    private var messenger: GroupSessionMessenger?
     private var cancellables = Set<AnyCancellable>()
     
     private init() {}
