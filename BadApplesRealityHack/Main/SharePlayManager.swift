@@ -61,6 +61,22 @@ class SharePlayManager: ObservableObject {
             
             session.join()
             GameStateManager.shared.gameState = .lobbyNotReady
+            
+            if GameStateManager.shared.gameState == .lobbyNotReady {
+                var seatId = 1
+                for (_, player) in GameStateManager.shared.players {
+                    if player.isVisionDevice {
+                        var playerCopy = player
+                        playerCopy.playerSeat = 1
+                        SharePlayManager.sendMessage(message: playerCopy)
+                    } else {
+                        var playerCopy = player
+                        playerCopy.playerSeat = seatId
+                        SharePlayManager.sendMessage(message: playerCopy)
+                        seatId += 1
+                    }
+                }
+            }
         }
     }
     
@@ -98,7 +114,7 @@ class SharePlayManager: ObservableObject {
             
             for participant in activeParticipants {
                 // Calculate seat number based on join order
-                let participantIndex = Array(activeParticipants).firstIndex(of: participant) ?? 0
+                let participantIndex = Array(activeParticipants).firstIndex(of: participant) ?? 1
                 let seatNumber = participantIndex + 2  // Start at 2 since Vision Pro is 1
                 
                 let potentialNewPlayer = Player(
@@ -122,6 +138,22 @@ class SharePlayManager: ObservableObject {
                         }
                     }
                     GameStateManager.shared.tasks.insert(task)
+                }
+            }
+            
+            if GameStateManager.shared.gameState == .lobbyNotReady && currentPlatform() == .visionOS {
+                var seatId = 1
+                for (_, player) in GameStateManager.shared.players {
+                    if player.isVisionDevice {
+                        var playerCopy = player
+                        playerCopy.playerSeat = 1
+                        SharePlayManager.sendMessage(message: player)
+                    } else {
+                        var playerCopy2 = player
+                        playerCopy2.playerSeat = seatId
+                        SharePlayManager.sendMessage(message: playerCopy2)
+                        seatId += 1
+                    }
                 }
             }
         }
