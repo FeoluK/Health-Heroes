@@ -132,6 +132,7 @@ class SharePlayManager: ObservableObject {
                         var playerCopy = player
                         playerCopy.playerSeat = 1
                         SharePlayManager.sendMessage(message: player)
+                        seatId += 1
                     } else {
                         var playerCopy2 = player
                         playerCopy2.playerSeat = seatId
