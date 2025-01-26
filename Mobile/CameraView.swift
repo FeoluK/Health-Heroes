@@ -18,7 +18,6 @@ struct CameraView: View {
     @State private var showRules = false
     @State private var showLeaderboard = false
     @State private var showCustomMenu = false
-    @State private var selectedGame: GameType = .diagnosis
     @ObservedObject private var gameStateManager = GameStateManager.shared
     
     var body: some View {
@@ -79,9 +78,6 @@ struct CameraView: View {
                 }
                 
                 Spacer()
-                
-                GameSelector()
-                    .padding(.bottom, 30)
             }
         }
         .navigationBarHidden(true)
@@ -122,59 +118,6 @@ struct CameraView: View {
     }
 }
 
-struct GameSelector: View {
-    @State private var selectedGameTitle: String = "No game selected"
-    @ObservedObject private var gameStateManager = GameStateManager.shared
-    
-    var body: some View {
-        VStack {
-            // Debug text to show current selection
-            Text(selectedGameTitle)
-                .foregroundColor(.white)
-                .padding(.top)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    ForEach(GameType.allCases, id: \.self) { game in
-                        GameCircle(game: game)
-                            .onTapGesture {
-                                selectedGameTitle = "Selected: \(game.rawValue)"
-                                print("Tapped: \(game.rawValue)")
-                                // Optional: Add haptic feedback
-                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            }
-                    }
-                }
-                .padding(.horizontal, 20)
-            }
-            .frame(height: 100)
-        }
-    }
-}
-struct GameCircle: View {
-    let game: GameType
-    
-    var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .fill(game.color.opacity(0.15))
-                    .frame(width: 70, height: 70)
-                
-                Image(systemName: game.icon)
-                    .font(.system(size: 30))
-                    .foregroundColor(game.color)
-            }
-            
-            Text(game.rawValue)
-                .font(.caption)
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-                .frame(width: 70) // Added fixed width for better text wrapping
-        }
-    }
-}
-
 // Custom menu view
 struct CustomMenuView: View {
     @Binding var isPresented: Bool
@@ -212,7 +155,7 @@ struct CustomMenuView: View {
                 .fill(Color.black.opacity(0.8))
         )
         .frame(width: 160)
-        .zIndex(1) // Ensure menu stays above other elements
+        .zIndex(1)
     }
 }
 

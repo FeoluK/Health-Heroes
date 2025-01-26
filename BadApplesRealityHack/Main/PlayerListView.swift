@@ -4,7 +4,6 @@
 //
 //  Created by Hunter Harris on 1/24/25.
 //
-
 import Foundation
 import SwiftUI
 import SharePlayMessages
@@ -31,8 +30,7 @@ struct PlayerListView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "FF6B6B"),
-                                            Color(hex: "4ECDC4")]),
+                gradient: Gradient(colors: [Color(hex: "FF6B6B"), Color(hex: "4ECDC4")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -75,6 +73,9 @@ struct PlayerListView: View {
                     .padding(.top, 20)
                     
                     Spacer()
+                    
+                    GameSelector()
+                        .padding(.bottom, 10)
                     
                     if gameStateManager.players.values.allSatisfy({ $0.isReady }) {
                         playerStartGameButton
@@ -164,9 +165,10 @@ struct PlayerCard: View {
     @State private var readyPulse: CGFloat = 1.0
     @State private var isEditing = false
     @State private var newName = ""
+    @ObservedObject private var gameStateManager = GameStateManager.shared
     
     var body: some View {
-        HStack {
+        HStack(spacing: 15) {
             ZStack {
                 Circle()
                     .fill(Color(SharePlayManager.getColorForSeat(seat: player.playerSeat)))
@@ -182,53 +184,44 @@ struct PlayerCard: View {
                     .font(.headline)
             }
             
-            if player.isReady {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
-                    .font(.system(size: 24))
-                    .scaleEffect(readyPulse)
-                    .shadow(color: .green.opacity(0.5), radius: 5)
-                    .zIndex(10)
-                    .padding(.trailing, 30)
+            ZStack(alignment: .leading) {
+                if isEditing && player.id == Player.local?.id {
+                    TextField("", text: $newName)
+                        .textFieldStyle(.plain)
+                        .foregroundColor(.white)
+                        .onSubmit {
+                            if !newName.isEmpty {
+                                if var localPlayer = Player.local {
+                                    localPlayer.name = newName
+                                    Player.local = localPlayer
+                                    gameStateManager.players[localPlayer.id] = localPlayer
+                                    PlayerFuncs.sendLocalPlayerUpdateMsg()
+                                }
+                                isEditing = false
+                            }
+                        }
+                } else {
+                    Text(player.name)
+                        .foregroundColor(.white)
+                }
             }
-            
-            if isEditing && player.id == Player.local?.id {
-                TextField("Enter name", text: $newName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .foregroundColor(.black)
-                    .frame(width: 120)
-                    .onSubmit {
-                        if !newName.isEmpty {
-                            //Player.sendNameUpdateMsg(newName: newName)
-                            isEditing = false
-                        }
-                    }
-            } else {
-                Text(player.name)
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(.white)
-                    .onTapGesture {
-                        if player.id == Player.local?.id {
-                            isEditing = true
-                            newName = player.name
-                        }
-                    }
+            .frame(width: 120, alignment: .leading)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                if player.id == Player.local?.id {
+                    newName = player.name
+                    isEditing = true
+                }
             }
             
             Spacer()
             
-            HStack(spacing: 15) {
-//                if player.id == Player.local?.id && !isEditing {
-//                    Image(systemName: "pencil.circle.fill")
-//                        .foregroundColor(.white.opacity(0.8))
-//                        .font(.system(size: 24))
-//                        .onTapGesture {
-//                            isEditing = true
-//                            newName = player.name
-//                        }
-//                }
-                
-            }
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(gameStateManager.players[player.id]?.isReady == true ? .green : .gray.opacity(0.3))
+                .font(.system(size: 30))
+                .frame(width: 40)
+                .scaleEffect(gameStateManager.players[player.id]?.isReady == true ? readyPulse : 1.0)
+                .shadow(color: gameStateManager.players[player.id]?.isReady == true ? .green.opacity(0.5) : .clear, radius: 5)
         }
         .padding()
         .background(
@@ -254,8 +247,53 @@ struct PlayerCard: View {
     }
 }
 
-#Preview {
-    PlayerListView()
+struct GameSelector: View {
+    @ObservedObject private var gameStateManager = GameStateManager.shared
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 20) {
+                ForEach(GameType.allCases, id: \.self) { game in
+                    GameCircle(game: game, isSelected: game == gameStateManager.currentGame)
+                        .onTapGesture {
+                            gameStateManager.currentGame = game
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        }
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .frame(height: 100)
+    }
+}
+
+struct GameCircle: View {
+    let game: GameType
+    let isSelected: Bool
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                Circle()
+                    .fill(game.color.opacity(0.15))
+                    .frame(width: 70, height: 70)
+                    .overlay(
+                        Circle()
+                            .stroke(isSelected ? Color.white : Color.clear, lineWidth: 2)
+                    )
+                
+                Image(systemName: game.icon)
+                    .font(.system(size: 30))
+                    .foregroundColor(game.color)
+            }
+            
+            Text(game.rawValue)
+                .font(.caption)
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .frame(width: 70)
+        }
+    }
 }
 
 #Preview {
