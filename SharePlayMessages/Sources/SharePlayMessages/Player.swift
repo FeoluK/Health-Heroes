@@ -1,0 +1,41 @@
+//
+//  File.swift
+//  SharePlayMessages
+//
+//  Created by Hunter Harris on 1/25/25.
+//
+
+import Foundation
+import GroupActivities
+
+public struct Player: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
+    public var windowId: String = ""
+    
+    public var messageId: String = UUID().uuidString
+    
+    public static func == (lhs: Player, rhs: Player) -> Bool {
+        lhs.name == rhs.name && lhs.id == rhs.id
+    }
+    
+    public let name: String
+    public let id: UUID
+    public let score: Int
+    public var isActive: Bool
+    public var isReady: Bool
+    public var playerSeat: Int
+    public var isVisionDevice: Bool
+    
+    public init(name: String, id: UUID, score: Int, isActive: Bool, isReady: Bool, isVisionDevice: Bool, playerSeat: Int) {
+        self.name = name
+        self.score = score
+        self.id = id
+        self.isActive = isActive
+        self.isReady = isReady
+        self.playerSeat = playerSeat
+        self.isVisionDevice = isVisionDevice
+    }
+    
+    /// The local player, "me".
+    public static var local: Player? = nil   
+    
+}

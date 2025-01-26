@@ -9,6 +9,7 @@ import Foundation
 import RealityFoundation
 import RealityKit
 import SwiftUICore
+import SharePlayMessages
 
 var rootEntity = ModelEntity()
 var cameraAnchor: ModelEntity = ModelEntity(mesh: .generateSphere(radius: 0.02), materials: [UnlitMaterial(color: .green)])
@@ -228,8 +229,8 @@ class ScalingSystem: System {
                         entity.components[ModelComponent.self]?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
                     }
                     
-                    SharePlayManager.sendMessage(
-                        message: Game_SendHeartMessage(id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: 1), handleLocally: true)
+                    SharePlayManager.sendMessage(message: Game_SendHeartMessage(windowId: "", messageId: "", id: UUID(), seatNumber: Player.local?.playerSeat ?? 0, heartHeight: 1))
+                    
                 }
             }
 

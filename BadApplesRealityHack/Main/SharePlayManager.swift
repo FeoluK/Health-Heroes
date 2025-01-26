@@ -10,6 +10,7 @@ import GroupActivities
 import Combine
 import SwiftUICore
 import UIKit
+import SharePlayMessages
 
 @available(iOS 17.0, *)
 
@@ -98,7 +99,7 @@ class SharePlayManager: ObservableObject {
                 if !GameStateManager.shared.players.values.contains(where: { $0.id == potentialNewPlayer.id })
                 {
                     let task = Task { @MainActor in
-                        Player.sendLocalPlayerUpdateMsg()
+                        PlayerFuncs.sendLocalPlayerUpdateMsg()
                         GameStateManager.shared.players[participant.id] = potentialNewPlayer
                     }
                     GameStateManager.shared.tasks.insert(task)
@@ -124,8 +125,8 @@ class SharePlayManager: ObservableObject {
                               sender: Participant,
                               forceHandling: Bool = false) async {
         switch message.base {
-        case let message as Player:
-            await Player.handlePlayerMessage(message: message, sender: sender)
+        case let message as Player: return 
+            await PlayerFuncs.handlePlayerMessage(message: message, sender: sender)
         case let message as PlayerReadyMessage:
             return
         case let message as Game_StartMessage:
@@ -173,9 +174,10 @@ class SharePlayManager: ObservableObject {
 
 extension SharePlayManager {
     static func sendStartGameMessage() {
-        let startGameMsg: Game_StartMessage = .init(id: UUID(), gameMode: GameModeManager.shared.gameMode.rawValue)
+        let startGameMsg: Game_StartMessage = .init(windowId: "", messageId: "", id: UUID(), gameMode: GameModeManager.shared.gameMode.rawValue)
         sendMessage(message: startGameMsg, handleLocally: true)
     }
+     
 }
 
 // Define your custom GroupActivity
@@ -205,101 +207,5 @@ class DemoSessionInfo: ObservableObject {
         Task { @MainActor in
             SharePlayManager.shared.sessionInfo = self
         }
-    }
-}
-
-// MARK: - Messages
-
-protocol SharePlayMessage: Codable, Equatable, Decodable {
-    var windowId: String { get }
-    var messageId: String { get }
-}
-
-/// Generic SharePlayMessage type with custom decoding & encoding.
-struct AnySharePlayMessage: Codable {
-    let base: any SharePlayMessage
-
-    init<T: SharePlayMessage>(_ base: T) {
-        self.base = base
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case base
-        case type
-    }
-
-    private enum MessageType: String, Codable {
-        case playerMessage
-        case playerReadyMessage
-        case game_StartMessage
-        case game_SendHeartMessage
-       
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        switch base {
-        case is Player:
-            try container.encode(MessageType.playerMessage, forKey: .type)
-        case is PlayerReadyMessage:
-            try container.encode(MessageType.playerReadyMessage, forKey: .type)
-        case is Game_StartMessage:
-            try container.encode(MessageType.game_StartMessage, forKey: .type)
-        case is Game_SendHeartMessage:
-            try container.encode(MessageType.game_SendHeartMessage, forKey: .type)
-        default:
-            throw EncodingError.invalidValue(base, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Error encoding AnySharePlayMessage: Invalid type"))
-        }
-        
-        let data = try JSONEncoder().encode(base)
-        try container.encode(data, forKey: .base)
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(MessageType.self, forKey: .type)
-        let data = try container.decode(Data.self, forKey: .base)
-
-        switch type {
-        case .playerMessage:
-            base = try JSONDecoder().decode(Player.self, from: data)
-            
-        case .playerReadyMessage:
-            base = try JSONDecoder().decode(PlayerReadyMessage.self, from: data)
-        case .game_StartMessage:
-            base = try JSONDecoder().decode(Game_StartMessage.self, from: data)
-        case .game_SendHeartMessage:
-            base = try JSONDecoder().decode(Game_SendHeartMessage.self, from: data)
-        default: return
-        }
-    }
-}
-
-
-
-
-
-struct Game_StartMessage: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
-    var windowId: String = ""
-    var messageId: String = UUID().uuidString
-    let id: UUID
-    let gameMode: String
-    
-    static func == (lhs: Game_StartMessage, rhs: Game_StartMessage) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-
-struct Game_SendHeartMessage: Codable, Sendable, Identifiable, Equatable, SharePlayMessage {
-    var windowId: String = ""
-    var messageId: String = UUID().uuidString
-    let id: UUID
-    let seatNumber: Int
-    let heartHeight: Float
-    
-    static func == (lhs: Game_SendHeartMessage, rhs: Game_SendHeartMessage) -> Bool {
-        lhs.id == rhs.id
     }
 }

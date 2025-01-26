@@ -3,6 +3,8 @@ import RealityFoundation
 import Combine
 import GroupActivities
 import RealityKit
+import SharePlayMessages
+
 
 enum SessionAction {
     case openImmersiveSpace(String)

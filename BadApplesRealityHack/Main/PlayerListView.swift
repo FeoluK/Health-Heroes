@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SharePlayMessages
 
 struct PlayerListView: View {
     @ObservedObject private var sharePlayManager = SharePlayManager.shared
@@ -42,7 +43,7 @@ struct PlayerListView: View {
     
     var playerReadyButton: some View {
         Button(action: {
-            Player.sendLocalIsReadyMsg()
+            PlayerFuncs.sendLocalIsReadyMsg()
         }) {
             Text("Ready")
                 .padding()

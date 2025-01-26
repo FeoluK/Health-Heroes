@@ -25,6 +25,8 @@
 		68D1A5AA2D44837A004A6A8C /* SharePlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE4ED3670D9731718D5F37 /* SharePlayManager.swift */; };
 		68D1A5AB2D448731004A6A8C /* TextLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D1A5A32D4482F5004A6A8C /* TextLoadingView.swift */; };
 		716084650409BE2A76D8610E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D7A99750FE031301280864 /* Player.swift */; };
+		810FA07B2D45BFA000A4733B /* SharePlayMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 810FA07A2D45BFA000A4733B /* SharePlayMessages */; };
+		810FA07E2D45BFA800A4733B /* SharePlayMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 810FA07D2D45BFA800A4733B /* SharePlayMessages */; };
 		81290B4B2D4485DF006CFB47 /* TextEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B4A2D4485DF006CFB47 /* TextEntity.swift */; };
 		81290B4C2D4485DF006CFB47 /* TextEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B4A2D4485DF006CFB47 /* TextEntity.swift */; };
 		81290B782D44B954006CFB47 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81290B772D44B954006CFB47 /* Extensions.swift */; };
@@ -88,6 +90,25 @@
 		81290B3B2D447376006CFB47 /* GameModes */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (81290B4E2D449872006CFB47 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = GameModes; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		810FA0782D45BF9C00A4733B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				810FA07B2D45BFA000A4733B /* SharePlayMessages in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		810FA07C2D45BFA500A4733B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				810FA07E2D45BFA800A4733B /* SharePlayMessages in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
 		1B3BADCCC4DE071787DA65DE /* BadApplesRealityHack */ = {
 			isa = PBXGroup;
@@ -126,6 +147,13 @@
 				9E0612657F168C0EC2BEDEB4 /* Preview Content */,
 			);
 			path = Mobile;
+			sourceTree = "<group>";
+		};
+		810FA0792D45BFA000A4733B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9E0612657F168C0EC2BEDEB4 /* Preview Content */ = {
@@ -170,6 +198,7 @@
 				1B3BADCCC4DE071787DA65DE /* BadApplesRealityHack */,
 				5A2E66AC092871E8C329F457 /* Mobile */,
 				2F1ACFDAC8A2CCD97E3A044C /* Products */,
+				810FA0792D45BFA000A4733B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,10 +211,12 @@
 			buildPhases = (
 				C7D13A021F2D55244E847C6E /* Sources */,
 				180268FE78F6604E6E878091 /* Resources */,
+				810FA0782D45BF9C00A4733B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				810FA0752D45BE1300A4733B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				81290B3B2D447376006CFB47 /* GameModes */,
@@ -201,10 +232,12 @@
 			buildPhases = (
 				A4CC3D687D3628CDFEF287CB /* Sources */,
 				A5B9D291548DA2463FB296A8 /* Resources */,
+				810FA07C2D45BFA500A4733B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				810FA0772D45BE1700A4733B /* PBXTargetDependency */,
 			);
 			name = Mobile;
 			productName = Mobile;
@@ -229,6 +262,9 @@
 				en,
 			);
 			mainGroup = FF59148301521FADE5329A22;
+			packageReferences = (
+				810CF34A2D45BDEE006A02F5 /* XCLocalSwiftPackageReference "SharePlayMessages" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -303,6 +339,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		810FA0752D45BE1300A4733B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 810FA0742D45BE1300A4733B /* SharePlayMessages */;
+		};
+		810FA0772D45BE1700A4733B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 810FA0762D45BE1700A4733B /* SharePlayMessages */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3ED72E2E2CF46737FCE3287B /* Release */ = {
@@ -536,6 +583,36 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		810CF34A2D45BDEE006A02F5 /* XCLocalSwiftPackageReference "SharePlayMessages" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = SharePlayMessages;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		810FA0742D45BE1300A4733B /* SharePlayMessages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 810CF34A2D45BDEE006A02F5 /* XCLocalSwiftPackageReference "SharePlayMessages" */;
+			productName = SharePlayMessages;
+		};
+		810FA0762D45BE1700A4733B /* SharePlayMessages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 810CF34A2D45BDEE006A02F5 /* XCLocalSwiftPackageReference "SharePlayMessages" */;
+			productName = SharePlayMessages;
+		};
+		810FA07A2D45BFA000A4733B /* SharePlayMessages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 810CF34A2D45BDEE006A02F5 /* XCLocalSwiftPackageReference "SharePlayMessages" */;
+			productName = SharePlayMessages;
+		};
+		810FA07D2D45BFA800A4733B /* SharePlayMessages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 810CF34A2D45BDEE006A02F5 /* XCLocalSwiftPackageReference "SharePlayMessages" */;
+			productName = SharePlayMessages;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B1A82FD8F9D673C33243E3AC /* Project object */;
 }
