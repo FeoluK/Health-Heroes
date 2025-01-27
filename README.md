@@ -1,5 +1,5 @@
-![Video Thumbnail](https://imgur.com/a/m6C77fb)
-[![Watch the video](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube&style=for-the-badge](https://youtu.be/2pmWjs3NbPg)<img width="1481" alt="Screenshot 2025-01-27 at 4 35 06 PM" src="https://github.com/user-attachments/assets/1f884d75-b499-4c14-b8d7-1b90c3346c29" />
+alt="Screenshot 2025-01-27 at 4 35 06 PM" src="https://github.com/user-attachments/assets/1f884d75-b499-4c14-b8d7-1b90c3346c29" />
+[![Watch the video](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube&style=for-the-badge](https://youtu.be/2pmWjs3NbPg)<img width="1481" 
 
 # Healing Heroes
 
