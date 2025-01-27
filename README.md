@@ -1,5 +1,5 @@
 ![Video Thumbnail](https://www.example.com/video-thumbnail.jpg)
-[![Watch the video](https://www.example.com/video-thumbnail.jpg)](https://www.example.com/video.mp4)
+[![Watch the video](https://imgur.com/a/m6C77fb)](https://youtu.be/2pmWjs3NbPg)
 
 # Healing Heroes
 
