@@ -26,7 +26,7 @@ Healing Heroes is a groundbreaking cross-platform game designed to teach essenti
 3. **Real-Time Feedback**: The Vision Pro displays immersive visuals of vitals improving as the rescuers succeed, creating an interactive learning experience.
 
 ![Demo1-ezgif com-video-to-gif-converter (1)](https://github.com/user-attachments/assets/4315a6db-9acd-4ce1-8291-bba2809debbd)
-<img width="941" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/830cd7ac-0980-47c7-bfaa-b72a2e462d8b" />
+<img width="360" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/830cd7ac-0980-47c7-bfaa-b72a2e462d8b" />
 ---
 
 ## Development Process
