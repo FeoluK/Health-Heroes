@@ -1,4 +1,7 @@
-alt="Screenshot 2025-01-27 at 4 35 06 PM" src="https://github.com/user-attachments/assets/1f884d75-b499-4c14-b8d7-1b90c3346c29" />
+
+<img width="941" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/466d8f68-9f74-40e9-af14-3e117e4c2451" />
+
+
 [![Watch the video](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube&style=for-the-badge](https://youtu.be/2pmWjs3NbPg)<img width="1481" 
 
 # Healing Heroes
