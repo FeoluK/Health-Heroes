@@ -1,5 +1,5 @@
 
-<img width="941" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/466d8f68-9f74-40e9-af14-3e117e4c2451" />
+<img width="360" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/466d8f68-9f74-40e9-af14-3e117e4c2451" />
 
 
 [![Watch the video](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube&style=for-the-badge](https://youtu.be/2pmWjs3NbPg)<img width="1481" 
