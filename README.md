@@ -1,7 +1,8 @@
-<a href="https://youtu.be/2pmWjs3NbPg" target="_blank">
-  <img src="https://img.youtube.com/vi/2pmWjs3NbPg/0.jpg" alt="Watch the video" width="400" style="position: relative;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/YouTube_social_white_circle_%282017%29.svg" alt="Play" width="50" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-</a>
+# Watch the Video
+
+[![Watch the video](https://img.youtube.com/vi/2pmWjs3NbPg/0.jpg)](https://www.youtube.com/watch?v=2pmWjs3NbPg)  
+[![Watch Video](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube&style=for-the-badge)](https://www.youtube.com/watch?v=2pmWjs3NbPg)
+
 # Healing Heroes
 
 Healing Heroes is a groundbreaking cross-platform game designed to teach essential medical techniques through engaging and immersive gameplay. By seamlessly integrating Apple Vision Pro and iPhone, we bring learning and collaboration to a whole new level.
