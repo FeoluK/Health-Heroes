@@ -7,8 +7,6 @@
 
 Healing Heroes is a groundbreaking cross-platform game designed to teach essential medical techniques through engaging and immersive gameplay. By seamlessly integrating Apple Vision Pro and iPhone, we bring learning and collaboration to a whole new level.
 
-<img width="360" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/466d8f68-9f74-40e9-af14-3e117e4c2451" />
-
 ---
 
 ## Features
@@ -29,6 +27,9 @@ Healing Heroes is a groundbreaking cross-platform game designed to teach essenti
 3. **Real-Time Feedback**: The Vision Pro displays immersive visuals of vitals improving as the rescuers succeed, creating an interactive learning experience.
 
 ![Demo1-ezgif com-video-to-gif-converter (1)](https://github.com/user-attachments/assets/4315a6db-9acd-4ce1-8291-bba2809debbd)
+
+![Demo1-ezgif com-video-to-gif-converter (2)](https://github.com/user-attachments/assets/4315a6db-9acd-4ce1-8291-bba2809debbd)
+
 <img width="360" alt="Screenshot 2025-01-26 at 6 26 15 PM" src="https://github.com/user-attachments/assets/830cd7ac-0980-47c7-bfaa-b72a2e462d8b" />
 ---
 
